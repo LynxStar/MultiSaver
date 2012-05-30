@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiSaver", "MultiSaver\MultiSaver\MultiSaver.csproj", "{9E9CC433-9E39-4D00-A5B0-B3A4AFB4323B}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "MultiSaverContent", "MultiSaver\MultiSaverContent\MultiSaverContent.contentproj", "{1FC61D1D-32B1-4254-A89F-0288D0EA24AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E9CC433-9E39-4D00-A5B0-B3A4AFB4323B}.Debug|x86.ActiveCfg = Debug|x86
+		{9E9CC433-9E39-4D00-A5B0-B3A4AFB4323B}.Debug|x86.Build.0 = Debug|x86
+		{9E9CC433-9E39-4D00-A5B0-B3A4AFB4323B}.Release|x86.ActiveCfg = Release|x86
+		{9E9CC433-9E39-4D00-A5B0-B3A4AFB4323B}.Release|x86.Build.0 = Release|x86
+		{1FC61D1D-32B1-4254-A89F-0288D0EA24AE}.Debug|x86.ActiveCfg = Debug|x86
+		{1FC61D1D-32B1-4254-A89F-0288D0EA24AE}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
