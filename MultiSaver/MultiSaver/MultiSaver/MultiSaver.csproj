@@ -13,7 +13,7 @@
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
-    <XnaProfile>Reach</XnaProfile>
+    <XnaProfile>HiDef</XnaProfile>
     <XnaCrossPlatformGroupID>00daaa1d-87dd-4957-9228-5a4a0a5ecd6b</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
     <ApplicationIcon>Game.ico</ApplicationIcon>
@@ -72,9 +72,18 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Camera.cs" />
+    <Compile Include="FreeCamera.cs" />
+    <Compile Include="Map.cs" />
+    <Compile Include="Maze.cs" />
+    <Compile Include="MazeAI.cs" />
+    <Compile Include="Mode.cs" />
+    <Compile Include="Monitor.cs" />
+    <Compile Include="MultiView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Game1.cs" />
+    <Compile Include="Screensaver.cs" />
+    <Compile Include="TargetCamera.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
