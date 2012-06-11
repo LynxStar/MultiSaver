@@ -20,16 +20,21 @@ namespace MultiSaver
 
         Effect SlideShowEffect;
 
-        public VertexPositionTexture[] Vertices;
+        public VertexPositionNormalTexture[] Vertices;
         public VertexBuffer VerticesBuffer;
         public int[] Indices;
         public IndexBuffer IndicesBuffer;
 
-        Texture2D Image1;
-        Texture2D Image2;
+        List<Texture2D> Images = new List<Texture2D>();
+        int ImageIndex;
+
+        Texture2D CurrentImage;
 
         TargetCamera FixedCamera;
         FreeCamera MovableCamera;
+        
+        int Time;
+        int TransitionTime;
 
         public Screensaver()
         {
@@ -56,30 +61,36 @@ namespace MultiSaver
 
             SlideShowEffect = Content.Load<Effect>("SlideShow");
 
-            Image1 = Content.Load<Texture2D>("Image1");
-            Image2 = Content.Load<Texture2D>("Image2");
+            Images.Add(Content.Load<Texture2D>("Image1"));
+            Images.Add(Content.Load<Texture2D>("Image2"));
 
-            GeneratePrimatives(1);
+            GeneratePrimatives(10, Images[0]);
 
             FixedCamera = new TargetCamera(new Vector3(100, 50, 300), new Vector3(100, 50, 0), GraphicsDevice);
             FixedCamera.Update();
 
-            MovableCamera = new FreeCamera(new Vector3(100, 50, 500), 0, 0, GraphicsDevice);
+            MovableCamera = new FreeCamera(new Vector3(250, 225, 750), 0, 0, GraphicsDevice);
             MovableCamera.Update();
 
         }
 
-        public void GeneratePrimatives(int Tiling)
+        public void GeneratePrimatives(int Tiling, Texture2D Image)
         {
 
-            Vertices = new VertexPositionTexture[Tiling * Tiling * 4];
+            CurrentImage = Image;
+
+            Vertices = new VertexPositionNormalTexture[Tiling * Tiling * 4];
             Indices = new int[Tiling * Tiling * 6];
 
-            VerticesBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionTexture), Vertices.Length, BufferUsage.WriteOnly);
+            VerticesBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionNormalTexture), Vertices.Length, BufferUsage.WriteOnly);
             IndicesBuffer = new IndexBuffer(GraphicsDevice, IndexElementSize.ThirtyTwoBits, Indices.Length, BufferUsage.WriteOnly);
 
             int i = 0;
             int j = 0;
+
+            Random Rand = new Random();
+
+            int Time = 0;
 
             for (int y = 0; y < Tiling; y++)
             {
@@ -90,15 +101,20 @@ namespace MultiSaver
                     //0-500 for x and y
 
                     int Length = 500 / Tiling;
-                    float UVLength = 1 / Tiling;
+                    float UVLength = 1f / Tiling;
 
                     Vector2 Coords = new Vector2(x * Length, 500 - y * Length);
                     Vector2 UVCoords = new Vector2((float)x * UVLength, (float)y * UVLength);
 
-                    Vertices[i++] = new VertexPositionTexture(new Vector3(Coords.X, Coords.Y, 0), new Vector2(UVCoords.X, UVCoords.Y));
-                    Vertices[i++] = new VertexPositionTexture(new Vector3(Coords.X + Length, Coords.Y, 0), new Vector2(UVCoords.X + UVLength, UVCoords.Y));
-                    Vertices[i++] = new VertexPositionTexture(new Vector3(Coords.X, Coords.Y - Length, 0), new Vector2(UVCoords.X, UVCoords.Y + UVLength));
-                    Vertices[i++] = new VertexPositionTexture(new Vector3(Coords.X + Length, Coords.Y - Length, 0), new Vector2(UVCoords.X + UVLength, UVCoords.Y + UVLength));
+                    int Offset = Rand.Next(0, 500);
+                    int Speed = Rand.Next(2, 5);
+
+                    Time = (int)(Time < Offset / Speed ? (250 + Coords.X - Offset) / (Speed) : Time);
+
+                    Vertices[i++] = new VertexPositionNormalTexture(new Vector3(250 + Coords.X, Coords.Y, 0), new Vector3(Offset, 250 + Coords.X, Speed), new Vector2(UVCoords.X, UVCoords.Y));
+                    Vertices[i++] = new VertexPositionNormalTexture(new Vector3(250 + Coords.X + Length, Coords.Y, 0), new Vector3(Offset, 250 + Coords.X + Length, Speed), new Vector2(UVCoords.X + UVLength, UVCoords.Y));
+                    Vertices[i++] = new VertexPositionNormalTexture(new Vector3(250 + Coords.X, Coords.Y - Length, 0), new Vector3(Offset, 250 + Coords.X, Speed), new Vector2(UVCoords.X, UVCoords.Y + UVLength));
+                    Vertices[i++] = new VertexPositionNormalTexture(new Vector3(250 + Coords.X + Length, Coords.Y - Length, 0), new Vector3(Offset, 250 + Coords.X + Length, Speed), new Vector2(UVCoords.X + UVLength, UVCoords.Y + UVLength));
 
                     Indices[j++] = i - 4;
                     Indices[j++] = i - 3;
@@ -113,8 +129,10 @@ namespace MultiSaver
 
             }
 
-            VerticesBuffer.SetData<VertexPositionTexture>(Vertices);
+            VerticesBuffer.SetData<VertexPositionNormalTexture>(Vertices);
             IndicesBuffer.SetData<int>(Indices);
+
+            TransitionTime = Time + 300;
 
         }
 
@@ -124,7 +142,7 @@ namespace MultiSaver
 
 
         }
-
+        
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
@@ -147,6 +165,21 @@ namespace MultiSaver
             MovableCamera.Move(translation);
             MovableCamera.Update();
 
+            Time++;
+
+            if (Time > TransitionTime)
+            {
+
+                ImageIndex++;
+
+                if (ImageIndex >= Images.Count)
+                    ImageIndex = 0;
+
+                GeneratePrimatives(10, Images[ImageIndex]);
+                Time = 0;
+                
+            }
+
             base.Update(gameTime);
         }
 
@@ -159,7 +192,8 @@ namespace MultiSaver
 
             SlideShowEffect.Parameters["View"].SetValue(MovableCamera.View);
             SlideShowEffect.Parameters["Projection"].SetValue(MovableCamera.Projection);
-            SlideShowEffect.Parameters["PhotoTexture"].SetValue(Image1);
+            SlideShowEffect.Parameters["PhotoTexture"].SetValue(CurrentImage);
+            SlideShowEffect.Parameters["Time"].SetValue(Time);
 
             SlideShowEffect.Techniques[0].Passes[0].Apply();
 

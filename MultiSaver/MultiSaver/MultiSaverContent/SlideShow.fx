@@ -1,6 +1,8 @@
 float4x4 View;
 float4x4 Projection;
 
+int Time;
+
 texture PhotoTexture;
 sampler PhotoSampler = sampler_state 
 {
@@ -17,7 +19,9 @@ sampler PhotoSampler = sampler_state
 struct VertexShaderInput
 {
     float4 Position : POSITION0;
+	float3 Normal   : NORMAL0;
 	float2 UV : TEXCOORD0;
+
 };
 
 struct VertexShaderOutput
@@ -32,6 +36,10 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput Input)
 
     VertexShaderOutput Output;
 
+	Input.Position.x += Input.Normal.x;
+	Input.Position.x = clamp(Input.Position.x - (Time * Input.Normal.z), Input.Normal.y - 250, 1500);
+
+	
 	Output.Position = mul(Input.Position, mul(View, Projection));
 	Output.UV = Input.UV;
 
