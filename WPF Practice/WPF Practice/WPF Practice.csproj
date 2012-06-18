@@ -75,7 +75,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MonitorControls\SlideShowConfig.xaml">
+    <Page Include="MonitorControls\ScreenSaverConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MonitorControls\ScreenSaverPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -87,8 +91,11 @@
     <Compile Include="MonitorControls\MonitorTab.xaml.cs">
       <DependentUpon>MonitorTab.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MonitorControls\SlideShowConfig.xaml.cs">
-      <DependentUpon>SlideShowConfig.xaml</DependentUpon>
+    <Compile Include="MonitorControls\ScreenSaverConfig.xaml.cs">
+      <DependentUpon>ScreenSaverConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MonitorControls\ScreenSaverPage.xaml.cs">
+      <DependentUpon>ScreenSaverPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
