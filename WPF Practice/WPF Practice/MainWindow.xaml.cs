@@ -20,6 +20,7 @@ namespace WPF_Practice
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -29,13 +30,14 @@ namespace WPF_Practice
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             MonitorTab monitor = new MonitorTab();
-            monitor.setMonitorInfo("Test");
 
-            MonitorTab monitor2 = new MonitorTab();
-            monitor.setMonitorInfo("Test");
+            if (ScreenSaver.SelectedIndex == 0)
+                monitor.setMonitorInfo("3D Maze");
+            else if (ScreenSaver.SelectedIndex == 1)
+                monitor.setMonitorInfo("Slideshow");
+            monitor.MouseDoubleClick += clicked;
 
             addnewMonitor(monitor);
-            addnewMonitor(monitor2);
         }
 
         public void addnewMonitor(MonitorTab monitor)
@@ -43,6 +45,18 @@ namespace WPF_Practice
             MonitorMenu.Children.Add(monitor);
          
         }
+
+        public void clicked(object sender, EventArgs args)
+        {
+            MonitorTab tab = (MonitorTab)sender;
+            if (Background == Brushes.Blue)
+                tab.Background = null;
+            else
+                tab.Background = Brushes.Blue;
+
+            if(
+        }
+
 
 
     }
