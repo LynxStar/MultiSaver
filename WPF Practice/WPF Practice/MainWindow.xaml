@@ -1,15 +1,11 @@
 ﻿<Window x:Class="WPF_Practice.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="390" Width="572">
+        Title="MainWindow" Height="440" Width="592">
     <Grid>
-        <Label Height="299" HorizontalAlignment="Right" Margin="0,12,12,0" Name="name" VerticalAlignment="Top" Width="373" Target="{Binding}" />
-        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,316,93,0" Name="ScreenSaver" VerticalAlignment="Top" Width="245" >
-            <ComboBoxItem>3D Maze</ComboBoxItem>
-            <ComboBoxItem>SlideShow</ComboBoxItem>
-        </ComboBox>
-        <StackPanel Name="MonitorMenu" Margin="0,0,383,40" />
-        <Button Content="Create" Height="23" HorizontalAlignment="Right" Margin="0,316,12,0" Name="createButton" VerticalAlignment="Top" Width="75" Click="Grid_Loaded" />
-        <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="0,313,0,0" Name="DeleteButton" VerticalAlignment="Top" Width="167" />
+        <Label Height="399" HorizontalAlignment="Right" Name="name" VerticalAlignment="Top" Width="385" Target="{Binding}" />
+        <StackPanel Name="MonitorMenu" Margin="0,0,383,59" />
+        <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="0,376,0,0" Name="DeleteButton" VerticalAlignment="Top" Width="187" />
+        <Button Content="CreateGroup" Height="23" HorizontalAlignment="Left" Margin="0,348,0,0" Name="button1" VerticalAlignment="Top" Width="187" Click="Grid_Loaded" />
     </Grid>
 </Window>

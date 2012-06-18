@@ -23,5 +23,10 @@ namespace WPF_Practice.MonitorControls
         {
             InitializeComponent();
         }
+
+        private void grouptxt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

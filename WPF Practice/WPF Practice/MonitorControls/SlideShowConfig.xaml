@@ -7,7 +7,15 @@
       d:DesignHeight="343" d:DesignWidth="515"
 	Title="PictureCOnfig">
 
-    <Grid>
-        
+    <Grid Height="347" Width="5161" Loaded="Grid_Loaded">
+        <Button Content="Button" Height="23" HorizontalAlignment="Left" Margin="428,12,0,0" Name="button1" VerticalAlignment="Top" Width="75" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="303,12,0,0" Name="comboBox1" VerticalAlignment="Top" Width="120" />
+        <StackPanel Height="290" HorizontalAlignment="Left" Margin="303,41,0,0" Name="stackPanel1" VerticalAlignment="Top" Width="200" />
+        <Label Content="Group Name:" Height="28" HorizontalAlignment="Left" Margin="12,12,0,0" Name="label1" VerticalAlignment="Top" />
+        <TextBox Height="18" HorizontalAlignment="Left" Margin="99,17,0,0" Name="grouptxt" VerticalAlignment="Top" Width="173" TextChanged="grouptxt_TextChanged" />
+        <StackPanel Height="263" HorizontalAlignment="Left" Margin="10,68,0,0" Name="abductedScreens" VerticalAlignment="Top" Width="141"></StackPanel>
+        <StackPanel Name="PendingScreens" Width="141" Margin="157,68,4863,16" />
+        <Label Content="Available Screens" Height="28" HorizontalAlignment="Left" Margin="171,41,0,0" Name="label2" VerticalAlignment="Top" />
+        <Label Content="Owned Screens" Height="28" HorizontalAlignment="Left" Margin="42,41,0,0" Name="label3" VerticalAlignment="Top" />
     </Grid>
 </Page>

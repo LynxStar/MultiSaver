@@ -10,6 +10,6 @@
             <RowDefinition Height="52*" />
             <RowDefinition Height="30*" />
         </Grid.RowDefinitions>
-        <Label Content="Label" Height="72" HorizontalAlignment="Left" Margin="111,0,0,0" Name="MonitorInfo" VerticalAlignment="Top" Width="187" Grid.RowSpan="2" />
+        <Label Content="Label" Height="82" HorizontalAlignment="Left" Margin="111,0,0,0" Name="MonitorInfo" VerticalAlignment="Top" Width="208" Grid.RowSpan="2" />
     </Grid>
 </UserControl>
