@@ -41,6 +41,7 @@ namespace WPF_Practice
         public void addnewMonitor(MonitorTab monitor)
         {
             MonitorMenu.Children.Add(monitor);
+         
         }
 
 
