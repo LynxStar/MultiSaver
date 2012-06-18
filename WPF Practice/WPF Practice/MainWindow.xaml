@@ -3,8 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="390" Width="572">
     <Grid>
-        <Label Height="245" HorizontalAlignment="Right" Margin="0,12,71,0" Name="name" VerticalAlignment="Top" Width="314" Target="{Binding}" />
-        <ComboBox Height="19" HorizontalAlignment="Left" Margin="173,292,0,0" Name="comboBox1" VerticalAlignment="Top" Width="291" />
-        <StackPanel Name="MonitorMenu" Margin="0,0,383,40" Loaded="Grid_Loaded" />
+        <Label Height="299" HorizontalAlignment="Right" Margin="0,12,12,0" Name="name" VerticalAlignment="Top" Width="373" Target="{Binding}" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,316,93,0" Name="ScreenSaver" VerticalAlignment="Top" Width="245" >
+            <ComboBoxItem>3D Maze</ComboBoxItem>
+            <ComboBoxItem>SlideShow</ComboBoxItem>
+        </ComboBox>
+        <StackPanel Name="MonitorMenu" Margin="0,0,383,40" />
+        <Button Content="Create" Height="23" HorizontalAlignment="Right" Margin="0,316,12,0" Name="createButton" VerticalAlignment="Top" Width="75" Click="Grid_Loaded" />
+        <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="0,313,0,0" Name="DeleteButton" VerticalAlignment="Top" Width="167" />
     </Grid>
 </Window>

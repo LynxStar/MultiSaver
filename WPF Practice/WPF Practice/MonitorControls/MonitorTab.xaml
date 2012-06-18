@@ -5,8 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="81" d:DesignWidth="319">
-    <Grid Height="92" Width="298">
-        <Image Height="72" Source="\MonitorControls\Monitor.jpg" HorizontalAlignment="Left" Name="MonitorImage" Stretch="Fill" VerticalAlignment="Top" Width="102" ImageFailed="MonitorImage_ImageFailed" />
-        <Label Content="Label" Height="72" HorizontalAlignment="Left" Margin="111,0,0,0" Name="MonitorInfo" VerticalAlignment="Top" Width="187" />
+    <Grid Height="82" Width="319" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="52*" />
+            <RowDefinition Height="30*" />
+        </Grid.RowDefinitions>
+        <Label Content="Label" Height="72" HorizontalAlignment="Left" Margin="111,0,0,0" Name="MonitorInfo" VerticalAlignment="Top" Width="187" Grid.RowSpan="2" />
     </Grid>
 </UserControl>
