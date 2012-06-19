@@ -15,11 +15,14 @@ using System.Windows.Shapes;
 namespace WPF_Practice.MonitorControls
 {
     /// <summary>
-    /// Interaction logic for MazeConfig.xaml
+    /// Interaction logic for ScreenSaverPage.xaml
     /// </summary>
-    public partial class MazeConfig : UserControl
+    public partial class ScreenSaverPage : Page
     {
-        public MazeConfig()
+        MazeConfig mazeConfig = new MazeConfig();
+        SlideShowPage slideShowConfig = new SlideShowPage();
+
+        public ScreenSaverPage()
         {
             InitializeComponent();
         }
