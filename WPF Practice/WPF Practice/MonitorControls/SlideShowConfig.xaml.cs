@@ -44,21 +44,63 @@ namespace WPF_Practice.MonitorControls
             get { return (bool)isClockwise.IsChecked; }
             set { isClockwise.IsChecked = value; }
         }
-        public bool isAlphabetical
+        public bool Alphabetical
+        {
+            get {return (bool)radioA.IsChecked;}
+            set {radioA.IsChecked = value;}
+        }
+        public bool RevAlphebetical
+        {
+            get { return (bool)radioRevA.IsChecked; }
+            set { radioRevA.IsChecked = value; }
+        }
+        public bool Random
+        {
+            get { return (bool)radioRandom.IsChecked; }
+            set { radioRandom.IsChecked = value; }
+        }
+        public char DirectionIn
         {
             get
             {
-                if (radioA.IsChecked)
-                    return true;
-                else if(radioRevA)
-                    return false;
-                }
+                string tmp = (directionInBox.SelectedItem as ComboBoxItem).Content.ToString();
+                return tmp[0];
+            }
+            set
+            {
+                string tmp = value.ToString();
+                setComparisions(tmp, directionInBox);
+            }
+        }
+        public char DirectionOut
+        {
+            get
+            {
+                string tmp = (directionoutBox.SelectedItem as ComboBoxItem).Content.ToString();
+                return tmp[0];
+            }
+            set
+            {
+                string tmp = value.ToString();
+                setComparisions(tmp, directionoutBox);
+            }
         }
         public SlideShowConfig()
         {
             InitializeComponent();
         }
 
-        
+        //function is only used to set direction txt boxes
+        private void setComparisions(string tmp, ComboBox tmpCombo)
+        {
+            if (String.Equals(tmp, "N", StringComparison.InvariantCultureIgnoreCase))
+                tmpCombo.SelectedIndex = 0;
+            else if (String.Equals(tmp, "S", StringComparison.InvariantCultureIgnoreCase))
+                tmpCombo.SelectedIndex = 1;
+            else if (String.Equals(tmp, "W", StringComparison.InvariantCultureIgnoreCase))
+                tmpCombo.SelectedIndex = 2;
+            else if (String.Equals(tmp, "E", StringComparison.InvariantCultureIgnoreCase))
+                tmpCombo.SelectedIndex = 3;
+        }
     }
 }
