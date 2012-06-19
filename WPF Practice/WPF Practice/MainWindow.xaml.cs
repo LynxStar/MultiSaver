@@ -20,7 +20,7 @@ namespace WPF_Practice
     /// </summary>
     public partial class MainWindow : Window
     {
-        struct SlideShowConfig
+        struct SlideShowInfo
         {
             int id;
             int FadeTime;
@@ -36,21 +36,20 @@ namespace WPF_Practice
         struct Group
         {
             string name;
-            int Groupid;
+            int groupid;
             List<string> ownedMonitors;
         }
 
-        public int selectedelement = 0;
-        private bool isScreenSaver = false;
+        private int currentscreen = -1;
 
         
-        List<SlideShowConfig> slideShowList = new List<SlideShowConfig>();
+        List<SlideShowInfo> slideShowList = new List<SlideShowInfo>();
         List<Group> listofGroups = new List<Group>();
         
         ScreenSaverControl screenPage = new ScreenSaverControl();
         GroupControl gControl = new GroupControl();
         MazeConfig mazeConfig = new MazeConfig();
-        SlideShowConfig slideShowConfig = new SlideShowConfig();
+        SlideShowConfig slideConfig = new SlideShowConfig();
 
         bool isgroupAdded = false;
 
@@ -65,17 +64,19 @@ namespace WPF_Practice
             
         }
 
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        private void Create_Button_Clicked(object sender, RoutedEventArgs e)
         {
             MonitorTab monitor = new MonitorTab();
             monitor.Width = 383;
             monitor.Height = 30;
             monitor.MouseDoubleClick += clicked;
             addnewMonitor(monitor);
+            monitor.order = listofGroups.Count-1;
         }
 
         public void addnewMonitor(MonitorTab monitor)
         {
+            createNewData();
             monitor.MinWidth = MonitorMenu.MinWidth;
             monitor.MaxWidth = MonitorMenu.MaxWidth;
             MonitorMenu.Children.Add(monitor);
@@ -97,22 +98,21 @@ namespace WPF_Practice
             }
         }
 
-        public void screensaverClicked(object sender, EventArgs e)
+        private void ScreenSaver_Click(object sender, RoutedEventArgs e)
         {
             if (isgroupAdded)
             {
                 ConfigPage.Children.Remove(gControl);
-                ConfigPage.Children.Add(slideShowConfig);
+                ConfigPage.Children.Add(slideConfig);
             }
-            
         }
 
-        private void ScreenSaver_Click(object sender, RoutedEventArgs e)
+        private void createNewData()
         {
-
+            listofGroups.Add(new Group());
+            slideShowList.Add(new SlideShowInfo());
+            currentscreen = listofGroups.Count-1;
         }
-
-
 
     }
 }

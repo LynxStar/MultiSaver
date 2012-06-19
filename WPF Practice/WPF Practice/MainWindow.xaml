@@ -5,7 +5,7 @@
     <Grid>
         <StackPanel Name="MonitorMenu" Margin="0,0,426,59" MaxHeight="426" MinHeight="59"/>
         <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="0,395,0,0" Name="DeleteButton" VerticalAlignment="Top" Width="162" />
-        <Button Content="CreateGroup" Height="23" HorizontalAlignment="Left" Margin="0,367,0,0" Name="createButton" VerticalAlignment="Top" Width="162" Click="Grid_Loaded" />
+        <Button Content="CreateGroup" Height="23" HorizontalAlignment="Left" Margin="0,367,0,0" Name="createButton" VerticalAlignment="Top" Width="162" Click="Create_Button_Clicked" />
         <StackPanel Height="391" MinHeight="391" MinWidth="420" HorizontalAlignment="Left" Margin="168,0,0,0" Name="ConfigPage" VerticalAlignment="Top" Width="420" />
         <Button Content="Screen Saver" Height="23" HorizontalAlignment="Left" Margin="513,395,0,0" Name="ScreenSaver" VerticalAlignment="Top" Width="75" Click="ScreenSaver_Click" />
     </Grid>

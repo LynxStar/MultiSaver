@@ -19,7 +19,12 @@ namespace WPF_Practice.MonitorControls
     /// </summary>
     public partial class MonitorTab : UserControl
     {
-        
+        private int place;
+        public int order
+        {
+            get { return place; }
+            set { place = value; }
+        }
         public MonitorTab()
         {
             InitializeComponent();
