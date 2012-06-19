@@ -19,6 +19,14 @@ namespace WPF_Practice.MonitorControls
     /// </summary>
     public partial class GroupControl : UserControl
     {
+        public string GroupName
+        {
+            get { return grouptxt.Text; }
+            set { grouptxt.Text = value; }
+        }
+
+        
+
         public GroupControl()
         {
             InitializeComponent();

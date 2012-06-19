@@ -1,11 +1,12 @@
 ﻿<Window x:Class="WPF_Practice.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="460" Width="610">
+        Title="MainWindow" MinHeight="460" MinWidth="610" Height="460" Width="610" Loaded="form_Loaded">
     <Grid>
-        <StackPanel Name="MonitorMenu" Margin="0,0,393,59" />
-        <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="0,395,0,0" Name="DeleteButton" VerticalAlignment="Top" Width="195" />
-        <Button Content="CreateGroup" Height="23" HorizontalAlignment="Left" Margin="0,367,0,0" Name="button1" VerticalAlignment="Top" Width="195" Click="Grid_Loaded" />
-        <StackPanel Height="421" HorizontalAlignment="Left" Margin="193,0,0,0" Name="ConfigPage" VerticalAlignment="Top" Width="395" />
+        <StackPanel Name="MonitorMenu" Margin="0,0,426,59" MaxHeight="426" MinHeight="59"/>
+        <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="0,395,0,0" Name="DeleteButton" VerticalAlignment="Top" Width="162" />
+        <Button Content="CreateGroup" Height="23" HorizontalAlignment="Left" Margin="0,367,0,0" Name="createButton" VerticalAlignment="Top" Width="162" Click="Grid_Loaded" />
+        <StackPanel Height="391" MinHeight="391" MinWidth="420" HorizontalAlignment="Left" Margin="168,0,0,0" Name="ConfigPage" VerticalAlignment="Top" Width="420" />
+        <Button Content="Screen Saver" Height="23" HorizontalAlignment="Left" Margin="513,395,0,0" Name="ScreenSaver" VerticalAlignment="Top" Width="75" Click="ScreenSaver_Click" />
     </Grid>
 </Window>

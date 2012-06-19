@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="314" d:DesignWidth="357">
     <Grid>
-        <ComboBox Height="23" HorizontalAlignment="Left" Margin="12,12,0,0" Name="FadeTypes" VerticalAlignment="Top" Width="120">
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="12,12,0,0" Name="FadeTypes" VerticalAlignment="Top" Width="179">
             <ComboBoxItem>Fade</ComboBoxItem>
             <ComboBoxItem>Pan</ComboBoxItem>
             <ComboBoxItem>Spiral</ComboBoxItem>
