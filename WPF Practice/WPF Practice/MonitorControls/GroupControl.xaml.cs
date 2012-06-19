@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace WPF_Practice.MonitorControls
 {
     /// <summary>
-    /// Interaction logic for MazeConfig.xaml
+    /// Interaction logic for GroupControl.xaml
     /// </summary>
-    public partial class MazeConfig : UserControl
+    public partial class GroupControl : UserControl
     {
-        public MazeConfig()
+        public GroupControl()
         {
             InitializeComponent();
         }

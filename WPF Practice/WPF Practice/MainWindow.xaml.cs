@@ -20,7 +20,10 @@ namespace WPF_Practice
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+
+        public int selectedelement = 0;
+        ScreenSaverControl screenPage = new ScreenSaverControl();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -30,14 +33,12 @@ namespace WPF_Practice
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             MonitorTab monitor = new MonitorTab();
-
-            if (ScreenSaver.SelectedIndex == 0)
-                monitor.setMonitorInfo("3D Maze");
-            else if (ScreenSaver.SelectedIndex == 1)
-                monitor.setMonitorInfo("Slideshow");
+            monitor.Width = 383;
+            monitor.Height = 30;
             monitor.MouseDoubleClick += clicked;
-
             addnewMonitor(monitor);
+
+            ConfigPage.Children.Add(screenPage);
         }
 
         public void addnewMonitor(MonitorTab monitor)
@@ -54,7 +55,7 @@ namespace WPF_Practice
             else
                 tab.Background = Brushes.Blue;
 
-            if(
+           
         }
 
 

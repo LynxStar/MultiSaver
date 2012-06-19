@@ -67,11 +67,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MonitorControls\GroupControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MonitorControls\MazeConfig.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MonitorControls\MonitorTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MonitorControls\ScreenSaverControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -81,11 +89,17 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MonitorControls\GroupControl.xaml.cs">
+      <DependentUpon>GroupControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MonitorControls\MazeConfig.xaml.cs">
       <DependentUpon>MazeConfig.xaml</DependentUpon>
     </Compile>
     <Compile Include="MonitorControls\MonitorTab.xaml.cs">
       <DependentUpon>MonitorTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MonitorControls\ScreenSaverControl.xaml.cs">
+      <DependentUpon>ScreenSaverControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="MonitorControls\SlideShowConfig.xaml.cs">
       <DependentUpon>SlideShowConfig.xaml</DependentUpon>
