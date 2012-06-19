@@ -15,18 +15,13 @@ using System.Windows.Shapes;
 namespace WPF_Practice.MonitorControls
 {
     /// <summary>
-    /// Interaction logic for PictureCOnfig.xaml
+    /// Interaction logic for SlideShowConfig.xaml
     /// </summary>
-    public partial class PictureCOnfig : Page
+    public partial class SlideShowConfig : UserControl
     {
-        public PictureCOnfig()
+        public SlideShowConfig()
         {
             InitializeComponent();
-        }
-
-        private void grouptxt_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
     }
 }

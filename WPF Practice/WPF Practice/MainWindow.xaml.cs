@@ -20,8 +20,10 @@ namespace WPF_Practice
     /// </summary>
     public partial class MainWindow : Window
     {
-        
-        
+
+        public int selectedelement = 0;
+        ScreenSaverControl screenPage = new ScreenSaverControl();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -34,8 +36,9 @@ namespace WPF_Practice
             monitor.Width = 383;
             monitor.Height = 30;
             monitor.MouseDoubleClick += clicked;
-
             addnewMonitor(monitor);
+
+            ConfigPage.Children.Add(screenPage);
         }
 
         public void addnewMonitor(MonitorTab monitor)
