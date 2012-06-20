@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Diagnostics;
 namespace WPF_Practice.MonitorControls
 {
     /// <summary>
@@ -62,7 +62,7 @@ namespace WPF_Practice.MonitorControls
                 tab.setMonitorInfo(str);
                 tab.order = tmpCount;
                 tab.Height = 20;
-                tab.MouseDoubleClick += clicked_OwnedGroupBox;
+                tab.MouseDoubleClick += clicked_AvailableGroupBox;
                 abductedScreens.Children.Add(tab);
                 tmpCount++;
             }
@@ -71,21 +71,33 @@ namespace WPF_Practice.MonitorControls
         private void clicked_AvailableGroupBox(object sender, EventArgs e)
         {
             MonitorTab tab = (MonitorTab)sender;
-            MonitorTab tab2 = tab;
-            PendingScreens.Children.RemoveAt(tab.order);
-            availabeString.RemoveAt(tab.order);
-            OwnedScreens.Add(tab.getMonitorInfo());
-            abductedScreens.Children.Add(tab2);
+            StackPanel parent = (StackPanel)tab.Parent;
+            string tmpName = parent.Name;
+            Debug.WriteLine(tmpName);
+            if (tmpName.Equals("PendingScreens", StringComparison.OrdinalIgnoreCase))
+            {
+
+                PendingScreens.Children.Remove(tab);
+                Debug.WriteLine(tab.getMonitorInfo());
+                availabeString.Remove(tab.getMonitorInfo());
+                OwnedScreens.Add(tab.getMonitorInfo());
+                abductedScreens.Children.Add(tab);
+            }
+            else if (tmpName.Equals("abductedScreens", StringComparison.OrdinalIgnoreCase))
+            {
+                abductedScreens.Children.Remove(tab);
+                OwnedScreens.Remove(tab.getMonitorInfo());
+                availabeString.Add(tab.getMonitorInfo());
+                PendingScreens.Children.Add(tab);
+            }
+
         }
 
         private void clicked_OwnedGroupBox(object sender, EventArgs e)
         {
             MonitorTab tab = (MonitorTab)sender;
-            MonitorTab tab2 = tab;
-            abductedScreens.Children.RemoveAt(tab.order);
-            OwnedScreens.RemoveAt(tab.order);
-            availabeString.Add(tab.getMonitorInfo());
-            PendingScreens.Children.Add(tab2);
+
+
         }
 
         public void fillBox(Group targetGroup)
