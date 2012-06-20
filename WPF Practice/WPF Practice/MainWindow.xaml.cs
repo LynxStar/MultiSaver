@@ -69,11 +69,6 @@ namespace WPF_Practice
             MonitorMenu.Children.Add(monitor);
         }
 
-        private void tet_changed(object sender, EventArgs e)
-        {
-
-        }
-
         private void Monitor_clicked(object sender, EventArgs e)
         {
             MonitorTab tab = (MonitorTab)sender;
