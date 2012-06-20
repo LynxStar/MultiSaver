@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using System.Diagnostics;
 using System.Windows.Shapes;
 using WPF_Practice.MonitorControls;
 
@@ -21,7 +22,6 @@ namespace WPF_Practice
     public partial class MainWindow : Window
     {
 
-        private MonitorTab activeGroup;
         private int currentscreen = 0;
 
         
@@ -73,7 +73,6 @@ namespace WPF_Practice
         public void Monitor_clicked(object sender, EventArgs e)
         {
             MonitorTab tab = (MonitorTab)sender;
-            activeGroup = tab;
             foreach(MonitorTab mt in MonitorMenu.Children)
             {
                 mt.Background = null;
@@ -96,6 +95,10 @@ namespace WPF_Practice
             isgroupAdded = true;
             ScreenSaverButton.Content = "Screen Saver";
             currentscreen = tab.order;
+
+            MonitorTab tab2 = (MonitorTab)MonitorMenu.Children[currentscreen];
+            tab2.setMonitorInfo(listofGroups[currentscreen].name);
+            MonitorMenu.Children[currentscreen] = tab2;
         }
 
         private void ScreenSaver_Click(object sender, RoutedEventArgs e)
@@ -111,7 +114,6 @@ namespace WPF_Practice
             }
             else
             {
-               // MonitorTab tab =  MonitorMenu.Children.
                 gControl = new GroupControl();
                 gControl.Name = listofGroups[currentscreen].name;
                 ConfigPage.Children.RemoveAt(0);
@@ -122,11 +124,14 @@ namespace WPF_Practice
                 ScreenSaverButton.Content = "Screen Saver";
                 
             }
+            MonitorTab tab2 = (MonitorTab)MonitorMenu.Children[currentscreen];
+            tab2.setMonitorInfo(listofGroups[currentscreen].name);
+            MonitorMenu.Children[currentscreen] = tab2;
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            MonitorMenu.Children.Remove(activeGroup);
+            MonitorMenu.Children.RemoveAt(currentscreen);
         }
 
     }
