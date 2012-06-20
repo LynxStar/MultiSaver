@@ -78,7 +78,6 @@ namespace WPF_Practice.MonitorControls
             {
 
                 PendingScreens.Children.Remove(tab);
-                Debug.WriteLine(tab.getMonitorInfo());
                 availabeString.Remove(tab.getMonitorInfo());
                 OwnedScreens.Add(tab.getMonitorInfo());
                 abductedScreens.Children.Add(tab);
