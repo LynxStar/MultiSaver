@@ -22,7 +22,6 @@ namespace WPF_Practice.MonitorControls
         SlideShowConfig slideshowConfig = new SlideShowConfig();
         MazeConfig mazeConfig = new MazeConfig();
         GroupControl gcontrol = new GroupControl();
-        bool groupisAdded = false;
 
         public ScreenSaverControl()
         {
