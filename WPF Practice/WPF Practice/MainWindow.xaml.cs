@@ -21,6 +21,7 @@ namespace WPF_Practice
     public partial class MainWindow : Window
     {
 
+        private MonitorTab activeGroup;
         private int currentscreen = 0;
 
         
@@ -72,31 +73,34 @@ namespace WPF_Practice
         public void Monitor_clicked(object sender, EventArgs e)
         {
             MonitorTab tab = (MonitorTab)sender;
-            /*
-            if (tab.Background == Brushes.Blue)
-                tab.Background = null;
-            else
+            activeGroup = tab;
+            foreach(MonitorTab mt in MonitorMenu.Children)
+            {
+                mt.Background = null;
+            }
                 tab.Background = Brushes.Blue;
-            */
+            
             if (isgroupAdded)
-                {
+            {
                 listofGroups[currentscreen].name = gControl.Name;
                 ConfigPage.Children.RemoveAt(0);
-                }
-                gControl = new GroupControl();
-                ConfigPage.Children.Remove(gControl);
-                ConfigPage.Children.Remove(slideConfig);
-                gControl.Name = listofGroups[tab.order].name;
-                gControl.AssignOwnedStrings(ref listofGroups[tab.order].ownedMonitors);
-                gControl.AssignAvailableString(ref unassignedMonitors);
-                ConfigPage.Children.Add(gControl);
-                isgroupAdded = true;
-                ScreenSaverButton.Content = "Screen Saver";
-                currentscreen = tab.order;
+            }
+            tab.Name = listofGroups[currentscreen].name;
+            gControl = new GroupControl();
+            ConfigPage.Children.Remove(gControl);
+            ConfigPage.Children.Remove(slideConfig);
+            gControl.Name = listofGroups[tab.order].name;
+            gControl.AssignOwnedStrings(ref listofGroups[tab.order].ownedMonitors);
+            gControl.AssignAvailableString(ref unassignedMonitors);
+            ConfigPage.Children.Add(gControl);
+            isgroupAdded = true;
+            ScreenSaverButton.Content = "Screen Saver";
+            currentscreen = tab.order;
         }
 
         private void ScreenSaver_Click(object sender, RoutedEventArgs e)
         {
+
             if (isgroupAdded)
             {
                 listofGroups[currentscreen].name = gControl.Name;
@@ -107,6 +111,7 @@ namespace WPF_Practice
             }
             else
             {
+               // MonitorTab tab =  MonitorMenu.Children.
                 gControl = new GroupControl();
                 gControl.Name = listofGroups[currentscreen].name;
                 ConfigPage.Children.RemoveAt(0);
@@ -117,6 +122,11 @@ namespace WPF_Practice
                 ScreenSaverButton.Content = "Screen Saver";
                 
             }
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            MonitorMenu.Children.Remove(activeGroup);
         }
 
     }
