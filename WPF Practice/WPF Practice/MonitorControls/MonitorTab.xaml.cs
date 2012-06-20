@@ -20,6 +20,7 @@ namespace WPF_Practice.MonitorControls
     public partial class MonitorTab : UserControl
     {
         private int place;
+
         public int order
         {
             get { return place; }
@@ -33,6 +34,16 @@ namespace WPF_Practice.MonitorControls
         public void setMonitorInfo(string str)
         {
             MonitorInfo.Content = str;
+        }
+
+        public void setMonitorInfo(ref string str)
+        {
+            MonitorInfo.Content = str;
+        }
+
+        public string getMonitorInfo()
+        {
+            return MonitorInfo.Content.ToString();
         }
 
         private void Grid_MouseEnter(object sender, MouseEventArgs e)

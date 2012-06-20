@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" MinHeight="460" MinWidth="610" Height="460" Width="610" Loaded="form_Loaded">
     <Grid>
-        <StackPanel Name="MonitorMenu" Margin="0,0,426,59" MaxHeight="426" MinHeight="59"/>
+        <StackPanel Name="MonitorMenu" Margin="0,0,426,59" MaxHeight="426" MinHeight="59" MaxWidth="426"/>
         <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="0,395,0,0" Name="DeleteButton" VerticalAlignment="Top" Width="162" />
         <Button Content="CreateGroup" Height="23" HorizontalAlignment="Left" Margin="0,367,0,0" Name="createButton" VerticalAlignment="Top" Width="162" Click="Create_Button_Clicked" />
         <StackPanel Height="391" MinHeight="391" MinWidth="420" HorizontalAlignment="Left" Margin="168,0,0,0" Name="ConfigPage" VerticalAlignment="Top" Width="420" />
