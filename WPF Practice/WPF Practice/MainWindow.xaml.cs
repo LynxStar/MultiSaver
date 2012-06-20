@@ -20,32 +20,13 @@ namespace WPF_Practice
     /// </summary>
     public partial class MainWindow : Window
     {
-        struct SlideShowInfo
-        {
-            int id;
-            int FadeTime;
-            int DisplayTime;
-            int PanTime;
-            int Rotation;
-            bool Clockwise;
-            bool Alphabetical;
-            bool RevAlphabetical;
-            bool Random;
-        }
 
-        struct Group
-        {
-            string name;
-            int groupid;
-            List<string> ownedMonitors;
-        }
-
-        private int currentscreen = -1;
+        private int currentscreen = 0;
 
         
         List<SlideShowInfo> slideShowList = new List<SlideShowInfo>();
         List<Group> listofGroups = new List<Group>();
-        String[] unassignedMonitors = new String[3];
+        List<string> unassignedMonitors = new List<string>();
 
         ScreenSaverControl screenPage = new ScreenSaverControl();
         GroupControl gControl = new GroupControl();
@@ -62,10 +43,9 @@ namespace WPF_Practice
 
         public void form_Loaded(object sender, RoutedEventArgs e)
         {
-            unassignedMonitors[0] = "Dynex 19\" Monitor";
-            unassignedMonitors[1] = "Acer 23\" Monitor";
-            unassignedMonitors[2] = "Projector";
-
+            unassignedMonitors.Add("Dynex 19\" Monitor");
+            unassignedMonitors.Add("Acer 23\" Monitor");
+            unassignedMonitors.Add("Projector");
         }
 
         private void Create_Button_Clicked(object sender, RoutedEventArgs e)
@@ -73,40 +53,53 @@ namespace WPF_Practice
             MonitorTab monitor = new MonitorTab();
             monitor.Width = 383;
             monitor.Height = 30;
-            monitor.MouseDoubleClick += clicked;
+            monitor.MouseDoubleClick += Monitor_clicked;
+            monitor.order = listofGroups.Count;
             addnewMonitor(monitor);
-            monitor.order = listofGroups.Count-1;
         }
 
         public void addnewMonitor(MonitorTab monitor)
         {
-            createNewData();
+            listofGroups.Add(new Group(listofGroups.Count + 1, slideShowList.Count + 1));
+            slideShowList.Add(new SlideShowInfo(slideShowList.Count + 1));
+            listofGroups[listofGroups.Count - 1].name = "Unnamed";
+            monitor.setMonitorInfo(ref listofGroups[listofGroups.Count-1].name);
             monitor.MinWidth = MonitorMenu.MinWidth;
             monitor.MaxWidth = MonitorMenu.MaxWidth;
             MonitorMenu.Children.Add(monitor);
         }
 
-        public void clicked(object sender, EventArgs e)
+        public void Monitor_clicked(object sender, EventArgs e)
         {
             MonitorTab tab = (MonitorTab)sender;
+            /*
             if (tab.Background == Brushes.Blue)
                 tab.Background = null;
             else
                 tab.Background = Brushes.Blue;
-
-            if (!isgroupAdded)
-            {
+            */
+            if (isgroupAdded)
+                {
+                listofGroups[currentscreen].name = gControl.Name;
+                ConfigPage.Children.RemoveAt(0);
+                }
+                gControl = new GroupControl();
                 ConfigPage.Children.Remove(gControl);
+                ConfigPage.Children.Remove(slideConfig);
+                gControl.Name = listofGroups[tab.order].name;
+                gControl.AssignOwnedStrings(ref listofGroups[tab.order].ownedMonitors);
+                gControl.AssignAvailableString(ref unassignedMonitors);
                 ConfigPage.Children.Add(gControl);
                 isgroupAdded = true;
                 ScreenSaverButton.Content = "Screen Saver";
-            }
+                currentscreen = tab.order;
         }
 
         private void ScreenSaver_Click(object sender, RoutedEventArgs e)
         {
             if (isgroupAdded)
             {
+                listofGroups[currentscreen].name = gControl.Name;
                 ConfigPage.Children.RemoveAt(0);
                 ConfigPage.Children.Add(slideConfig);
                 ScreenSaverButton.Content = "Monitor Groups";
@@ -114,24 +107,16 @@ namespace WPF_Practice
             }
             else
             {
+                gControl = new GroupControl();
+                gControl.Name = listofGroups[currentscreen].name;
                 ConfigPage.Children.RemoveAt(0);
+                gControl.AssignOwnedStrings(ref listofGroups[currentscreen].ownedMonitors);
+                gControl.AssignAvailableString(ref unassignedMonitors);
                 ConfigPage.Children.Add(gControl);
                 isgroupAdded = true;
-                ScreenSaverButton.Content = "ScreenSaver";
+                ScreenSaverButton.Content = "Screen Saver";
                 
             }
-        }
-
-        private void createNewData()
-        {
-            listofGroups.Add(new Group());
-            slideShowList.Add(new SlideShowInfo());
-            currentscreen = listofGroups.Count-1;
-        }
-
-        private void fillInGroupForm(MonitorTab tab)
-        {
-
         }
 
     }

@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Diagnostics;
 namespace WPF_Practice.MonitorControls
 {
     /// <summary>
@@ -22,10 +22,10 @@ namespace WPF_Practice.MonitorControls
         List<string> availabeString = new List<string>();
         List<string> OwnedScreens = new List<string>();
 
-        public string GroupName
+        public string Name
         {
-            get { return grouptxt.Text; }
-            set { grouptxt.Text = value; }
+            get { return nametxtbox.Text; }
+            set { nametxtbox.Text = value; }
         }
 
         public GroupControl()
@@ -33,48 +33,77 @@ namespace WPF_Practice.MonitorControls
             InitializeComponent();
         }
 
-        public void AssignAvailableString(ref List<string> AvailableString)
+        public void AssignAvailableString(ref  List<string> AvailableString)
         {
             this.availabeString = AvailableString;
         }
-
-        public void AssignOwnedStrings(List<string> targetStrings)
+        public void AssignOwnedStrings(ref List<string> targetStrings)
         {
-            this.availabeString = targetStrings;
+            this.OwnedScreens = targetStrings;
         }
 
-        public void Load_Page(object sender, EventArgs e)
+        private void Load_Page(object sender, RoutedEventArgs e)
         {
+            int tmpCount = 0;
             foreach (String str in availabeString)
             {
                 MonitorTab tab = new MonitorTab();
                 tab.setMonitorInfo(str);
+                tab.order = tmpCount;
+                tab.Height = 20;
                 tab.MouseDoubleClick += clicked_AvailableGroupBox;
                 PendingScreens.Children.Add(tab);
+                tmpCount++;
             }
+            tmpCount = 0;
             foreach (String str in OwnedScreens)
             {
                 MonitorTab tab = new MonitorTab();
                 tab.setMonitorInfo(str);
-                tab.MouseDoubleClick += clicked_OwnedGroupBox;
-                PendingScreens.Children.Add(tab);
+                tab.order = tmpCount;
+                tab.Height = 20;
+                tab.MouseDoubleClick += clicked_AvailableGroupBox;
+                abductedScreens.Children.Add(tab);
+                tmpCount++;
             }
         }
 
-        public void clicked_AvailableGroupBox(object sender, EventArgs e)
+        private void clicked_AvailableGroupBox(object sender, EventArgs e)
         {
             MonitorTab tab = (MonitorTab)sender;
-            PendingScreens.Children.Remove(tab);
-            abductedScreens.Children.Add(tab);
+            StackPanel parent = (StackPanel)tab.Parent;
+            string tmpName = parent.Name;
+            Debug.WriteLine(tmpName);
+            if (tmpName.Equals("PendingScreens", StringComparison.OrdinalIgnoreCase))
+            {
+
+                PendingScreens.Children.Remove(tab);
+                Debug.WriteLine(tab.getMonitorInfo());
+                availabeString.Remove(tab.getMonitorInfo());
+                OwnedScreens.Add(tab.getMonitorInfo());
+                abductedScreens.Children.Add(tab);
+            }
+            else if (tmpName.Equals("abductedScreens", StringComparison.OrdinalIgnoreCase))
+            {
+                abductedScreens.Children.Remove(tab);
+                OwnedScreens.Remove(tab.getMonitorInfo());
+                availabeString.Add(tab.getMonitorInfo());
+                PendingScreens.Children.Add(tab);
+            }
+
         }
 
-        public void clicked_OwnedGroupBox(object sender, EventArgs e)
+        private void clicked_OwnedGroupBox(object sender, EventArgs e)
         {
             MonitorTab tab = (MonitorTab)sender;
-            abductedScreens.Children.Remove(tab);
-            PendingScreens.Children.Add(tab);
+
+
         }
 
+        public void fillBox(Group targetGroup)
+        {
+            nametxtbox.Text = targetGroup.name;
+        }
 
     }
 }

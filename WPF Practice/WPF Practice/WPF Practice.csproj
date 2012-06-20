@@ -89,6 +89,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MonitorControls\CommonClasses.cs" />
     <Compile Include="MonitorControls\GroupControl.xaml.cs">
       <DependentUpon>GroupControl.xaml</DependentUpon>
     </Compile>
