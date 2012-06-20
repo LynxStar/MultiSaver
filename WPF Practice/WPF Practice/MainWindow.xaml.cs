@@ -141,7 +141,8 @@ namespace WPF_Practice
                     MonitorTab tab = (MonitorTab)MonitorMenu.Children[i];
                     tab.order = i-1;
             }
-
+            slideShowList.RemoveAt(currentscreen);
+            listofGroups.RemoveAt(currentscreen);
             MonitorMenu.Children.RemoveAt(currentscreen);
             ConfigPage.Children.RemoveAt(0);
         }
