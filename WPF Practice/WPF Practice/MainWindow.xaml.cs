@@ -45,7 +45,8 @@ namespace WPF_Practice
         
         List<SlideShowInfo> slideShowList = new List<SlideShowInfo>();
         List<Group> listofGroups = new List<Group>();
-        
+        String[] unassignedMonitors = new String[3];
+
         ScreenSaverControl screenPage = new ScreenSaverControl();
         GroupControl gControl = new GroupControl();
         MazeConfig mazeConfig = new MazeConfig();
@@ -61,7 +62,10 @@ namespace WPF_Practice
 
         public void form_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            unassignedMonitors[0] = "Dynex 19\" Monitor";
+            unassignedMonitors[1] = "Acer 23\" Monitor";
+            unassignedMonitors[2] = "Projector";
+
         }
 
         private void Create_Button_Clicked(object sender, RoutedEventArgs e)
@@ -95,15 +99,27 @@ namespace WPF_Practice
                 ConfigPage.Children.Remove(gControl);
                 ConfigPage.Children.Add(gControl);
                 isgroupAdded = true;
+                ScreenSaverButton.Content = "Screen Saver";
             }
         }
 
         private void ScreenSaver_Click(object sender, RoutedEventArgs e)
         {
+            MonitorTab tab = (MonitorTab)sender;
             if (isgroupAdded)
             {
-                ConfigPage.Children.Remove(gControl);
+                ConfigPage.Children.RemoveAt(0);
                 ConfigPage.Children.Add(slideConfig);
+                ScreenSaverButton.Content = "Monitor Groups";
+                isgroupAdded = false;
+            }
+            else
+            {
+                ConfigPage.Children.RemoveAt(0);
+                ConfigPage.Children.Add(gControl);
+                isgroupAdded = true;
+                ScreenSaverButton.Content = "ScreenSaver";
+                
             }
         }
 
@@ -112,6 +128,11 @@ namespace WPF_Practice
             listofGroups.Add(new Group());
             slideShowList.Add(new SlideShowInfo());
             currentscreen = listofGroups.Count-1;
+        }
+
+        private void fillInGroupForm(MonitorTab tab)
+        {
+
         }
 
     }

@@ -20,7 +20,7 @@
         <Label Content="Rotation:" Height="28" HorizontalAlignment="Left" Margin="12,198,0,0" Name="label7" VerticalAlignment="Top" />
         <RadioButton Content="Alphabetical" Height="16" HorizontalAlignment="Left" Margin="217,41,0,0" Name="radioA" VerticalAlignment="Top" />
         <RadioButton Content="Reverse Alphabetical" Height="16" HorizontalAlignment="Left" Margin="217,62,0,0" Name="radioRevA" VerticalAlignment="Top" />
-        <RadioButton Content="Random" Height="16" HorizontalAlignment="Left" Margin="217,87,0,0" Name="radioRandom" VerticalAlignment="Top" />
+        <RadioButton Content="Random" Height="16" HorizontalAlignment="Left" Margin="217,83,0,0" Name="radioRandom" VerticalAlignment="Top" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="97,46,0,0" Name="txtFadeTime" VerticalAlignment="Top" Width="94" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="97,80,0,0" Name="txtDisplayTime" VerticalAlignment="Top" Width="94" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="97,110,0,0" Name="txtPanTime" VerticalAlignment="Top" Width="94" />
