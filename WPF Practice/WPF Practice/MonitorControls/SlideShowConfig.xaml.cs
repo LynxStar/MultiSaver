@@ -102,5 +102,29 @@ namespace WPF_Practice.MonitorControls
             else if (String.Equals(tmp, "E", StringComparison.InvariantCultureIgnoreCase))
                 tmpCombo.SelectedIndex = 3;
         }
+
+        public void fillForm(SlideShowInfo targetGroup)
+        {
+            FadeTime = targetGroup.FadeTime;
+            DisplayTime = targetGroup.DisplayTime;
+            PanTime = targetGroup.PanTime;
+            Rotation = targetGroup.Rotation;
+            Clockwise = targetGroup.Clockwise;
+            Alphabetical = targetGroup.Alphabetical;
+            RevAlphebetical = targetGroup.RevAlphabetical;
+            Random = targetGroup.Random;
+        }
+
+        public void getFormInfo(SlideShowInfo targetGroup)
+        {
+            targetGroup.FadeTime = FadeTime;
+            targetGroup.DisplayTime = DisplayTime;
+            targetGroup.PanTime = PanTime;
+            targetGroup.Rotation = Rotation;
+            targetGroup.Clockwise = Clockwise;
+            targetGroup.Alphabetical = Alphabetical;
+            targetGroup.RevAlphabetical = RevAlphebetical;
+            targetGroup.Random = Random;
+        }
     }
 }
