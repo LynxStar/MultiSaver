@@ -4,7 +4,7 @@
         Title="MainWindow" MinHeight="460" MinWidth="610" Height="460" Width="776" Loaded="form_Loaded">
     <Grid Height="426">
         <StackPanel Name="MonitorMenu" Margin="0,0,592,65" MaxHeight="426" MinHeight="59" MaxWidth="426"/>
-        <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="0,395,0,0" Name="DeleteButton" VerticalAlignment="Top" Width="162" />
+        <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="0,395,0,0" Name="DeleteButton" VerticalAlignment="Top" Width="162" Click="DeleteButton_Click" />
         <Button Content="CreateGroup" Height="23" HorizontalAlignment="Left" Margin="0,367,0,0" Name="createButton" VerticalAlignment="Top" Width="162" Click="Create_Button_Clicked" />
         <StackPanel Height="391" MinHeight="391" MinWidth="420" HorizontalAlignment="Left" Margin="160,0,0,0" Name="ConfigPage" VerticalAlignment="Top" Width="594" />
         <Button Content="Screen Saver" Height="23" HorizontalAlignment="Left" Margin="648,395,0,0" Name="ScreenSaverButton" VerticalAlignment="Top" Width="106" Click="ScreenSaver_Click" />
