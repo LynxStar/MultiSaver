@@ -105,7 +105,6 @@ namespace WPF_Practice
 
         private void ScreenSaver_Click(object sender, RoutedEventArgs e)
         {
-            MonitorTab tab = (MonitorTab)sender;
             if (isgroupAdded)
             {
                 ConfigPage.Children.RemoveAt(0);
