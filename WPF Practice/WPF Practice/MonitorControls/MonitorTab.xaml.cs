@@ -19,14 +19,16 @@ namespace WPF_Practice.MonitorControls
     /// </summary>
     public partial class MonitorTab : UserControl
     {
+        private int place;
+
+        public int order
+        {
+            get { return place; }
+            set { place = value; }
+        }
         public MonitorTab()
         {
             InitializeComponent();
-        }
-
-        private void image1_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-
         }
 
         public void setMonitorInfo(string str)
@@ -34,9 +36,47 @@ namespace WPF_Practice.MonitorControls
             MonitorInfo.Content = str;
         }
 
-        private void MonitorImage_ImageFailed(object sender, ExceptionRoutedEventArgs e)
+        public void setMonitorInfo(ref string str)
+        {
+            MonitorInfo.Content = str;
+        }
+
+        public string getMonitorInfo()
+        {
+            return MonitorInfo.Content.ToString();
+        }
+
+        private void Grid_MouseEnter(object sender, MouseEventArgs e)
+        {
+        if(Background == null)
+           Background = Brushes.YellowGreen;
+        }
+
+        private void Grid_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if(Background == Brushes.YellowGreen)
+                Background = null;
+        }
+
+        public void resetBackground()
+        {
+            Background = null;
+        }
+
+        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            border.Height = this.Height;
+            border.Width = this.Width;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        public void setPic(string str)
+        {
+            //controlImage.Source = str;
         }
     }
 }
