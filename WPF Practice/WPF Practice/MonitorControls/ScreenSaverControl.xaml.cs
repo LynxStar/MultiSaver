@@ -22,6 +22,7 @@ namespace WPF_Practice.MonitorControls
         SlideShowConfig slideshowConfig = new SlideShowConfig();
         MazeConfig mazeConfig = new MazeConfig();
         GroupControl gcontrol = new GroupControl();
+        bool groupisAdded = false;
 
         public ScreenSaverControl()
         {
@@ -40,6 +41,7 @@ namespace WPF_Practice.MonitorControls
         public void createnewPanels()
         {
             TabItem screenSaver = new TabItem();
+            
             screenSaver.Content = gcontrol;
             GroupConfigOptions.Items.Add(screenSaver);
         }

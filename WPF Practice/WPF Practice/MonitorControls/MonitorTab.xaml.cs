@@ -19,7 +19,12 @@ namespace WPF_Practice.MonitorControls
     /// </summary>
     public partial class MonitorTab : UserControl
     {
-        
+        private int place;
+        public int order
+        {
+            get { return place; }
+            set { place = value; }
+        }
         public MonitorTab()
         {
             InitializeComponent();
@@ -45,6 +50,22 @@ namespace WPF_Practice.MonitorControls
         public void resetBackground()
         {
             Background = null;
+        }
+
+        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            border.Height = this.Height;
+            border.Width = this.Width;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        public void setPic(string str)
+        {
+            //controlImage.Source = str;
         }
     }
 }
