@@ -23,7 +23,6 @@ namespace WPF_Practice
     {
 
         private int currentscreen = 0;
-
         
         List<SlideShowInfo> slideShowList = new List<SlideShowInfo>();
         List<Group> listofGroups = new List<Group>();
@@ -59,7 +58,7 @@ namespace WPF_Practice
             addnewMonitor(monitor);
         }
 
-        public void addnewMonitor(MonitorTab monitor)
+        private void addnewMonitor(MonitorTab monitor)
         {
             listofGroups.Add(new Group(listofGroups.Count + 1, slideShowList.Count + 1));
             slideShowList.Add(new SlideShowInfo(slideShowList.Count + 1));
@@ -70,21 +69,28 @@ namespace WPF_Practice
             MonitorMenu.Children.Add(monitor);
         }
 
-        public void Monitor_clicked(object sender, EventArgs e)
+        private void tet_changed(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Monitor_clicked(object sender, EventArgs e)
         {
             MonitorTab tab = (MonitorTab)sender;
+
             foreach(MonitorTab mt in MonitorMenu.Children)
             {
                 mt.Background = null;
             }
                 tab.Background = Brushes.Blue;
-            
+
             if (isgroupAdded)
             {
-                listofGroups[currentscreen].name = gControl.Name;
-                ConfigPage.Children.RemoveAt(0);
+                 listofGroups[currentscreen].name = gControl.Name;
+                    if (ConfigPage.Children.Count != 0)
+                        ConfigPage.Children.RemoveAt(0);
             }
-            tab.Name = listofGroups[currentscreen].name;
+            //tab.Name = listofGroups[currentscreen].name;
             gControl = new GroupControl();
             ConfigPage.Children.Remove(gControl);
             ConfigPage.Children.Remove(slideConfig);
@@ -131,7 +137,18 @@ namespace WPF_Practice
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
+
+            foreach (string monitor in listofGroups[currentscreen].ownedMonitors)
+                unassignedMonitors.Add(monitor);
+
+            for (int i = currentscreen +1;  i <= MonitorMenu.Children.Count-1 ; i++)
+            {
+                    MonitorTab tab = (MonitorTab)MonitorMenu.Children[i];
+                    tab.order = i-1;
+            }
+
             MonitorMenu.Children.RemoveAt(currentscreen);
+            ConfigPage.Children.RemoveAt(0);
         }
 
     }
