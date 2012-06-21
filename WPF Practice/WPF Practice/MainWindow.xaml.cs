@@ -145,6 +145,7 @@ namespace WPF_Practice
             listofGroups.RemoveAt(currentscreen);
             MonitorMenu.Children.RemoveAt(currentscreen);
             ConfigPage.Children.RemoveAt(0);
+            currentscreen = 0; ;
         }
 
     }
