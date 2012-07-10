@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="WPF_Practice.MonitorControls.ScreenSaverControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="313" d:DesignWidth="391">
+    <Grid Height="315" Width="395" Loaded="Grid_Loaded">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="36*" />
+            <RowDefinition Height="264*" />
+        </Grid.RowDefinitions>
+        <StackPanel Height="291" HorizontalAlignment="Left" Margin="0,12,0,0" Name="stackPanel1" VerticalAlignment="Top" Width="383" Grid.RowSpan="2"></StackPanel>
+        <StackPanel Name="mainPanel" Margin="12" Grid.RowSpan="2" Loaded="Grid_Loaded" />
+    </Grid>
+</UserControl>
