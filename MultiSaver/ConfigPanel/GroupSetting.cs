@@ -14,8 +14,12 @@ namespace ConfigPanel
 
         public string ssType;
         public bool isActive;
+
+        //these settings matter for slideshow
         public string albumLocation;
         public string order;
+
+        //these settings matter for the maze
         public int mazeSize;
         public string mazePalletName;
 
@@ -33,6 +37,10 @@ namespace ConfigPanel
         public void addMonitor(int id)
         {
             monitors.Add(new MonitorSetting(id));
+        }
+        public void addMonitor(MonitorSetting ms)
+        {
+            monitors.Add(ms);
         }
 
     }
