@@ -59,7 +59,7 @@ namespace WPF_Practice.MonitorControls
             get { return (bool)radioRandom.IsChecked; }
             set { radioRandom.IsChecked = value; }
         }
-        public char DirectionIn
+        public char DirectionInChar
         {
             get
             {
@@ -72,7 +72,7 @@ namespace WPF_Practice.MonitorControls
                 setComparisions(tmp, directionInBox);
             }
         }
-        public char DirectionOut
+        public char DirectionOutChar
         {
             get
             {

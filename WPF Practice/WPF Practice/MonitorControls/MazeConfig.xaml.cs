@@ -19,6 +19,7 @@ namespace WPF_Practice.MonitorControls
     /// </summary>
     public partial class MazeConfig : UserControl
     {
+
         public MazeConfig()
         {
             InitializeComponent();
