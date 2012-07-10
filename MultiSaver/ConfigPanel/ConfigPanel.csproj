@@ -55,8 +55,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GroupSetting.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Test.cs" />
+    <Compile Include="XMLHandler.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
