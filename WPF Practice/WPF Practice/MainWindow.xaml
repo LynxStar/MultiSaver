@@ -1,4 +1,4 @@
-﻿<Window x:Class="WPF_Practice.MainWindow"
+<Window x:Class="WPF_Practice.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" MinHeight="460" MinWidth="610" Height="460" Width="776" Loaded="form_Loaded">

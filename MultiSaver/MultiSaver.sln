@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiSaver", "MultiSaver\MultiSaver\MultiSaver.csproj", "{9E9CC433-9E39-4D00-A5B0-B3A4AFB4323B}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "MultiSaverContent", "MultiSaver\MultiSaverContent\MultiSaverContent.contentproj", "{1FC61D1D-32B1-4254-A89F-0288D0EA24AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiSaverContent", "MultiSaver\MultiSaverContent\MultiSaverContent.contentproj", "{1FC61D1D-32B1-4254-A89F-0288D0EA24AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigPanel", "ConfigPanel\ConfigPanel.csproj", "{10B1A386-B43C-48DE-8A66-981E0DACFE75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +19,10 @@ Global
 		{9E9CC433-9E39-4D00-A5B0-B3A4AFB4323B}.Release|x86.Build.0 = Release|x86
 		{1FC61D1D-32B1-4254-A89F-0288D0EA24AE}.Debug|x86.ActiveCfg = Debug|x86
 		{1FC61D1D-32B1-4254-A89F-0288D0EA24AE}.Release|x86.ActiveCfg = Release|x86
+		{10B1A386-B43C-48DE-8A66-981E0DACFE75}.Debug|x86.ActiveCfg = Debug|x86
+		{10B1A386-B43C-48DE-8A66-981E0DACFE75}.Debug|x86.Build.0 = Debug|x86
+		{10B1A386-B43C-48DE-8A66-981E0DACFE75}.Release|x86.ActiveCfg = Release|x86
+		{10B1A386-B43C-48DE-8A66-981E0DACFE75}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
