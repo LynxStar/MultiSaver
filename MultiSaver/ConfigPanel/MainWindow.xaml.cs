@@ -23,5 +23,15 @@ namespace ConfigPanel
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+
+            List<GroupSetting> groups = new List<GroupSetting>();
+            GroupSetting group = new GroupSetting();
+            group.addMonitor(1);
+            groups.Add(group);
+            XMLHandler.save(groups);
+        }
     }
 }

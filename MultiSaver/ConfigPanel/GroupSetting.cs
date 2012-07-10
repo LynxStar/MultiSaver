@@ -19,15 +19,30 @@ namespace ConfigPanel
         public int mazeSize;
         public string mazePalletName;
 
+        public GroupSetting()
+        {
+            groupName = "Group";
+            isActive = false;
+            albumLocation = "C:\\Users\\Public\\Pictures";
+            order = "Alphabetical";
+            mazeSize = 10;
+            mazePalletName = "Basic.png";
+            monitors = new List<MonitorSetting>();
+        }
+
+        public void addMonitor(int id)
+        {
+            monitors.Add(new MonitorSetting(id));
+        }
 
     }
 
-    class MonitorSetting
+    public class MonitorSetting
     {
         public int monitorId;
         public int fadeTime;
         public int displayTime;
-        int panTime;
+        public int panTime;
         public int dirIn;
         public int dirOut;
         public bool clockwise;
@@ -36,6 +51,16 @@ namespace ConfigPanel
         public string aiView;
         public string aiMethod;
 
-
+        public MonitorSetting(int id)
+        {
+            monitorId = id;
+            fadeTime = 3;
+            displayTime = 3;
+            panTime = 3;
+            dirIn = 90;
+            dirOut = 270;
+            clockwise = true;
+            numRotations = 1;
+        }
     }
 }
