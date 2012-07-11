@@ -20,10 +20,10 @@ namespace WPF_Practice.MonitorControls
     /// </summary>
     public partial class SlideShowConfig : UserControl
     {
-        public string fadeTypes
+        public string transitionTypes
         {
-            get { return (FadeTypes.SelectedItem as ComboBoxItem).Content.ToString(); }
-            set { (FadeTypes.SelectedItem as ComboBoxItem).Content = value; }
+            get { return (TransitionTypes.SelectedItem as ComboBoxItem).Content.ToString(); }
+            set { (TransitionTypes.SelectedItem as ComboBoxItem).Content = value; }
         }
 
         public int FadeTime
@@ -168,6 +168,11 @@ namespace WPF_Practice.MonitorControls
             subform.DialogResult result = folderDialog.ShowDialog();
             if (result.ToString() == "OK")
                 pictureLocation.Text = folderDialog.SelectedPath;
+        }
+
+        private void TransitionTypes_DropDownClosed(object sender, EventArgs e)
+        {
+
         }
     }
 }

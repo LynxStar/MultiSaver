@@ -159,14 +159,6 @@ namespace WPF_Practice.MonitorControls
 
         private void comboScreenSaver_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (combomonitorSelection.SelectedValue != null)
-            {
-                panelMonitorSettings.Children.Clear();
-                if (comboScreenSaver.SelectedIndex == 0)
-                    panelMonitorSettings.Children.Add(slideshowConfig);
-                else if (comboScreenSaver.SelectedIndex == 1)
-                    panelMonitorSettings.Children.Add(mazeConfig);
-            }
         }
 
         private void combomonitorSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -202,6 +194,25 @@ namespace WPF_Practice.MonitorControls
                       mazeConfig.setGroupSettings(gSetting, tmpStr);
                   }
                   donothing = true;
+            }
+
+        }
+
+        private void nametxtbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            groupSetting.groupName = nametxtbox.Text;
+        }
+
+        private void comboScreenSaver_DropDownClosed(object sender, EventArgs e)
+        {
+            groupSetting.ssType = (sender as ComboBox).Text;
+            if (combomonitorSelection.SelectedValue != null)
+            {
+                panelMonitorSettings.Children.Clear();
+                if (comboScreenSaver.SelectedIndex == 0)
+                    panelMonitorSettings.Children.Add(slideshowConfig);
+                else if (comboScreenSaver.SelectedIndex == 1)
+                    panelMonitorSettings.Children.Add(mazeConfig);
             }
 
         }
