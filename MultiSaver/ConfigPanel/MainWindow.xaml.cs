@@ -33,5 +33,10 @@ namespace ConfigPanel
             groups.Add(group);
             XMLHandler.save(groups);
         }
+
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+            XMLHandler.load("config.xml");
+        }
     }
 }
