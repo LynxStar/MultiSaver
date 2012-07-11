@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,17 +21,8 @@ namespace WPF_Practice
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        private int currentscreen = 0;
-        
-        List<SlideShowInfo> slideShowList = new List<SlideShowInfo>();
-        List<Group> listofGroups = new List<Group>();
-        List<string> unassignedMonitors = new List<string>();
-
-        ScreenSaverControl screenPage = new ScreenSaverControl();
-        GroupControl gControl = new GroupControl();
-        MazeConfig mazeConfig = new MazeConfig();
-        SlideShowConfig slideConfig = new SlideShowConfig();
+        private ScreenSaverControl configScreensSaverControl = new ScreenSaverControl();
+        private int currentScreen = -1;
 
         bool isgroupAdded = false;
 
@@ -43,9 +34,7 @@ namespace WPF_Practice
 
         public void form_Loaded(object sender, RoutedEventArgs e)
         {
-            unassignedMonitors.Add("Dynex 19\" Monitor");
-            unassignedMonitors.Add("Acer 23\" Monitor");
-            unassignedMonitors.Add("Projector");
+            mainControl.Children.Add(configScreensSaverControl);
         }
 
         private void Create_Button_Clicked(object sender, RoutedEventArgs e)
@@ -53,46 +42,35 @@ namespace WPF_Practice
             MonitorTab monitor = new MonitorTab();
             monitor.Width = 383;
             monitor.Height = 30;
-            monitor.MouseDoubleClick += Monitor_clicked;
-            monitor.order = listofGroups.Count;
-            addnewMonitor(monitor);
-        }
-
-        private void addnewMonitor(MonitorTab monitor)
-        {
-            listofGroups.Add(new Group(listofGroups.Count + 1, slideShowList.Count + 1));
-            slideShowList.Add(new SlideShowInfo(slideShowList.Count + 1));
-            listofGroups[listofGroups.Count - 1].name = "Unnamed";
-            monitor.setMonitorInfo(ref listofGroups[listofGroups.Count-1].name);
             monitor.MinWidth = MonitorMenu.MinWidth;
             monitor.MaxWidth = MonitorMenu.MaxWidth;
+            monitor.MouseDoubleClick += Monitor_clicked;
+            monitor.order = configScreensSaverControl.createnewGroup();
+            currentScreen = configScreensSaverControl.getTotalNumberofGroups() - 1;
             MonitorMenu.Children.Add(monitor);
         }
 
         private void Monitor_clicked(object sender, EventArgs e)
         {
             MonitorTab tab = (MonitorTab)sender;
-
+            //resetting the color
             foreach(MonitorTab mt in MonitorMenu.Children)
-            {
                 mt.Background = null;
-            }
-                tab.Background = Brushes.Blue;
 
+            tab.Background = Brushes.YellowGreen;
+
+            configScreensSaverControl.displayGroupControl(currentScreen);
+            /*
             if (isgroupAdded)
             {
-                 listofGroups[currentscreen].name = gControl.Name;
-                    if (ConfigPage.Children.Count != 0)
-                        ConfigPage.Children.RemoveAt(0);
+                 listofGroups[currentscreen].name = maincontrol.getCurrentGroupName();
             }
             //tab.Name = listofGroups[currentscreen].name;
-            gControl = new GroupControl();
-            ConfigPage.Children.Remove(gControl);
-            ConfigPage.Children.Remove(slideConfig);
-            gControl.Name = listofGroups[tab.order].name;
-            gControl.AssignOwnedStrings(ref listofGroups[tab.order].ownedMonitors);
-            gControl.AssignAvailableString(ref unassignedMonitors);
-            ConfigPage.Children.Add(gControl);
+            //gControl = new GroupControl();
+            //ConfigPage.Children.Remove(gControl);
+            //ConfigPage.Children.Remove(slideConfig);
+             * 
+             * 
             isgroupAdded = true;
             ScreenSaverButton.Content = "Screen Saver";
             currentscreen = tab.order;
@@ -100,6 +78,7 @@ namespace WPF_Practice
             MonitorTab tab2 = (MonitorTab)MonitorMenu.Children[currentscreen];
             tab2.setMonitorInfo(listofGroups[currentscreen].name);
             MonitorMenu.Children[currentscreen] = tab2;
+             */
         }
 
         private void ScreenSaver_Click(object sender, RoutedEventArgs e)
@@ -107,14 +86,15 @@ namespace WPF_Practice
 
             if (isgroupAdded)
             {
-                listofGroups[currentscreen].name = gControl.Name;
-                ConfigPage.Children.RemoveAt(0);
-                ConfigPage.Children.Add(slideConfig);
-                ScreenSaverButton.Content = "Monitor Groups";
-                isgroupAdded = false;
+             //   listofGroups[currentscreen].name = gControl.Name;
+               // ConfigPage.Children.RemoveAt(0);
+               // ConfigPage.Children.Add(slideConfig);
+                //ScreenSaverButton.Content = "Monitor Groups";
+                //isgroupAdded = false;
             }
             else
             {
+                /*
                 gControl = new GroupControl();
                 gControl.Name = listofGroups[currentscreen].name;
                 ConfigPage.Children.RemoveAt(0);
@@ -123,29 +103,29 @@ namespace WPF_Practice
                 ConfigPage.Children.Add(gControl);
                 isgroupAdded = true;
                 ScreenSaverButton.Content = "Screen Saver";
+                 */
                 
             }
+            /*
             MonitorTab tab2 = (MonitorTab)MonitorMenu.Children[currentscreen];
             tab2.setMonitorInfo(listofGroups[currentscreen].name);
             MonitorMenu.Children[currentscreen] = tab2;
+             */
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
 
-            foreach (string monitor in listofGroups[currentscreen].ownedMonitors)
-                unassignedMonitors.Add(monitor);
+            configScreensSaverControl.deleteGroup(currentScreen);
 
-            for (int i = currentscreen +1;  i <= MonitorMenu.Children.Count-1 ; i++)
+            for (int i = currentScreen +1;  i <= MonitorMenu.Children.Count-1 ; i++)
             {
                     MonitorTab tab = (MonitorTab)MonitorMenu.Children[i];
                     tab.order = i-1;
             }
-            slideShowList.RemoveAt(currentscreen);
-            listofGroups.RemoveAt(currentscreen);
-            MonitorMenu.Children.RemoveAt(currentscreen);
-            ConfigPage.Children.RemoveAt(0);
-            currentscreen = 0; ;
+
+            MonitorMenu.Children.RemoveAt(currentScreen);
+            currentScreen = 0;
         }
 
     }

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WPF_Practice.MonitorControls.ScreenSaverControl"
+<UserControl x:Class="WPF_Practice.MonitorControls.ScreenSaverControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -10,6 +10,7 @@
             <RowDefinition Height="36*" />
             <RowDefinition Height="264*" />
         </Grid.RowDefinitions>
-        <TabControl Height="315" HorizontalAlignment="Left" Name="GroupConfigOptions" VerticalAlignment="Top" Width="395" Grid.RowSpan="2"></TabControl>
+        <StackPanel Height="291" HorizontalAlignment="Left" Margin="0,12,0,0" Name="stackPanel1" VerticalAlignment="Top" Width="383" Grid.RowSpan="2"></StackPanel>
+        <StackPanel Name="mainPanel" Margin="12" Grid.RowSpan="2" Loaded="Grid_Loaded" />
     </Grid>
 </UserControl>
