@@ -69,6 +69,11 @@ namespace WPF_Practice.MonitorControls
             return gcontrol.Name;
         }
 
+        public List<GroupSetting> getGroupSettings()
+        {
+            return groupsettings;
+        }
+
         public void reset()
         {
             if (mainPanel.Children.Count != 0)
