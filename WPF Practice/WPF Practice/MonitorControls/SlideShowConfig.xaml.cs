@@ -23,7 +23,7 @@ namespace WPF_Practice.MonitorControls
         public string fadeTypes
         {
             get { return (FadeTypes.SelectedItem as ComboBoxItem).Content.ToString(); }
-            set { (FadeTypes.SelectedItem as ComboBoxItem).Content = value; }
+            set { FadeTypes.SelectedIndex = setFadeTypes(value); }
         }
 
         public int FadeTime
@@ -120,6 +120,19 @@ namespace WPF_Practice.MonitorControls
             return 0;
         }
 
+        private int setFadeTypes(string tmp)
+        {
+            if (String.Equals("Fade", tmp, StringComparison.InvariantCultureIgnoreCase))
+                return 0;
+            else if (String.Equals("Pan", tmp, StringComparison.InvariantCultureIgnoreCase))
+                return 1;
+            else if (String.Equals("Spiral", tmp, StringComparison.InvariantCultureIgnoreCase))
+                return 2;
+            else if (String.Equals("Random", tmp, StringComparison.InvariantCultureIgnoreCase))
+                return 2;
+            return 0;
+        }
+
         public void fillForm(GroupSetting gSetting, int numberscreen)
         {
             FadeTime = gSetting.monitors[numberscreen].fadeTime - 1;
@@ -131,7 +144,7 @@ namespace WPF_Practice.MonitorControls
             Clockwise = gSetting.monitors[numberscreen].clockwise;
             Order = gSetting.order;
             location = gSetting.albumLocation;
-
+            fadeTypes = gSetting.monitors[numberscreen].transitionType;
 
             
         }
@@ -145,6 +158,7 @@ namespace WPF_Practice.MonitorControls
             gSetting.monitors[numberscreen].dirIn = directionInBox.SelectedIndex;
             gSetting.monitors[numberscreen].dirOut = directionoutBox.SelectedIndex;
             gSetting.monitors[numberscreen].clockwise = Clockwise;
+            gSetting.monitors[numberscreen].transitionType = fadeTypes;
             gSetting.order = Order;
             gSetting.albumLocation = location;
 
