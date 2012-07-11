@@ -20,6 +20,7 @@ namespace WPF_Practice.MonitorControls
         public GroupSetting()
         {
             groupName = "Group";
+            
             isActive = false;
             albumLocation = "C:\\Users\\Public\\Pictures";
             order = "Alphabetical";
@@ -65,6 +66,10 @@ namespace WPF_Practice.MonitorControls
             dirOut = 270;
             clockwise = true;
             numRotations = 1;
+            transitionType = "Fade";
+
+            aiMethod = "Depth First";
+            aiView = "First Person";
         }
     }
 }

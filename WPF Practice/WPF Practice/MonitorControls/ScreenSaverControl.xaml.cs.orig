@@ -11,7 +11,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WinForms = System.Windows.Forms;
 
 namespace WPF_Practice.MonitorControls
 {
@@ -23,8 +22,8 @@ namespace WPF_Practice.MonitorControls
        private GroupControl gcontrol = new GroupControl();
        private List<GroupSetting> groupsettings = new List<GroupSetting>();
        private List<List<string>> ownedmonitors = new List<List<string>>();
-       private WinForms.Screen[] screen = WinForms.Screen.AllScreens;
-       //Common Classes holds the classes in which we transfer things from the form to the listsz
+        
+        //Common Classes holds the classes in which we transfer things from the form to the listsz
 
        private List<string> unassignedMonitors = new List<string>();
        private int currentActiveGroup;
@@ -32,26 +31,22 @@ namespace WPF_Practice.MonitorControls
         public ScreenSaverControl()
         {
             InitializeComponent();
-<<<<<<< Updated upstream
-            /*
+<<<<<<< HEAD
             unassignedMonitors.Add("Dynex 19\" Monitor");
             unassignedMonitors.Add("Acer 23\" Monitor");
             unassignedMonitors.Add("Projector");
-            */
             foreach (WinForms.Screen slcScreen in screen)
-            {
-                unassignedMonitors.Add(slcScreen.DeviceName);
 =======
             //unassignedMonitors.Add("Dynex 19\" Monitor");
             //unassignedMonitors.Add("Acer 23\" Monitor");
             //unassignedMonitors.Add("Projector");
 
             foreach (System.Windows.Forms.Screen Screen in System.Windows.Forms.Screen.AllScreens)
+>>>>>>> upstream/master
             {
 
                 unassignedMonitors.Add((Screen.Primary ? "Primary" : "Secondary") + "Monitor");
 
->>>>>>> Stashed changes
             }
 
         }
@@ -113,6 +108,7 @@ namespace WPF_Practice.MonitorControls
         public void deleteGroup(int selectedScreen)
         {
             groupsettings.RemoveAt(selectedScreen);
+            ownedmonitors.RemoveAt(selectedScreen);
         }
 
     }

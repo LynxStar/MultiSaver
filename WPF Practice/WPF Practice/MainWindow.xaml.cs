@@ -75,8 +75,10 @@ namespace WPF_Practice
                     MonitorTab tab = (MonitorTab)MonitorMenu.Children[i];
                     tab.order = i-1;
             }
+
             MonitorMenu.Children.RemoveAt(currentScreen);
-            currentScreen = 0;
+            mainControl.Children.Clear();
+            firstAppear = true;
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
