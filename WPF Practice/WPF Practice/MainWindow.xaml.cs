@@ -79,11 +79,9 @@ namespace WPF_Practice
             currentScreen = 0;
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private void button1_Click(object sender, RoutedEventArgs e)
         {
-
-
-
+            XMLHandler.save(configScreensSaverControl.getGroupSettings());
         }
 
     }
