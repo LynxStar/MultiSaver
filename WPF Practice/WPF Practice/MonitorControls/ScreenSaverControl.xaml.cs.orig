@@ -31,11 +31,18 @@ namespace WPF_Practice.MonitorControls
         public ScreenSaverControl()
         {
             InitializeComponent();
+<<<<<<< HEAD
+            unassignedMonitors.Add("Dynex 19\" Monitor");
+            unassignedMonitors.Add("Acer 23\" Monitor");
+            unassignedMonitors.Add("Projector");
+            foreach (WinForms.Screen slcScreen in screen)
+=======
             //unassignedMonitors.Add("Dynex 19\" Monitor");
             //unassignedMonitors.Add("Acer 23\" Monitor");
             //unassignedMonitors.Add("Projector");
 
             foreach (System.Windows.Forms.Screen Screen in System.Windows.Forms.Screen.AllScreens)
+>>>>>>> upstream/master
             {
 
                 unassignedMonitors.Add((Screen.Primary ? "Primary" : "Secondary") + "Monitor");
@@ -101,6 +108,7 @@ namespace WPF_Practice.MonitorControls
         public void deleteGroup(int selectedScreen)
         {
             groupsettings.RemoveAt(selectedScreen);
+            ownedmonitors.RemoveAt(selectedScreen);
         }
 
     }

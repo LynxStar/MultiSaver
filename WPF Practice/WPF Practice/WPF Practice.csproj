@@ -136,6 +136,12 @@
   <ItemGroup>
     <Resource Include="notes.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MultiSaver\ConfigPanel\ConfigPanel.csproj">
+      <Project>{10B1A386-B43C-48DE-8A66-981E0DACFE75}</Project>
+      <Name>ConfigPanel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

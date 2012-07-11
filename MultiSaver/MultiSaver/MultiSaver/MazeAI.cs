@@ -95,7 +95,7 @@ namespace MultiSaver
             MovableCamera.Update();
 
             MazeEffect = Content.Load<Effect>("MazeEffect");
-            MazeTexture = Content.Load<Texture2D>("Zelda2");
+            MazeTexture = Content.Load<Texture2D>("Alex");
 
             BEffect = new BasicEffect(GraphicsDevice);
             BEffect.VertexColorEnabled = true;
@@ -212,11 +212,28 @@ namespace MultiSaver
                         if (SmallTimer > 0)
                         {
 
-                            MovableCamera = new FreeCamera(new Vector3(1375 - (180 - SmallTimer) * 1320 / 180f,
-                                3750 - (180 - SmallTimer) * 3695 / 180f, 
-                                1375 - (180 - SmallTimer) * 1320 / 180f),
-                                MathHelper.ToRadians(-(180 - SmallTimer)),
-                                MathHelper.ToRadians(-90 + (180 - SmallTimer) * .5f), GraphicsDevice);                            
+                            if (ID == 0)
+                            {
+
+                                MovableCamera = new FreeCamera(new Vector3(1375 - (180 - SmallTimer) * 1320 / 180f,
+                                    3750 - (180 - SmallTimer) * 3695 / 180f,
+                                    1375 - (180 - SmallTimer) * 1320 / 180f),
+                                    MathHelper.ToRadians(-(180 - SmallTimer)),
+                                    MathHelper.ToRadians(-90 + (180 - SmallTimer) * .5f), GraphicsDevice);
+
+
+                            }
+
+                            else
+                            {
+
+                                MovableCamera = new FreeCamera(new Vector3(1375 - (180 - SmallTimer) * 1320 / 180f,
+                                    3750 - (180 - SmallTimer) * 3695 / 180f,
+                                    1375 + (180 - SmallTimer) * 1320 / 180f),
+                                    MathHelper.ToRadians(0),
+                                    MathHelper.ToRadians(-90 + (180 - SmallTimer) * .5f), GraphicsDevice);
+
+                            }
 
                             MovableCamera.Update();
 
@@ -238,7 +255,7 @@ namespace MultiSaver
                             
                             Current = PathStack.Peek();
 
-                            CurrentDirection = "Down";
+                            CurrentDirection = ID == 0 ? "Down" : "Up";
                             MovableCamera = new FreeCamera(new Vector3(Current.Location.X * 110 + 55, 55, Current.Location.Y * 110 + 55), MovableCamera.Yaw, 0, GraphicsDevice);
 
                         }
@@ -445,7 +462,7 @@ namespace MultiSaver
                 
                 if (ID == 0)
                 {
-
+                    
                     GraphicsDevice.SetVertexBuffer(Program.MasterMaze.WallVerticesBuffer);
                     GraphicsDevice.Indices = Program.MasterMaze.WallIndicesBuffer;
 

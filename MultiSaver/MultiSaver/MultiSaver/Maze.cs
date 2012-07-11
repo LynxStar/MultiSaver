@@ -29,7 +29,7 @@ namespace MultiSaver
 
         public Stack<Cell> CellStack = new Stack<Cell>();
 
-        public Random Random = new Random(2);
+        public Random Random = new Random(526);
         public Cell Location;
         public Cell End;
 
@@ -183,12 +183,12 @@ namespace MultiSaver
                 for (int x = 0; x < Dimensions.X; x++)
                 {
 
-                    Vector3 Location = new Vector3(x * 110, 110, y * 110);
+                    Vector3 Location = new Vector3(x * 110, 0, y * 110);
 
                     Vertices[i++] = new VertexPositionNormalTexture(Location, Vector3.Zero, new Vector2(0));
-                    Vertices[i++] = new VertexPositionNormalTexture(Location + new Vector3(110, 0, 0), Vector3.Zero, new Vector2(.5f, 0));
-                    Vertices[i++] = new VertexPositionNormalTexture(Location + new Vector3(0, 0, 110), Vector3.Zero, new Vector2(0, .5f));
-                    Vertices[i++] = new VertexPositionNormalTexture(Location + new Vector3(110, 0, 110), Vector3.Zero, new Vector2(.5f, .5f));
+                    Vertices[i++] = new VertexPositionNormalTexture(Location + new Vector3(110, 0, 0), Vector3.Zero, new Vector2(1f, 0));
+                    Vertices[i++] = new VertexPositionNormalTexture(Location + new Vector3(0, 0, 110), Vector3.Zero, new Vector2(0, 1f));
+                    Vertices[i++] = new VertexPositionNormalTexture(Location + new Vector3(110, 0, 110), Vector3.Zero, new Vector2(1f, 1f));
 
                     Indices[j++] = i - 4;
                     Indices[j++] = i - 3;
