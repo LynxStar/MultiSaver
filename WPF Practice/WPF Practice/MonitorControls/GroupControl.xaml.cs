@@ -58,6 +58,11 @@ namespace WPF_Practice.MonitorControls
         private void Load_Page(object sender, RoutedEventArgs e)
         {
             nametxtbox.Text = gSetting.groupName;
+            if (String.Equals(gSetting.ssType,"SlideShow", StringComparison.InvariantCultureIgnoreCase))
+                comboScreenSaver.SelectedIndex = 0;
+            else if (String.Equals(gSetting.ssType, "Maze", StringComparison.InvariantCultureIgnoreCase))
+                comboScreenSaver.SelectedIndex = 1;
+           
             int tmpCount = 0;
             foreach (String str in availabeString)
             {
@@ -78,6 +83,12 @@ namespace WPF_Practice.MonitorControls
                 tab.Height = 20;
                 tab.MouseDoubleClick += clicked_AvailableGroupBox;
                 abductedScreens.Children.Add(tab);
+
+                ComboBoxItem tmpItem = new ComboBoxItem();
+                tmpItem.Content = tab.getMonitorInfo();
+                tmpItem.Name = "N" + tmpCount;
+                combomonitorSelection.Items.Add(tmpItem);
+
                 tmpCount++;
             }
         }
