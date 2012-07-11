@@ -28,11 +28,11 @@ namespace MultiSaver
             Thread MazeAICenter = new Thread(RunMaze);
             //Thread MazeAILeft = new Thread(RunMaze);
 
-            MazeAICenter.Start(new object[] {new Rectangle(-1000, 0, 1680, 1050), 1 });
+            MazeAICenter.Start(new object[] {new Rectangle(0, 0, 1680, 1050), 0 });
 
         }
 
-        public static void RunAlbum(object Bounds, object ID)
+        public static void RunAlbum(object Bounds)
         {
 
             using (Album game = new Album())

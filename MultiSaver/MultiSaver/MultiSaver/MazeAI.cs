@@ -45,6 +45,8 @@ namespace MultiSaver
 
         int RotateBy = 0;
 
+        int ReRender = 0;
+
         public MazeAI()
         {
             
@@ -164,7 +166,12 @@ namespace MultiSaver
 
                 case "Generate":
 
-                    Program.MasterMaze.GenerateNext();
+                    ReRender--;
+
+                    Program.MasterMaze.GenerateNext(ReRender < 0 ? true : false);
+
+                    if (ReRender < 0)
+                        ReRender += 5;
 
                     break;
 

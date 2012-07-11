@@ -60,7 +60,7 @@ namespace MultiSaver
 
         }
         
-        public void GenerateNext()
+        public void GenerateNext(Boolean ReRender = false)
         {
 
             if (CellStack.Count > 0)
@@ -96,7 +96,8 @@ namespace MultiSaver
 
             }
 
-            GenerateWallPrimatives();
+            if (ReRender)
+                GenerateWallPrimatives();
 
         }
 
