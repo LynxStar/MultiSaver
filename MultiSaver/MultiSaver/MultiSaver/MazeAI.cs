@@ -46,6 +46,10 @@ namespace MultiSaver
         int RotateBy = 0;
 
         int ReRender = 0;
+        public int Stagger = 0;
+
+        public VertexBuffer WallVerticesBuffer;
+        public IndexBuffer WallIndicesBuffer;
 
         public MazeAI()
         {
@@ -53,6 +57,7 @@ namespace MultiSaver
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
+            graphics.SynchronizeWithVerticalRetrace = false;
 
         }
         
@@ -82,9 +87,9 @@ namespace MultiSaver
 
                 MasterMode = "Generate";
 
-            }
+                Program.MasterMaze.GenerateGroundPrimatives(GraphicsDevice);
 
-            Program.MasterMaze.GenerateGroundPrimatives(GraphicsDevice);
+            }
 
             MovableCamera = new FreeCamera(new Vector3(1375, 3750, 1375), 0, MathHelper.ToRadians(-90), GraphicsDevice);
             MovableCamera.Update();
@@ -168,10 +173,26 @@ namespace MultiSaver
 
                     ReRender--;
 
-                    Program.MasterMaze.GenerateNext(ReRender < 0 ? true : false);
+                    if (ID == 0)
+                    {
+
+                        Program.MasterMaze.GenerateNext(ReRender < 0 ? true : false);
+
+                    }
+
+                    else
+                    {
+
+                        WallVerticesBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionColor), Program.MasterMaze.WallVertices.Length, BufferUsage.WriteOnly);
+                        WallIndicesBuffer = new IndexBuffer(GraphicsDevice, IndexElementSize.ThirtyTwoBits, Program.MasterMaze.WallIndices.Length, BufferUsage.WriteOnly);
+
+                        WallVerticesBuffer.SetData<VertexPositionColor>(Program.MasterMaze.WallVertices);
+                        WallIndicesBuffer.SetData<int>(Program.MasterMaze.WallIndices);
+
+                    }
 
                     if (ReRender < 0)
-                        ReRender += 5;
+                        ReRender += Stagger;
 
                     break;
 
@@ -209,7 +230,12 @@ namespace MultiSaver
                             SelfMode = "Guess";
 
                             PathStack = new Stack<Cell>();
-                            PathStack.Push(Program.MasterMaze.Cells[0, 0]);
+
+                            if (ID == 0)
+                                PathStack.Push(Program.MasterMaze.Cells[0, 0]);
+                            else
+                                PathStack.Push(Program.MasterMaze.Cells[0, (int)Program.MasterMaze.Dimensions.Y - 1]);
+                            
                             Current = PathStack.Peek();
 
                             CurrentDirection = "Down";
@@ -416,25 +442,22 @@ namespace MultiSaver
 
             if (Program.MasterMaze.State != "None")
             {
+                
+                if (ID == 0)
+                {
 
-                //if (Program.MasterMaze.State == "Ready")
-                //{
+                    GraphicsDevice.SetVertexBuffer(Program.MasterMaze.WallVerticesBuffer);
+                    GraphicsDevice.Indices = Program.MasterMaze.WallIndicesBuffer;
 
-                //    GraphicsDevice.SetVertexBuffer(Program.MasterMaze.VerticesBuffer);
-                //    GraphicsDevice.Indices = Program.MasterMaze.IndicesBuffer;
+                }
 
-                //    MazeEffect.Parameters["View"].SetValue(MovableCamera.View);
-                //    MazeEffect.Parameters["Projection"].SetValue(MovableCamera.Projection);
-                //    MazeEffect.Parameters["MazeTexture"].SetValue(MazeTexture);
+                else
+                {
 
-                //    MazeEffect.Techniques[0].Passes[0].Apply();
+                    GraphicsDevice.SetVertexBuffer(WallVerticesBuffer);
+                    GraphicsDevice.Indices = WallIndicesBuffer;
 
-                //    GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, Program.MasterMaze.VerticesBuffer.VertexCount, 0, Program.MasterMaze.IndicesBuffer.IndexCount / 3);
-
-                //}
-
-                GraphicsDevice.SetVertexBuffer(Program.MasterMaze.WallVerticesBuffer);
-                GraphicsDevice.Indices = Program.MasterMaze.WallIndicesBuffer;
+                }
 
                 BEffect.View = MovableCamera.View;
                 BEffect.Projection = MovableCamera.Projection;

@@ -29,7 +29,7 @@ namespace MultiSaver
 
         public Stack<Cell> CellStack = new Stack<Cell>();
 
-        public Random Random = new Random(1);
+        public Random Random = new Random(2);
         public Cell Location;
         public Cell End;
 
@@ -417,7 +417,7 @@ namespace MultiSaver
                 }
 
                 //Right
-                if (Temp.Location.X + 1 >= 0
+                if (Temp.Location.X + 1 < Dimensions.X
                     && !Cells[(int)Temp.Location.X + 1, (int)Temp.Location.Y].LeftWall
                     && !Cells[(int)Temp.Location.X + 1, (int)Temp.Location.Y].VisitedBy(ID))
                 {
@@ -443,7 +443,7 @@ namespace MultiSaver
                 }
 
                 //Bottom
-                if (Temp.Location.Y + 1 >= 0
+                if (Temp.Location.Y + 1 < Dimensions.Y
                     && !Cells[(int)Temp.Location.X, (int)Temp.Location.Y + 1].TopWall
                     && !Cells[(int)Temp.Location.X, (int)Temp.Location.Y + 1].VisitedBy(ID))
                 {
@@ -460,7 +460,7 @@ namespace MultiSaver
                 if (!Neighbors)
                 {
 
-                    Next = PathStack.Peek();
+                    Next = Temp.Previous(ID);
 
                 }
 

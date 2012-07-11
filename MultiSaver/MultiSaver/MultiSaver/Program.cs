@@ -19,16 +19,18 @@ namespace MultiSaver
         {
 
             //Thread Monitor1 = new Thread(RunAlbum);
-            //Thread Monitor2 = new Thread(RunAlbum);
+            Thread Monitor2 = new Thread(RunAlbum);
 
             //Monitor1.Start(new Rectangle(0, 0, 1600, 900));
             //Thread.Sleep(1);
-            //Monitor2.Start(new Rectangle(-1000, 0, 1680, 1050));
+            Monitor2.Start(new Rectangle(-1000, 0, 1680, 1050));
 
             Thread MazeAICenter = new Thread(RunMaze);
-            //Thread MazeAILeft = new Thread(RunMaze);
+            Thread MazeAILeft = new Thread(RunMaze);
 
-            MazeAICenter.Start(new object[] {new Rectangle(0, 0, 1680, 1050), 0 });
+            MazeAICenter.Start(new object[] {new Rectangle(0, 0, 1680, 1050), 0, 0 });//Stagger should be 5ish to account for Provost-DTS Fail
+           // MazeAILeft.Start(new object[] {new Rectangle(-1000, 0, 1680, 1050), 1, 20 });//Stagger to account for XNA and DirectX and Windows 
+            //and generally computers not being designed for MM
 
         }
 
@@ -64,6 +66,7 @@ namespace MultiSaver
                 F.FormBorderStyle = FormBorderStyle.None;
                 game.Bounds = (Rectangle)(Bounds as object[])[0];
                 game.ID = (int)(Bounds as object[])[1];
+                game.Stagger = (int)(Bounds as object[])[2];
 
                 game.IsLeft = game.Bounds.X < 0 ? true : false;
 
