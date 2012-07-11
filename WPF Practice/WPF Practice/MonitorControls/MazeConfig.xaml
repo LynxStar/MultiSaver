@@ -4,21 +4,34 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <GroupBox Header="Search Type" Height="100" HorizontalAlignment="Left" Margin="6,126,0,0" Name="groupBox1" VerticalAlignment="Top" Width="117">
-            <Grid>
-                <RadioButton Content="Depth Search" Height="16" HorizontalAlignment="Left" Margin="6,55,0,0" Name="DSsearch" VerticalAlignment="Top" />
-                <RadioButton Content="BreadthFirst" Height="16" HorizontalAlignment="Left" Margin="6,33,0,0" Name="BFSearch" VerticalAlignment="Top" />
-                <RadioButton Content="Left Hand First" Height="16" HorizontalAlignment="Left" Margin="6,11,0,0" Name="LHFSearch" VerticalAlignment="Top" />
-            </Grid>
-        </GroupBox>
-        <GroupBox Header="ViewPoint" Height="86" HorizontalAlignment="Left" Margin="6,34,0,0" Name="groupBox2" VerticalAlignment="Top" Width="111">
-            <Grid>
-                <RadioButton Content="FirstPerson" Height="16" HorizontalAlignment="Left" Margin="6,28,0,0" Name="FPView" VerticalAlignment="Top" />
-                <RadioButton Content="Top Down" Height="16" HorizontalAlignment="Left" Margin="6,6,0,0" Name="TPView" VerticalAlignment="Top" />
-            </Grid>
-        </GroupBox>
-        <Label Content="Maze Config" Height="28" HorizontalAlignment="Left" Name="label1" VerticalAlignment="Top" />
+             d:DesignHeight="300" d:DesignWidth="250">
+    <Grid Width="245" Height="301">
+        <Label Content="Maze Config" Height="28" HorizontalAlignment="Left" Name="label1" VerticalAlignment="Top" Margin="0,13,0,0" />
+        <Label Content="Maze Size:" Height="28" HorizontalAlignment="Left" Margin="0,47,0,0" Name="label2" VerticalAlignment="Top" />
+        <Label Content="Maze Pallet Name:" Height="24" HorizontalAlignment="Left" Margin="0,74,0,0" Name="label3" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="107,47,0,0" Name="comboMazeSize" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem>1</ComboBoxItem>
+            <ComboBoxItem>2</ComboBoxItem>
+            <ComboBoxItem>3</ComboBoxItem>
+            <ComboBoxItem>4</ComboBoxItem>
+            <ComboBoxItem>5</ComboBoxItem>
+            <ComboBoxItem>6</ComboBoxItem>
+            <ComboBoxItem>7</ComboBoxItem>
+            <ComboBoxItem>8</ComboBoxItem>
+            <ComboBoxItem>9</ComboBoxItem>
+            <ComboBoxItem>10</ComboBoxItem>
+        </ComboBox>
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="106,105,0,0" Name="comboAIView" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Content="First Person" />
+            <ComboBoxItem Content="Top Down" />
+        </ComboBox>
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="107,0,0,143" Name="comboAIMethod" VerticalAlignment="Bottom" Width="120">
+            <ComboBoxItem Content="Depth First" />
+            <ComboBoxItem Content="Breadth First" />
+            <ComboBoxItem Content="Left Hand First" />
+        </ComboBox>
+        <Label Content="Ai View:" Height="24" HorizontalAlignment="Left" Margin="0,105,0,0" Name="label4" VerticalAlignment="Top" />
+        <Label Content="Search Method:" Height="24" HorizontalAlignment="Left" Margin="0,134,0,0" Name="label5" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="106,76,0,0" Name="textBoxPalletN" VerticalAlignment="Top" Width="120" />
     </Grid>
 </UserControl>

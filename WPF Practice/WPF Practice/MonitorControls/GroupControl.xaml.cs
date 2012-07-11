@@ -19,13 +19,26 @@ namespace WPF_Practice.MonitorControls
     /// </summary>
     public partial class GroupControl : UserControl
     {
+        private SlideShowConfig slideshowConfig = new SlideShowConfig();
+        private MazeConfig mazeConfig = new MazeConfig();
+        private GroupSetting gSetting = new GroupSetting();
+        private int previoussetting = 0; 
+
         List<string> availabeString = new List<string>();
         List<string> OwnedScreens = new List<string>();
 
-        public string Name
+        public bool donothing = false;
+
+        public string GroupName
         {
             get { return nametxtbox.Text; }
             set { nametxtbox.Text = value; }
+        }
+
+        public GroupSetting groupSetting
+        {
+            get { return gSetting; }
+            set { gSetting = value; }
         }
 
         public GroupControl()
@@ -33,13 +46,18 @@ namespace WPF_Practice.MonitorControls
             InitializeComponent();
         }
 
-        public void AssignAvailableString(ref  List<string> AvailableString)
+        public void AssignAvailableString(List<string> AvailableString)
         {
             this.availabeString = AvailableString;
         }
-        public void AssignOwnedStrings(ref List<string> targetStrings)
+        public void AssignOwnedStrings(List<string> targetStrings)
         {
             this.OwnedScreens = targetStrings;
+        }
+
+        public List<string> ownedScreens()
+        {
+            return OwnedScreens;
         }
 
         private void Load_Page(object sender, RoutedEventArgs e)
@@ -76,18 +94,46 @@ namespace WPF_Practice.MonitorControls
             Debug.WriteLine(tmpName);
             if (tmpName.Equals("PendingScreens", StringComparison.OrdinalIgnoreCase))
             {
-
+                //Display Changes
                 PendingScreens.Children.Remove(tab);
                 availabeString.Remove(tab.getMonitorInfo());
                 OwnedScreens.Add(tab.getMonitorInfo());
                 abductedScreens.Children.Add(tab);
+
+                //Adding the monitor settings
+                gSetting.monitors.Add(new MonitorSetting(0));
+
+                ComboBoxItem tmpItem = new ComboBoxItem();
+                tmpItem.Content = tab.getMonitorInfo();
+                tmpItem.Name = "N" + gSetting.monitors.Count.ToString();
+                combomonitorSelection.Items.Add(tmpItem);
             }
             else if (tmpName.Equals("abductedScreens", StringComparison.OrdinalIgnoreCase))
             {
+                //Diplay Changes
+                ComboBoxItem tmpitem = new ComboBoxItem();
+
                 abductedScreens.Children.Remove(tab);
                 OwnedScreens.Remove(tab.getMonitorInfo());
                 availabeString.Add(tab.getMonitorInfo());
                 PendingScreens.Children.Add(tab);
+
+                foreach (ComboBoxItem item in combomonitorSelection.Items)
+                {
+                    if (item.Content == tab.getMonitorInfo())
+                    {
+                        tmpitem = item;
+                        break;
+                    }
+                }
+                combomonitorSelection.Items.Remove(tmpitem);
+                
+                if (combomonitorSelection.SelectedValue != null )
+                {
+                    int tmpStr = Int32.Parse((combomonitorSelection.SelectedValue as ComboBoxItem).Name[1].ToString()) - 1;
+                    gSetting.monitors.RemoveAt(tmpStr);
+                }
+
             }
 
         }
@@ -102,6 +148,55 @@ namespace WPF_Practice.MonitorControls
         public void fillBox(Group targetGroup)
         {
             nametxtbox.Text = targetGroup.name;
+        }
+
+        private void comboScreenSaver_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (combomonitorSelection.SelectedValue != null)
+            {
+                panelMonitorSettings.Children.Clear();
+                if (comboScreenSaver.SelectedIndex == 0)
+                    panelMonitorSettings.Children.Add(slideshowConfig);
+                else if (comboScreenSaver.SelectedIndex == 1)
+                    panelMonitorSettings.Children.Add(mazeConfig);
+            }
+        }
+
+        private void combomonitorSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+            if (comboScreenSaver.SelectedValue!= null && combomonitorSelection.SelectedValue != null)
+            {
+               int tmpStr = Int32.Parse((combomonitorSelection.SelectedValue as ComboBoxItem).Name[1].ToString()) - 1;
+
+                   if (comboScreenSaver.SelectedIndex == 0 && donothing)
+                   {
+                       //Is ScreenSaver
+                       slideshowConfig.getFormInfo(gSetting, previoussetting);
+                   }
+                   else if (comboScreenSaver.SelectedIndex == 1 && donothing)
+                   {
+                       mazeConfig.getPage(gSetting, previoussetting);
+                   }
+
+                   panelMonitorSettings.Children.Clear();
+                   if (comboScreenSaver.SelectedIndex == 0)
+                       panelMonitorSettings.Children.Add(slideshowConfig);
+                   else if (comboScreenSaver.SelectedIndex == 1)
+                       panelMonitorSettings.Children.Add(mazeConfig);
+                  previoussetting = tmpStr;
+
+                  if (comboScreenSaver.SelectedIndex == 0)
+                  {
+                      slideshowConfig.fillForm(gSetting, tmpStr);
+                  }
+                  else if (comboScreenSaver.SelectedIndex == 1)
+                  {
+                      mazeConfig.setGroupSettings(gSetting, tmpStr);
+                  }
+                  donothing = true;
+            }
+
         }
 
     }

@@ -1,11 +1,11 @@
 ﻿<Window x:Class="WPF_Practice.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" MinHeight="460" MinWidth="610" Height="460" Width="776" Loaded="form_Loaded">
-    <Grid Height="424" Width="760">
-        <StackPanel Name="MonitorMenu" Margin="0,0,592,65" MaxHeight="426" MinHeight="59" MaxWidth="426"/>
+        Title="MainWindow" MinHeight="460" MinWidth="610" Height="460" Width="876" Loaded="form_Loaded">
+    <Grid Height="424" Width="860">
+        <StackPanel Name="MonitorMenu" Margin="0,0,698,63" MaxHeight="426" MinHeight="59" MaxWidth="426"/>
         <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="0,395,0,0" Name="DeleteButton" VerticalAlignment="Top" Width="162" Click="DeleteButton_Click" />
         <Button Content="CreateGroup" Height="23" HorizontalAlignment="Left" Margin="0,367,0,0" Name="createButton" VerticalAlignment="Top" Width="162" Click="Create_Button_Clicked" />
-        <StackPanel Height="418" HorizontalAlignment="Left" Margin="168,0,0,0" Name="mainControl" VerticalAlignment="Top" Width="586" />
+        <StackPanel  HorizontalAlignment="Left" Margin="165,0,0,0" Name="mainControl" VerticalAlignment="Top" Width="690" Height="422" />
     </Grid>
 </Window>
