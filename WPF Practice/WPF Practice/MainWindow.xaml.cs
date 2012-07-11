@@ -81,11 +81,9 @@ namespace WPF_Practice
             firstAppear = true;
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private void button1_Click(object sender, RoutedEventArgs e)
         {
-
-
-
+            XMLHandler.save(configScreensSaverControl.getGroupSettings());
         }
 
     }

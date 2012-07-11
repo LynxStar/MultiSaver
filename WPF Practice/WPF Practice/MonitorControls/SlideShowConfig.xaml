@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="314" d:DesignWidth="227">
     <Grid Height="315" Width="227" PreviewMouseDown="Grid_PreviewMouseDown">
-        <ComboBox Height="23" HorizontalAlignment="Left" Margin="12,12,0,0" Name="FadeTypes" VerticalAlignment="Top" Width="179">
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="12,12,0,0" Name="TransitionTypes" VerticalAlignment="Top" Width="179" DropDownClosed="TransitionTypes_DropDownClosed">
             <ComboBoxItem>Fade</ComboBoxItem>
             <ComboBoxItem>Pan</ComboBoxItem>
             <ComboBoxItem>Spiral</ComboBoxItem>

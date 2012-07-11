@@ -34,6 +34,11 @@ namespace WPF_Practice.MonitorControls
             monitors.Add(new MonitorSetting(id));
         }
 
+        public void addMonitor(MonitorSetting ms)
+        {
+            monitors.Add(ms);
+        }
+
     }
 
     public class MonitorSetting
