@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,30 +19,75 @@ namespace WPF_Practice.MonitorControls
     /// </summary>
     public partial class ScreenSaverControl : UserControl
     {
-        SlideShowConfig slideshowConfig = new SlideShowConfig();
-        MazeConfig mazeConfig = new MazeConfig();
-        GroupControl gcontrol = new GroupControl();
+       private GroupControl gcontrol = new GroupControl();
+       private List<GroupSetting> groupsettings = new List<GroupSetting>();
+        
+        //Common Classes holds the classes in which we transfer things from the form to the listsz
+
+       private List<string> unassignedMonitors = new List<string>();
+       private int currentActiveGroup;
 
         public ScreenSaverControl()
         {
             InitializeComponent();
+            unassignedMonitors.Add("Dynex 19\" Monitor");
+            unassignedMonitors.Add("Acer 23\" Monitor");
+            unassignedMonitors.Add("Projector");
         }
+
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-            TabItem screenSaver = new TabItem();
-            screenSaver.Content = gcontrol;
-            GroupConfigOptions.Items.Add(screenSaver);
-            
 
         }
 
-        public void createnewPanels()
+        public int createnewGroup()
         {
-            TabItem screenSaver = new TabItem();
-            
-            screenSaver.Content = gcontrol;
-            GroupConfigOptions.Items.Add(screenSaver);
+            int groupid = groupsettings.Count + 1;
+            groupsettings.Add(new GroupSetting());
+            groupsettings[groupsettings.Count - 1].groupName = "Unnamed";
+            return groupsettings.Count - 1;
         }
+
+        public void createNewSlideShow(SlideShowInfo info)
+        {
+            
+        }
+
+        public string getCurrentGroupName()
+        {
+            return gcontrol.Name;
+        }
+
+        public void reset()
+        {
+            if (mainPanel.Children.Count != 0)
+                mainPanel.Children.RemoveAt(0);
+        }
+
+        public int getTotalNumberofGroups()
+        {
+            return groupsettings.Count;
+        }
+
+        public void displayGroupControl(int selectedScreen)
+        {
+            reset();
+            gcontrol = new GroupControl();
+            gcontrol.groupSetting = groupsettings[selectedScreen];
+            mainPanel.Children.Add(gcontrol);
+            currentActiveGroup = selectedScreen;
+        }
+
+        public void saveGroupSettings()
+        {
+            groupsettings[currentActiveGroup] = gcontrol.groupSetting;
+        }
+
+        public void deleteGroup(int selectedScreen)
+        {
+            groupsettings.RemoveAt(selectedScreen);
+        }
+
     }
 }
