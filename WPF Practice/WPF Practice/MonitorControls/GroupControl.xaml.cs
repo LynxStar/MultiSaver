@@ -19,11 +19,12 @@ namespace WPF_Practice.MonitorControls
     /// </summary>
     public partial class GroupControl : UserControl
     {
-        private SlideShowConfig slideshowConfig = new SlideShowConfig();
         private MazeConfig mazeConfig = new MazeConfig();
         private GroupSetting gSetting = new GroupSetting();
+        private SlideShowConfig slideshowConfig;
         private int previoussetting = 0; 
 
+        
         List<string> availabeString = new List<string>();
         List<string> OwnedScreens = new List<string>();
 
@@ -37,6 +38,7 @@ namespace WPF_Practice.MonitorControls
 
         public GroupControl()
         {
+            slideshowConfig = new SlideShowConfig(gSetting);
             InitializeComponent();
         }
 
@@ -74,7 +76,7 @@ namespace WPF_Practice.MonitorControls
                 PendingScreens.Children.Add(tab);
                 tmpCount++;
             }
-            tmpCount = 0;
+            tmpCount = 1;
             foreach (String str in OwnedScreens)
             {
                 MonitorTab tab = new MonitorTab();
