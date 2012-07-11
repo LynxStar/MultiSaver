@@ -4,13 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="313" d:DesignWidth="391">
-    <Grid Height="315" Width="395" Loaded="Grid_Loaded">
+             d:DesignHeight="395" d:DesignWidth="567">
+    <Grid Height="395" Width="567" Loaded="Grid_Loaded">
         <Grid.RowDefinitions>
-            <RowDefinition Height="36*" />
-            <RowDefinition Height="264*" />
+            <RowDefinition Height="12*" />
+            <RowDefinition Height="383*" />
         </Grid.RowDefinitions>
-        <StackPanel Height="291" HorizontalAlignment="Left" Margin="0,12,0,0" Name="stackPanel1" VerticalAlignment="Top" Width="383" Grid.RowSpan="2"></StackPanel>
         <StackPanel Name="mainPanel" Margin="12" Grid.RowSpan="2" Loaded="Grid_Loaded" />
     </Grid>
 </UserControl>

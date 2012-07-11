@@ -26,17 +26,13 @@ namespace WPF_Practice.MonitorControls
             get { return place; }
             set { place = value; }
         }
+
         public MonitorTab()
         {
             InitializeComponent();
         }
 
         public void setMonitorInfo(string str)
-        {
-            MonitorInfo.Content = str;
-        }
-
-        public void setMonitorInfo(ref string str)
         {
             MonitorInfo.Content = str;
         }

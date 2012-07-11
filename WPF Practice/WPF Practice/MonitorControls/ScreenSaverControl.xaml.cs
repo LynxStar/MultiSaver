@@ -19,22 +19,10 @@ namespace WPF_Practice.MonitorControls
     /// </summary>
     public partial class ScreenSaverControl : UserControl
     {
-        enum ActiveForm
-        {
-            SlideShowForm,
-            MazeForm,
-            GroupControlForm
-        };
-
-       private SlideShowConfig slideshowConfig = new SlideShowConfig();
-       private MazeConfig mazeConfig = new MazeConfig();
        private GroupControl gcontrol = new GroupControl();
-       private ActiveForm activeForm;
+       private List<GroupSetting> groupsettings = new List<GroupSetting>();
         
-        //Common Classes holds the classes in which we transfer things from the form to the lists
-       private List<SlideShowInfo> slideShowList = new List<SlideShowInfo>();
-       private List<MazeInfo> mazeinfoList = new List<MazeInfo>();
-       private List<Group> listofGroups = new List<Group>();
+        //Common Classes holds the classes in which we transfer things from the form to the listsz
 
        private List<string> unassignedMonitors = new List<string>();
        private int currentActiveGroup;
@@ -42,22 +30,23 @@ namespace WPF_Practice.MonitorControls
         public ScreenSaverControl()
         {
             InitializeComponent();
-        }
-
-
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
-        {
             unassignedMonitors.Add("Dynex 19\" Monitor");
             unassignedMonitors.Add("Acer 23\" Monitor");
             unassignedMonitors.Add("Projector");
         }
 
+
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         public int createnewGroup()
         {
-            int groupid = listofGroups.Count + 1;
-            listofGroups.Add(new Group(groupid));
-            listofGroups[listofGroups.Count - 1].name = "Unnamed";
-            return listofGroups.Count - 1;
+            int groupid = groupsettings.Count + 1;
+            groupsettings.Add(new GroupSetting());
+            groupsettings[groupsettings.Count - 1].groupName = "Unnamed";
+            return groupsettings.Count - 1;
         }
 
         public void createNewSlideShow(SlideShowInfo info)
@@ -78,73 +67,26 @@ namespace WPF_Practice.MonitorControls
 
         public int getTotalNumberofGroups()
         {
-            return listofGroups.Count;
+            return groupsettings.Count;
         }
 
         public void displayGroupControl(int selectedScreen)
         {
             reset();
             gcontrol = new GroupControl();
-            gcontrol.Name = listofGroups[selectedScreen].name;
-            gcontrol.AssignOwnedStrings(ref listofGroups[selectedScreen].ownedMonitors);
-            gcontrol.AssignAvailableString(ref unassignedMonitors);
+            gcontrol.groupSetting = groupsettings[selectedScreen];
             mainPanel.Children.Add(gcontrol);
-            activeForm = ActiveForm.GroupControlForm;
+            currentActiveGroup = selectedScreen;
         }
 
-        public void displaySlideShowControl(int selectedScreen)
+        public void saveGroupSettings()
         {
-            reset(); 
-            
-            slideshowConfig = new SlideShowConfig();
-            slideshowConfig.FadeTime = slideShowList[selectedScreen].FadeTime;
-            slideshowConfig.DisplayTime = slideShowList[selectedScreen].DisplayTime;
-            slideshowConfig.PanTime = slideShowList[selectedScreen].PanTime;
-            slideshowConfig.Rotation = slideShowList[selectedScreen].Rotation;
-            slideshowConfig.Clockwise = slideShowList[selectedScreen].Clockwise;
-            slideshowConfig.Alphabetical = slideShowList[selectedScreen].Alphabetical;
-            slideshowConfig.RevAlphebetical = slideShowList[selectedScreen].RevAlphabetical;
-            slideshowConfig.Random = slideShowList[selectedScreen].Random;
-            slideshowConfig.DirectionInChar = slideShowList[selectedScreen].dIn;
-            slideshowConfig.DirectionOutChar = slideShowList[selectedScreen].dout;
-
-            mainPanel.Children.Add(slideshowConfig);
-
-            activeForm = ActiveForm.SlideShowForm;
-        }
-
-        public void savecurrentSettings(int selectedScreen)
-        {
-            if (activeForm == ActiveForm.SlideShowForm)
-            {
-                slideShowList[selectedScreen].dout = slideshowConfig.DirectionOutChar;
-                slideShowList[selectedScreen].dIn = slideshowConfig.DirectionInChar;
-                slideShowList[selectedScreen].FadeTime = slideshowConfig.FadeTime;
-                slideShowList[selectedScreen].DisplayTime = slideshowConfig.DisplayTime;
-                slideShowList[selectedScreen].PanTime = slideshowConfig.PanTime;
-                slideShowList[selectedScreen].Rotation = slideshowConfig.Rotation;
-                slideShowList[selectedScreen].Clockwise = slideshowConfig.Clockwise;
-                slideShowList[selectedScreen].Alphabetical = slideshowConfig.Alphabetical;
-                slideShowList[selectedScreen].RevAlphabetical = slideshowConfig.RevAlphebetical;
-                slideShowList[selectedScreen].Random = slideshowConfig.Random;
-            }
-            else if (activeForm == ActiveForm.MazeForm)
-            {
-                //TODO finish maze form
-            }
-            else if (activeForm == ActiveForm.GroupControlForm)
-            {
-                listofGroups[selectedScreen].name = gcontrol.Name;
-            }
+            groupsettings[currentActiveGroup] = gcontrol.groupSetting;
         }
 
         public void deleteGroup(int selectedScreen)
         {
-            foreach (string monitor in listofGroups[selectedScreen].ownedMonitors)
-                unassignedMonitors.Add(monitor);
-
-            slideShowList.RemoveAt(selectedScreen);
-            listofGroups.RemoveAt(selectedScreen);
+            groupsettings.RemoveAt(selectedScreen);
         }
 
     }
