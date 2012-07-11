@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +21,7 @@ namespace WPF_Practice.MonitorControls
     {
        private GroupControl gcontrol = new GroupControl();
        private List<GroupSetting> groupsettings = new List<GroupSetting>();
+       private List<List<string>> ownedmonitors = new List<List<string>>();
         
         //Common Classes holds the classes in which we transfer things from the form to the listsz
 
@@ -45,6 +46,7 @@ namespace WPF_Practice.MonitorControls
         {
             int groupid = groupsettings.Count + 1;
             groupsettings.Add(new GroupSetting());
+            ownedmonitors.Add(new List<string>());
             groupsettings[groupsettings.Count - 1].groupName = "Unnamed";
             return groupsettings.Count - 1;
         }
@@ -75,6 +77,8 @@ namespace WPF_Practice.MonitorControls
             reset();
             gcontrol = new GroupControl();
             gcontrol.groupSetting = groupsettings[selectedScreen];
+            gcontrol.AssignAvailableString(unassignedMonitors);
+            gcontrol.AssignOwnedStrings(ownedmonitors[selectedScreen]);
             mainPanel.Children.Add(gcontrol);
             currentActiveGroup = selectedScreen;
         }
@@ -82,8 +86,8 @@ namespace WPF_Practice.MonitorControls
         public void saveGroupSettings()
         {
             groupsettings[currentActiveGroup] = gcontrol.groupSetting;
+            ownedmonitors[currentActiveGroup] = gcontrol.getOwnedScreens();
         }
-
         public void deleteGroup(int selectedScreen)
         {
             groupsettings.RemoveAt(selectedScreen);
