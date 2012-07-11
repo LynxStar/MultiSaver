@@ -20,10 +20,14 @@ namespace WPF_Practice.MonitorControls
     /// </summary>
     public partial class SlideShowConfig : UserControl
     {
-        public string fadeTypes
+
+        GroupSetting gSetting;
+        public int monitor;
+
+        public string transitionTypes
         {
-            get { return (FadeTypes.SelectedItem as ComboBoxItem).Content.ToString(); }
-            set { FadeTypes.SelectedIndex = setFadeTypes(value); }
+            get { return (TransitionTypes.SelectedItem as ComboBoxItem).Content.ToString(); }
+            set { (TransitionTypes.SelectedItem as ComboBoxItem).Content = value; }
         }
 
         public int FadeTime
@@ -45,8 +49,8 @@ namespace WPF_Practice.MonitorControls
 
         public int PanTime
         {
-            get {return comboDisplayTime.SelectedIndex + 1;}
-            set { comboDisplayTime.SelectedIndex = value; }
+            get {return comboPanTime.SelectedIndex + 1;}
+            set { comboPanTime.SelectedIndex = value; }
         }
         public int Rotation
         {
@@ -91,8 +95,9 @@ namespace WPF_Practice.MonitorControls
             set { orderComboBox.SelectedIndex = setOrderComparisions(value); }
         }
 
-        public SlideShowConfig()
+        public SlideShowConfig(GroupSetting gs)
         {
+            gSetting = gs;
             InitializeComponent();
         }
 
@@ -120,31 +125,20 @@ namespace WPF_Practice.MonitorControls
             return 0;
         }
 
-        private int setFadeTypes(string tmp)
-        {
-            if (String.Equals("Fade", tmp, StringComparison.InvariantCultureIgnoreCase))
-                return 0;
-            else if (String.Equals("Pan", tmp, StringComparison.InvariantCultureIgnoreCase))
-                return 1;
-            else if (String.Equals("Spiral", tmp, StringComparison.InvariantCultureIgnoreCase))
-                return 2;
-            else if (String.Equals("Random", tmp, StringComparison.InvariantCultureIgnoreCase))
-                return 2;
-            return 0;
-        }
-
         public void fillForm(GroupSetting gSetting, int numberscreen)
         {
+            this.gSetting = gSetting;
+            monitor = numberscreen;
             FadeTime = gSetting.monitors[numberscreen].fadeTime - 1;
             DisplayTime = gSetting.monitors[numberscreen].displayTime - 1;
-            PanTime = gSetting.monitors[numberscreen].panTime - 1;
+            PanTime = gSetting.monitors[numberscreen].panTime -1;
             Rotation = gSetting.monitors[numberscreen].numRotations - 1;
             directionInBox.SelectedIndex = gSetting.monitors[numberscreen].dirIn;
             directionoutBox.SelectedIndex = gSetting.monitors[numberscreen].dirOut;
             Clockwise = gSetting.monitors[numberscreen].clockwise;
             Order = gSetting.order;
             location = gSetting.albumLocation;
-            fadeTypes = gSetting.monitors[numberscreen].transitionType;
+            TransitionTypes.Text = gSetting.monitors[numberscreen].transitionType;
 
             
         }
@@ -158,7 +152,6 @@ namespace WPF_Practice.MonitorControls
             gSetting.monitors[numberscreen].dirIn = directionInBox.SelectedIndex;
             gSetting.monitors[numberscreen].dirOut = directionoutBox.SelectedIndex;
             gSetting.monitors[numberscreen].clockwise = Clockwise;
-            gSetting.monitors[numberscreen].transitionType = fadeTypes;
             gSetting.order = Order;
             gSetting.albumLocation = location;
 
@@ -183,5 +176,65 @@ namespace WPF_Practice.MonitorControls
             if (result.ToString() == "OK")
                 pictureLocation.Text = folderDialog.SelectedPath;
         }
+
+        private void TransitionTypes_DropDownClosed(object sender, EventArgs e)
+        {
+            gSetting.monitors[monitor].transitionType = (sender as ComboBox).Text;
+        }
+
+        private void pictureLocation_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            gSetting.albumLocation = (sender as TextBox).Text;
+        }
+
+        private void comboFadeTime_DropDownClosed(object sender, EventArgs e)
+        {
+
+            gSetting.monitors[monitor].fadeTime = (sender as ComboBox).SelectedIndex + 1;
+        }
+
+        private void comboDisplayTime_DropDownClosed(object sender, EventArgs e)
+        {
+
+            gSetting.monitors[monitor].displayTime = (sender as ComboBox).SelectedIndex + 1;
+        }
+
+        private void comboPanTime_DropDownClosed(object sender, EventArgs e)
+        {
+
+            gSetting.monitors[monitor].panTime = (sender as ComboBox).SelectedIndex + 1;
+        }
+
+        private void directionInBox_DropDownClosed(object sender, EventArgs e)
+        {
+
+            gSetting.monitors[monitor].dirIn = (sender as ComboBox).SelectedIndex;
+        }
+
+        private void directionoutBox_DropDownClosed(object sender, EventArgs e)
+        {
+
+            gSetting.monitors[monitor].dirOut = (sender as ComboBox).SelectedIndex ;
+        }
+
+        private void comboRotation_DropDownClosed(object sender, EventArgs e)
+        {
+
+            gSetting.monitors[monitor].numRotations = (sender as ComboBox).SelectedIndex + 1;
+        }
+
+        private void orderComboBox_DropDownClosed(object sender, EventArgs e)
+        {
+
+            gSetting.order = (sender as ComboBox).Text;
+        }
+
+        private void isClockwise_Checked(object sender, RoutedEventArgs e)
+        {
+
+            gSetting.monitors[monitor].clockwise = (sender as CheckBox).IsChecked.HasValue ? (sender as CheckBox).IsChecked.Value : false;
+        }
+
     }
 }
