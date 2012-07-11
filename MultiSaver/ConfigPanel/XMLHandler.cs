@@ -28,6 +28,7 @@ namespace ConfigPanel
                 {
                     writer.WriteStartElement("Monitor");
                     writer.WriteElementString("ID", ms.monitorId.ToString());
+                    writer.WriteElementString("TransitionType", ms.transitionType);
                     writer.WriteElementString("FadeTime", ms.fadeTime.ToString());
                     writer.WriteElementString("DisplayTime", ms.displayTime.ToString());
                     writer.WriteElementString("PanTime", ms.panTime.ToString());
@@ -97,6 +98,9 @@ namespace ConfigPanel
                                 throw new Exception("No Monitor ID");
                             }
                             break;
+                        case "transitionType":
+                            reader.Read();
+                            tempMonitor.transitionType = reader.Value.Trim();
                         case "FadeTime":
                             reader.Read();
                             tempMonitor.fadeTime = int.Parse(reader.Value.Trim());
