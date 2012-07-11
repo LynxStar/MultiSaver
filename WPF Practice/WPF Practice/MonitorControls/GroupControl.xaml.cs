@@ -29,12 +29,6 @@ namespace WPF_Practice.MonitorControls
 
         public bool donothing = false;
 
-        public string GroupName
-        {
-            get { return nametxtbox.Text; }
-            set { nametxtbox.Text = value; }
-        }
-
         public GroupSetting groupSetting
         {
             get { return gSetting; }
@@ -48,20 +42,22 @@ namespace WPF_Practice.MonitorControls
 
         public void AssignAvailableString(List<string> AvailableString)
         {
-            this.availabeString = AvailableString;
+            foreach (string str in AvailableString)
+                availabeString.Add(str);
         }
         public void AssignOwnedStrings(List<string> targetStrings)
         {
-            this.OwnedScreens = targetStrings;
+            OwnedScreens = targetStrings;
         }
 
-        public List<string> ownedScreens()
+        public List<string> getOwnedScreens()
         {
             return OwnedScreens;
         }
 
         private void Load_Page(object sender, RoutedEventArgs e)
         {
+            nametxtbox.Text = gSetting.groupName;
             int tmpCount = 0;
             foreach (String str in availabeString)
             {

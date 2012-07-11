@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -56,7 +56,7 @@ namespace WPF_Practice
             //resetting the color
             foreach(MonitorTab mt in MonitorMenu.Children)
                 mt.Background = null;
-
+            currentScreen = tab.order;
             tab.Background = Brushes.YellowGreen;
             if (!firstAppear)
                 configScreensSaverControl.saveGroupSettings();
