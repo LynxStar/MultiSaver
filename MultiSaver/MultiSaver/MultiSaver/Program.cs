@@ -10,6 +10,7 @@ namespace MultiSaver
     {
         
         public static Random Rand = new Random();
+        public static Maze MasterMaze;
 
         /// <summary>
         /// The main entry point for the application.
@@ -17,22 +18,24 @@ namespace MultiSaver
         static void Main(string[] args)
         {
 
-            Thread Monitor1 = new Thread(Run);
-            Thread Monitor2 = new Thread(Run);
+            //Thread Monitor1 = new Thread(RunAlbum);
+            //Thread Monitor2 = new Thread(RunAlbum);
 
+            //Monitor1.Start(new Rectangle(0, 0, 1600, 900));
+            //Thread.Sleep(1);
+            //Monitor2.Start(new Rectangle(-1000, 0, 1680, 1050));
 
-            Monitor1.Start(new Rectangle(0, 0, 1600, 900));
+            Thread MazeAICenter = new Thread(RunMaze);
+            //Thread MazeAILeft = new Thread(RunMaze);
 
-            Thread.Sleep(1);
+            MazeAICenter.Start(new object[] {new Rectangle(-1000, 0, 1680, 1050), 1 });
 
-            Monitor2.Start(new Rectangle(-1000, 0, 1680, 1050));
-            
         }
 
-        public static void Run(object Bounds)
+        public static void RunAlbum(object Bounds, object ID)
         {
 
-            using (Screensaver game = new Screensaver())
+            using (Album game = new Album())
             {
 
                 Control C = Form.FromHandle(game.Window.Handle);
@@ -45,6 +48,27 @@ namespace MultiSaver
 
                 game.Run();
             
+            }
+
+        }
+
+        public static void RunMaze(object Bounds)
+        {
+
+            using (MazeAI game = new MazeAI())
+            {
+
+                Control C = Form.FromHandle(game.Window.Handle);
+                Form F = C.FindForm();
+
+                F.FormBorderStyle = FormBorderStyle.None;
+                game.Bounds = (Rectangle)(Bounds as object[])[0];
+                game.ID = (int)(Bounds as object[])[1];
+
+                game.IsLeft = game.Bounds.X < 0 ? true : false;
+
+                game.Run();
+
             }
 
         }
