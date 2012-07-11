@@ -28,7 +28,12 @@ namespace MultiSaver
         private Cell Previous2;
         private Cell Previous3;
 
-        public Color Color;
+        public Color LeftColor;
+        public Color RightColor;
+        public Color TopColor;
+        public Color BottomColor;
+
+        public bool IsEnd = false;
 
         public Cell(Vector2 Location)
         {
@@ -50,7 +55,13 @@ namespace MultiSaver
             Previous2 = null;
             Previous3 = null;
 
-            Color = new Color(Program.Rand.Next(50, 255), 0, 0);
+            LeftColor = new Color(Program.Rand.Next(50, 255), 0, 0);
+            RightColor = new Color(0, 0, Program.Rand.Next(50, 255));
+            TopColor = new Color(0, Program.Rand.Next(50, 255), 0);
+
+            int Yellow = Program.Rand.Next(50, 255);
+
+            BottomColor = new Color(Yellow, Yellow, 0);
 
         }
 
@@ -75,6 +86,32 @@ namespace MultiSaver
 
         }
 
+        public void SetVisit(int Index, bool State)
+        {
+
+            switch (Index)
+            {
+
+                case 0:
+                    VisitedBy0 = State;
+                    break;
+                case 1:
+                    VisitedBy1 = State;
+                    break;
+                case 2:
+                    VisitedBy2 = State;
+                    break;
+                case 3:
+                    VisitedBy3 = State;
+                    break;
+                default:
+                    VisitedBy0 = State;
+                    break;
+
+            }
+
+        }
+
         public Cell Previous(int Index)
         {
 
@@ -91,6 +128,27 @@ namespace MultiSaver
                     return Previous3;
                 default:
                     return Previous0;
+
+            }
+
+        }
+
+        public void SetPrevious(int Index, Cell Previous)
+        {
+
+            switch (Index)
+            {
+
+                case 0:
+                    Previous0 = Previous; break;
+                case 1:
+                    Previous1 = Previous; break;
+                case 2:
+                    Previous2 = Previous; break;
+                case 3:
+                    Previous3 = Previous; break;
+                default:
+                    Previous0 = Previous; break;
 
             }
 

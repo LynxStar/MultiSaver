@@ -29,8 +29,9 @@ namespace MultiSaver
 
         public Stack<Cell> CellStack = new Stack<Cell>();
 
-        public Random Random = new Random();
+        public Random Random = new Random(1);
         public Cell Location;
+        public Cell End;
 
         GraphicsDevice Graphics;
 
@@ -87,7 +88,11 @@ namespace MultiSaver
             else
             {
 
+                Cells[(int)Dimensions.X - 1, Random.Next((int)Dimensions.Y)].IsEnd = true;
 
+                End = Cells[(int)Dimensions.X - 1, Random.Next((int)Dimensions.Y)];
+
+                State = "Ready";
 
             }
 
@@ -177,7 +182,7 @@ namespace MultiSaver
                 for (int x = 0; x < Dimensions.X; x++)
                 {
 
-                    Vector3 Location = new Vector3(x * 110, 0, y * 110);
+                    Vector3 Location = new Vector3(x * 110, 110, y * 110);
 
                     Vertices[i++] = new VertexPositionNormalTexture(Location, Vector3.Zero, new Vector2(0));
                     Vertices[i++] = new VertexPositionNormalTexture(Location + new Vector3(110, 0, 0), Vector3.Zero, new Vector2(.5f, 0));
@@ -205,8 +210,8 @@ namespace MultiSaver
         public void GenerateWallPrimatives()
         {
 
-            WallVertices = new VertexPositionColor[(int)(Dimensions.X * Dimensions.Y) * 4 * 8];
-            WallIndices = new int[(int)(Dimensions.X * Dimensions.Y) * 4 * 30];
+            WallVertices = new VertexPositionColor[(int)(Dimensions.X * Dimensions.Y) * 5 * 8];
+            WallIndices = new int[(int)(Dimensions.X * Dimensions.Y) * 5 * 30];
 
             WallVerticesBuffer = new VertexBuffer(Graphics, typeof(VertexPositionColor), WallVertices.Length, BufferUsage.WriteOnly);
             WallIndicesBuffer = new IndexBuffer(Graphics, IndexElementSize.ThirtyTwoBits, WallIndices.Length, BufferUsage.WriteOnly);
@@ -231,7 +236,7 @@ namespace MultiSaver
 
                     BoundingBox Temp = new BoundingBox(new Vector3(x * 110, 0, y * 110), new Vector3(x * 110 + 5, Y, y * 110 + 110));
 
-                    GenerateBoxVertices(Temp, Inds, Verts, Cells[x, y].Color, i);
+                    GenerateBoxVertices(Temp, Inds, Verts, Cells[x, y].LeftColor, i);
 
                     i += 8;
                     Indices.AddRange(Inds);
@@ -247,7 +252,7 @@ namespace MultiSaver
 
                     Temp = new BoundingBox(new Vector3(x * 110 + 105, 0, y * 110), new Vector3(x * 110 + 110, Y, y * 110 + 110));
 
-                    GenerateBoxVertices(Temp, Inds, Verts, Cells[x, y].Color, i);
+                    GenerateBoxVertices(Temp, Inds, Verts, Cells[x, y].RightColor, i);
 
                     i += 8;
                     Indices.AddRange(Inds);
@@ -263,7 +268,7 @@ namespace MultiSaver
 
                     Temp = new BoundingBox(new Vector3(x * 110, 0, y * 110), new Vector3(x * 110 + 110, Y, y * 110 + 5));
 
-                    GenerateBoxVertices(Temp, Inds, Verts, Cells[x, y].Color, i);
+                    GenerateBoxVertices(Temp, Inds, Verts, Cells[x, y].TopColor, i);
 
                     i += 8;
                     Indices.AddRange(Inds);
@@ -279,7 +284,23 @@ namespace MultiSaver
 
                     Temp = new BoundingBox(new Vector3(x * 110, 0, y * 110 + 105), new Vector3(x * 110 + 110, Y, y * 110 + 110));
 
-                    GenerateBoxVertices(Temp, Inds, Verts, Cells[x, y].Color, i);
+                    GenerateBoxVertices(Temp, Inds, Verts, Cells[x, y].BottomColor, i);
+
+                    i += 8;
+                    Indices.AddRange(Inds);
+                    Vertices.AddRange(Verts);
+
+                    #endregion
+
+                    #region Floor
+                    Inds = new int[30];
+                    Verts = new VertexPositionColor[8];
+
+                    Color C = Cells[x, y].AllWallsIntact() ? Color.Transparent : (Cells[x,y].IsEnd ? Color.White : Color.Gray);
+
+                    Temp = new BoundingBox(new Vector3(x * 110, -1, y * 110), new Vector3(x * 110 + 110, -1, y * 110 + 110));
+
+                    GenerateBoxVertices(Temp, Inds, Verts, C, i);
 
                     i += 8;
                     Indices.AddRange(Inds);
@@ -354,6 +375,105 @@ namespace MultiSaver
             Indices[27] = 4 + Offset;
             Indices[28] = 1 + Offset;
             Indices[29] = 0 + Offset;
+
+        }
+
+        public Cell Guess(Stack<Cell> PathStack, int ID, Cell Next)
+        {
+
+            if (PathStack.Count > 0)
+            {
+
+                Cell Temp = PathStack.Pop();
+
+                //Check if at the end
+                if (Temp.Location == End.Location)
+                {
+
+                    State = "Win|" + ID;
+
+                    End.SetVisit(ID, true);
+
+                }
+
+                Temp.SetVisit(ID, true);
+
+                Boolean Neighbors = false;
+
+                #region Add Neighbours
+
+                //Left
+                if (Temp.Location.X - 1 >= 0
+                    && !Cells[(int)Temp.Location.X - 1, (int)Temp.Location.Y].RightWall
+                    && !Cells[(int)Temp.Location.X - 1, (int)Temp.Location.Y].VisitedBy(ID))
+                {
+
+                    Next = Cells[(int)Temp.Location.X - 1, (int)Temp.Location.Y];
+                    Next.SetPrevious(ID, Temp);
+                    PathStack.Push(Next);
+                    Neighbors = true;
+
+                }
+
+                //Right
+                if (Temp.Location.X + 1 >= 0
+                    && !Cells[(int)Temp.Location.X + 1, (int)Temp.Location.Y].LeftWall
+                    && !Cells[(int)Temp.Location.X + 1, (int)Temp.Location.Y].VisitedBy(ID))
+                {
+
+                    Next = Cells[(int)Temp.Location.X + 1, (int)Temp.Location.Y];
+                    Next.SetPrevious(ID, Temp);
+                    PathStack.Push(Next);
+                    Neighbors = true;
+
+                }
+
+                //Top
+                if (Temp.Location.Y -1 >= 0
+                    && !Cells[(int)Temp.Location.X, (int)Temp.Location.Y - 1].BottomWall
+                    && !Cells[(int)Temp.Location.X, (int)Temp.Location.Y - 1].VisitedBy(ID))
+                {
+
+                    Next = Cells[(int)Temp.Location.X, (int)Temp.Location.Y - 1];
+                    Next.SetPrevious(ID, Temp);
+                    PathStack.Push(Next);
+                    Neighbors = true;
+
+                }
+
+                //Bottom
+                if (Temp.Location.Y + 1 >= 0
+                    && !Cells[(int)Temp.Location.X, (int)Temp.Location.Y + 1].TopWall
+                    && !Cells[(int)Temp.Location.X, (int)Temp.Location.Y + 1].VisitedBy(ID))
+                {
+
+                    Next = Cells[(int)Temp.Location.X, (int)Temp.Location.Y + 1];
+                    Next.SetPrevious(ID, Temp);
+                    PathStack.Push(Next);
+                    Neighbors = true;
+
+                }
+
+                #endregion
+
+                if (!Neighbors)
+                {
+
+                    Next = PathStack.Peek();
+
+                }
+
+                return Next;
+
+            }
+
+            else
+            {
+
+                //HERPITY FUCKING DERP
+                return null;
+
+            }
 
         }
 

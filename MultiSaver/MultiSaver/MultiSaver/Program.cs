@@ -26,8 +26,9 @@ namespace MultiSaver
             //Monitor2.Start(new Rectangle(-1000, 0, 1680, 1050));
 
             Thread MazeAICenter = new Thread(RunMaze);
+            //Thread MazeAILeft = new Thread(RunMaze);
 
-            MazeAICenter.Start(new object[] {new Rectangle(0, 0, 1680, 1050), 0});
+            MazeAICenter.Start(new object[] {new Rectangle(-1000, 0, 1680, 1050), 1 });
 
         }
 
