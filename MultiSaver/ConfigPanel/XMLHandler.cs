@@ -101,6 +101,7 @@ namespace ConfigPanel
                         case "transitionType":
                             reader.Read();
                             tempMonitor.transitionType = reader.Value.Trim();
+                            break;
                         case "FadeTime":
                             reader.Read();
                             tempMonitor.fadeTime = int.Parse(reader.Value.Trim());
