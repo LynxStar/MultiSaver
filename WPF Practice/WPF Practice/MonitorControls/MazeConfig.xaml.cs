@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +19,7 @@ namespace WPF_Practice.MonitorControls
     /// </summary>
     public partial class MazeConfig : UserControl
     {
+
         public MazeConfig()
         {
             InitializeComponent();
