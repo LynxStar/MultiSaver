@@ -81,6 +81,7 @@
     <Compile Include="Map.cs" />
     <Compile Include="Maze.cs" />
     <Compile Include="MazeAI.cs" />
+    <Compile Include="Minimap.cs" />
     <Compile Include="Mode.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="MultiView.cs" />
