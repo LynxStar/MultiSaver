@@ -48,6 +48,7 @@ namespace ConfigPanel
     public class MonitorSetting
     {
         public int monitorId;
+        public string transitionType;
         public int fadeTime;
         public int displayTime;
         public int panTime;
