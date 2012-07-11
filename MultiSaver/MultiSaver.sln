@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiSaverContent", "MultiS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigPanel", "ConfigPanel\ConfigPanel.csproj", "{10B1A386-B43C-48DE-8A66-981E0DACFE75}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF Practice", "..\WPF Practice\WPF Practice\WPF Practice.csproj", "{B90D20B4-EC99-4EEA-98AD-15CEE294720A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -23,6 +25,10 @@ Global
 		{10B1A386-B43C-48DE-8A66-981E0DACFE75}.Debug|x86.Build.0 = Debug|x86
 		{10B1A386-B43C-48DE-8A66-981E0DACFE75}.Release|x86.ActiveCfg = Release|x86
 		{10B1A386-B43C-48DE-8A66-981E0DACFE75}.Release|x86.Build.0 = Release|x86
+		{B90D20B4-EC99-4EEA-98AD-15CEE294720A}.Debug|x86.ActiveCfg = Debug|x86
+		{B90D20B4-EC99-4EEA-98AD-15CEE294720A}.Debug|x86.Build.0 = Debug|x86
+		{B90D20B4-EC99-4EEA-98AD-15CEE294720A}.Release|x86.ActiveCfg = Release|x86
+		{B90D20B4-EC99-4EEA-98AD-15CEE294720A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
