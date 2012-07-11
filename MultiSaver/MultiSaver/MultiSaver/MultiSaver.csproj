@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="Cell.cs" />
     <Compile Include="FreeCamera.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Maze.cs" />

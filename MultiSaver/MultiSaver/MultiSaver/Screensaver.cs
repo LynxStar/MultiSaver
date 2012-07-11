@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 namespace MultiSaver
 {
 
-    public class Screensaver : Microsoft.Xna.Framework.Game
+    public class Album : Microsoft.Xna.Framework.Game
     {
 
         GraphicsDeviceManager graphics;
@@ -52,7 +52,7 @@ namespace MultiSaver
 
         public bool IsLeft = false;
 
-        public Screensaver()
+        public Album()
         {
             
             graphics = new GraphicsDeviceManager(this);
@@ -281,6 +281,7 @@ namespace MultiSaver
             if (keyState.IsKeyDown(Keys.S)) translation += Vector3.Down;
             if (keyState.IsKeyDown(Keys.A)) translation += Vector3.Left;
             if (keyState.IsKeyDown(Keys.D)) translation += Vector3.Right;
+            if (keyState.IsKeyDown(Keys.F12)) this.Exit();
 
             // Move 4 units per millisecond, independent of frame rate
             translation *= (float)(0.5 * gameTime.ElapsedGameTime.TotalMilliseconds);
