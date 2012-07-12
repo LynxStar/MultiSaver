@@ -83,6 +83,7 @@ namespace WPF_Practice
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
+
             XMLHandler.save(configScreensSaverControl.getGroupSettings());
         }
 
