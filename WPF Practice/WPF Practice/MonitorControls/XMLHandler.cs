@@ -9,9 +9,13 @@ namespace WPF_Practice.MonitorControls
     {
         public static void save(List<GroupSetting> groups)
         {
+            XMLHandler.save(groups, "");
+        }
+        public static void save(List<GroupSetting> groups, string pathname)
+        {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.ConformanceLevel = ConformanceLevel.Auto;
-            XmlWriter writer = XmlWriter.Create("config.xml", settings);
+            XmlWriter writer = XmlWriter.Create(pathname + "config.xml", settings);
             writer.WriteStartDocument();
             writer.WriteStartElement("Groups");
             foreach(GroupSetting gs in groups)
