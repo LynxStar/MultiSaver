@@ -74,5 +74,10 @@ namespace WPF_Practice.MonitorControls
         {
             //controlImage.Source = str;
         }
+
+        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        {
+            this.Cursor = Cursors.Hand;
+        }
     }
 }

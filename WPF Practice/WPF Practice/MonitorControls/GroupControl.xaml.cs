@@ -72,7 +72,7 @@ namespace WPF_Practice.MonitorControls
                 tab.setMonitorInfo(str);
                 tab.order = tmpCount;
                 tab.Height = 20;
-                tab.MouseDoubleClick += clicked_AvailableGroupBox;
+                tab.MouseDown += clicked_AvailableGroupBox;
                 PendingScreens.Children.Add(tab);
                 tmpCount++;
             }
@@ -83,7 +83,7 @@ namespace WPF_Practice.MonitorControls
                 tab.setMonitorInfo(str);
                 tab.order = tmpCount;
                 tab.Height = 20;
-                tab.MouseDoubleClick += clicked_AvailableGroupBox;
+                tab.MouseDown += clicked_AvailableGroupBox;
                 abductedScreens.Children.Add(tab);
 
                 ComboBoxItem tmpItem = new ComboBoxItem();

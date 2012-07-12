@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" MinHeight="460" MinWidth="610" Height="460" Width="876" Loaded="form_Loaded">
     <Grid Height="424" Width="860">
-        <StackPanel Name="MonitorMenu" Margin="0,0,698,99" MaxHeight="426" MinHeight="59" MaxWidth="426"></StackPanel>
+        <StackPanel Name="MonitorMenu" Margin="0,0,698,93" MaxHeight="426" MinHeight="59" MaxWidth="426"></StackPanel>
         <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="0,395,0,0" Name="DeleteButton" VerticalAlignment="Top" Width="162" Click="DeleteButton_Click" />
         <StackPanel  HorizontalAlignment="Left" Margin="165,0,0,0" Name="mainControl" VerticalAlignment="Top" Width="690" Height="422"></StackPanel>
-        <Button Content="CreateGroup" Height="23" Name="createButton" Width="162" Click="Create_Button_Clicked" Margin="0,331,698,70" />
+        <Button Content="CreateGroup" Height="23" Name="createButton" Width="162" Click="Create_Button_Clicked" Margin="0,337,698,0" VerticalAlignment="Top" />
         <Button Content="Save" Height="23" Name="button1" Margin="0,366,698,35" Click="button1_Click" />
     </Grid>
 </Window>
