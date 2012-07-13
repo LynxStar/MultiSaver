@@ -44,7 +44,7 @@ namespace WPF_Practice
             monitor.Height = 30;
             monitor.MinWidth = MonitorMenu.MinWidth;
             monitor.MaxWidth = MonitorMenu.MaxWidth;
-            monitor.MouseDoubleClick += Monitor_clicked;
+            monitor.MouseDown += Monitor_clicked;
             monitor.order = configScreensSaverControl.createnewGroup();
             currentScreen = configScreensSaverControl.getTotalNumberofGroups() - 1;
             MonitorMenu.Children.Add(monitor);
@@ -83,6 +83,7 @@ namespace WPF_Practice
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
+
             XMLHandler.save(configScreensSaverControl.getGroupSettings());
         }
 
