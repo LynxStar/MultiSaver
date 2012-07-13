@@ -62,6 +62,10 @@ namespace ConfigPanel
                         case "Group":
                             tempGroup = new GroupSetting();
                             break;
+                        case "Type":
+                            reader.Read();
+                            tempGroup.ssType = reader.Value.Trim();
+                            break;
                         case "Name":
                             reader.Read();
                             tempGroup.groupName = reader.Value.Trim();

@@ -35,6 +35,7 @@ namespace WPF_Practice.MonitorControls
             //unassignedMonitors.Add("Acer 23\" Monitor");
             //unassignedMonitors.Add("Projector");
 
+            //groupsettings = XMLHandler.load("./config.xml");
             foreach (System.Windows.Forms.Screen Screen in System.Windows.Forms.Screen.AllScreens)
             {
 
