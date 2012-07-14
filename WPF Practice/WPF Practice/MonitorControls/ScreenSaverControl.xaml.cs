@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace WPF_Practice.MonitorControls
 {
@@ -22,32 +23,31 @@ namespace WPF_Practice.MonitorControls
        private GroupControl gcontrol = new GroupControl();
        private List<GroupSetting> groupsettings = new List<GroupSetting>();
        private List<List<string>> ownedmonitors = new List<List<string>>();
-        
+       private List<List<string>> unassignedMonitors = new List<List<string>>();
         //Common Classes holds the classes in which we transfer things from the form to the listsz
 
-       private List<string> unassignedMonitors = new List<string>();
+
        private int currentActiveGroup;
 
         public ScreenSaverControl()
         {
             InitializeComponent();
-            //unassignedMonitors.Add("Dynex 19\" Monitor");
-            //unassignedMonitors.Add("Acer 23\" Monitor");
-            //unassignedMonitors.Add("Projector");
+            List<string> tmpMonitors = new List<string>();
 
             foreach (System.Windows.Forms.Screen Screen in System.Windows.Forms.Screen.AllScreens)
             {
 
-                unassignedMonitors.Add((Screen.Primary ? "Primary" : "Secondary") + "Monitor");
+                tmpMonitors.Add((Screen.Primary ? "Primary" : "Secondary") + "Monitor");
 
             }
+            unassignedMonitors.Add(tmpMonitors);
 
         }
 
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         public int createnewGroup()
@@ -55,15 +55,14 @@ namespace WPF_Practice.MonitorControls
             int groupid = groupsettings.Count + 1;
             groupsettings.Add(new GroupSetting());
             ownedmonitors.Add(new List<string>());
+            unassignedMonitors.Add(unassignedMonitors[0]);
             groupsettings[groupsettings.Count - 1].groupName = "Unnamed";
+
+            Debug.WriteLine(String.Format("GroupSettings: {0} Ownded MOnitors: {1}", groupsettings.Count, ownedmonitors.Count));
+
             return groupsettings.Count - 1;
         }
-
-        public void createNewSlideShow(SlideShowInfo info)
-        {
-            
-        }
-
+           
         public string getCurrentGroupName()
         {
             return gcontrol.Name;
@@ -76,6 +75,7 @@ namespace WPF_Practice.MonitorControls
 
         public void reset()
         {
+
             if (mainPanel.Children.Count != 0)
                 mainPanel.Children.RemoveAt(0);
         }
@@ -87,11 +87,12 @@ namespace WPF_Practice.MonitorControls
 
         public void displayGroupControl(int selectedScreen)
         {
+            Debug.WriteLine("Selected Screen: {0}", selectedScreen);
             reset();
             gcontrol = new GroupControl();
             gcontrol.groupSetting = groupsettings[selectedScreen];
-            gcontrol.AssignAvailableString(unassignedMonitors);
-            gcontrol.AssignOwnedStrings(ownedmonitors[selectedScreen]);
+            gcontrol.AvailableMonitors = unassignedMonitors[selectedScreen + 1];
+            gcontrol.OwnedMonitors = ownedmonitors[selectedScreen];
             mainPanel.Children.Add(gcontrol);
             currentActiveGroup = selectedScreen;
         }
@@ -100,12 +101,21 @@ namespace WPF_Practice.MonitorControls
         {
 
             groupsettings[currentActiveGroup] = gcontrol.groupSetting;
-            ownedmonitors[currentActiveGroup] = gcontrol.getOwnedScreens();
-
+            ownedmonitors[currentActiveGroup] = gcontrol.OwnedMonitors;
+            unassignedMonitors[currentActiveGroup] = gcontrol.AvailableMonitors;
         }
         public void deleteGroup(int selectedScreen)
         {
+            Debug.WriteLine("Selected Screen: {0}", selectedScreen);
             groupsettings.RemoveAt(selectedScreen);
+            ownedmonitors.RemoveAt(selectedScreen);
+            unassignedMonitors.RemoveAt(selectedScreen + 1);
+            reset();
+        }
+
+        public void nametxtbox_TextChanged(object sender, EventArgs e)
+        {
+            
         }
 
     }

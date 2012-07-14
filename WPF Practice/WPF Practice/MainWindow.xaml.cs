@@ -53,11 +53,12 @@ namespace WPF_Practice
         private void Monitor_clicked(object sender, EventArgs e)
         {
             MonitorTab tab = (MonitorTab)sender;
+            
             //resetting the color
             foreach(MonitorTab mt in MonitorMenu.Children)
                 mt.Background = null;
             currentScreen = tab.order;
-            tab.Background = Brushes.YellowGreen;
+            tab.Background = Brushes.DarkTurquoise;
             if (!firstAppear)
                 configScreensSaverControl.saveGroupSettings();
             else
@@ -77,7 +78,6 @@ namespace WPF_Practice
             }
 
             MonitorMenu.Children.RemoveAt(currentScreen);
-            mainControl.Children.Clear();
             firstAppear = true;
         }
 
