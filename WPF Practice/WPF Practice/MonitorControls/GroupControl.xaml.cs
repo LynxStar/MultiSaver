@@ -36,25 +36,32 @@ namespace WPF_Practice.MonitorControls
             set { gSetting = value; }
         }
 
+        public List<string> OwnedMonitors
+        {
+            get { return OwnedScreens; }
+            set { OwnedScreens = value; }
+        }
+
+        public List<string> AvailableMonitors
+        {
+            get { return availabeString; }
+            set { availabeString = value; }
+        }
+
         public GroupControl()
         {
             slideshowConfig = new SlideShowConfig(gSetting);
+            mazeConfig = new MazeConfig();
             InitializeComponent();
         }
 
         public void AssignAvailableString(List<string> AvailableString)
         {
-            foreach (string str in AvailableString)
-                availabeString.Add(str);
+            availabeString = AvailableString;
         }
         public void AssignOwnedStrings(List<string> targetStrings)
         {
             OwnedScreens = targetStrings;
-        }
-
-        public List<string> getOwnedScreens()
-        {
-            return OwnedScreens;
         }
 
         private void Load_Page(object sender, RoutedEventArgs e)
@@ -200,7 +207,7 @@ namespace WPF_Practice.MonitorControls
 
         }
 
-        private void nametxtbox_TextChanged(object sender, TextChangedEventArgs e)
+        public void nametxtbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             groupSetting.groupName = nametxtbox.Text;
         }
@@ -217,6 +224,21 @@ namespace WPF_Practice.MonitorControls
                     panelMonitorSettings.Children.Add(mazeConfig);
             }
 
+        }
+
+        private void isActive_Click(object sender, RoutedEventArgs e)
+        {
+            if (String.Equals(isActive.Content.ToString(), "Not Active", StringComparison.InvariantCultureIgnoreCase))
+            {
+                isActive.Content = "Active";
+                gSetting.isActive = true;
+            }
+            else
+            {
+                isActive.Content = "Not Active";
+                gSetting.isActive = false;
+            }
+            
         }
 
     }
