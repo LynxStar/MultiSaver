@@ -54,6 +54,7 @@ namespace WPF_Practice.MonitorControls
                 Background = null;
         }
 
+
         public void resetBackground()
         {
             Background = null;
