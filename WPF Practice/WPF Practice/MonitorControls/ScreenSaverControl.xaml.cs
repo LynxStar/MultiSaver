@@ -25,9 +25,12 @@ namespace WPF_Practice.MonitorControls
        private List<List<string>> ownedmonitors = new List<List<string>>();
        private List<List<string>> unassignedMonitors = new List<List<string>>();
         //Common Classes holds the classes in which we transfer things from the form to the listsz
-
-
        private int currentActiveGroup;
+
+       public GroupSetting getGroupSettings(int place)
+       {
+           return groupsettings[place];
+       }
 
         public ScreenSaverControl()
         {
@@ -54,9 +57,12 @@ namespace WPF_Practice.MonitorControls
         public int createnewGroup()
         {
             int groupid = groupsettings.Count + 1;
+            List<string> tmpstring = new List<string>();
             groupsettings.Add(new GroupSetting());
             ownedmonitors.Add(new List<string>());
-            unassignedMonitors.Add(unassignedMonitors[0]);
+            foreach (string str in unassignedMonitors[0])
+                tmpstring.Add(str);
+            unassignedMonitors.Add(tmpstring);
             groupsettings[groupsettings.Count - 1].groupName = "Unnamed";
 
             Debug.WriteLine(String.Format("GroupSettings: {0} Ownded MOnitors: {1}", groupsettings.Count, ownedmonitors.Count));
@@ -64,10 +70,6 @@ namespace WPF_Practice.MonitorControls
             return groupsettings.Count - 1;
         }
            
-        public string getCurrentGroupName()
-        {
-            return gcontrol.Name;
-        }
 
         public List<GroupSetting> getGroupSettings()
         {
@@ -113,11 +115,5 @@ namespace WPF_Practice.MonitorControls
             unassignedMonitors.RemoveAt(selectedScreen + 1);
             reset();
         }
-
-        public void nametxtbox_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
     }
 }

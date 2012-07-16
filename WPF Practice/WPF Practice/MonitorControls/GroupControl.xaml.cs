@@ -71,12 +71,17 @@ namespace WPF_Practice.MonitorControls
                 comboScreenSaver.SelectedIndex = 0;
             else if (String.Equals(gSetting.ssType, "Maze", StringComparison.InvariantCultureIgnoreCase))
                 comboScreenSaver.SelectedIndex = 1;
+
+            if (gSetting.isActive)
+                isActive.Content = "Active";
+            else
+                isActive.Content = "Not Active";
            
             int tmpCount = 0;
             foreach (String str in availabeString)
             {
                 MonitorTab tab = new MonitorTab();
-                tab.setMonitorInfo(str);
+                tab.title = str;
                 tab.order = tmpCount;
                 tab.Height = 20;
                 tab.MouseDown += clicked_AvailableGroupBox;
@@ -87,14 +92,14 @@ namespace WPF_Practice.MonitorControls
             foreach (String str in OwnedScreens)
             {
                 MonitorTab tab = new MonitorTab();
-                tab.setMonitorInfo(str);
+                tab.title = str;
                 tab.order = tmpCount;
                 tab.Height = 20;
                 tab.MouseDown += clicked_AvailableGroupBox;
                 abductedScreens.Children.Add(tab);
 
                 ComboBoxItem tmpItem = new ComboBoxItem();
-                tmpItem.Content = tab.getMonitorInfo();
+                tmpItem.Content = tab.title;
                 tmpItem.Name = "N" + tmpCount;
                 combomonitorSelection.Items.Add(tmpItem);
 
@@ -112,15 +117,15 @@ namespace WPF_Practice.MonitorControls
             {
                 //Display Changes
                 PendingScreens.Children.Remove(tab);
-                availabeString.Remove(tab.getMonitorInfo());
-                OwnedScreens.Add(tab.getMonitorInfo());
+                availabeString.Remove(tab.title);
+                OwnedScreens.Add(tab.title);
                 abductedScreens.Children.Add(tab);
 
                 //Adding the monitor settings
                 gSetting.monitors.Add(new MonitorSetting(0));
 
                 ComboBoxItem tmpItem = new ComboBoxItem();
-                tmpItem.Content = tab.getMonitorInfo();
+                tmpItem.Content = tab.title;
                 tmpItem.Name = "N" + gSetting.monitors.Count.ToString();
                 combomonitorSelection.Items.Add(tmpItem);
             }
@@ -130,13 +135,13 @@ namespace WPF_Practice.MonitorControls
                 ComboBoxItem tmpitem = new ComboBoxItem();
 
                 abductedScreens.Children.Remove(tab);
-                OwnedScreens.Remove(tab.getMonitorInfo());
-                availabeString.Add(tab.getMonitorInfo());
+                OwnedScreens.Remove(tab.title);
+                availabeString.Add(tab.title);
                 PendingScreens.Children.Add(tab);
 
                 foreach (ComboBoxItem item in combomonitorSelection.Items)
                 {
-                    if (item.Content == tab.getMonitorInfo())
+                    if (item.Content == tab.title)
                     {
                         tmpitem = item;
                         break;
@@ -237,9 +242,7 @@ namespace WPF_Practice.MonitorControls
             {
                 isActive.Content = "Not Active";
                 gSetting.isActive = false;
-            }
-            
+            } 
         }
-
     }
 }
