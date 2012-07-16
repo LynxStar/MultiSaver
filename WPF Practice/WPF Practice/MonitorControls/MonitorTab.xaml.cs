@@ -27,19 +27,20 @@ namespace WPF_Practice.MonitorControls
             set { place = value; }
         }
 
-        public MonitorTab()
+        public string title
         {
-            InitializeComponent();
+            get { return MonitorInfo.Content.ToString(); }
+            set { MonitorInfo.Content = value; }
         }
 
-        public void setMonitorInfo(string str)
+        public void passtitleRef(ref string str)
         {
             MonitorInfo.Content = str;
         }
 
-        public string getMonitorInfo()
+        public MonitorTab()
         {
-            return MonitorInfo.Content.ToString();
+            InitializeComponent();
         }
 
         private void Grid_MouseEnter(object sender, MouseEventArgs e)

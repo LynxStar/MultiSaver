@@ -40,6 +40,7 @@ namespace WPF_Practice
         private void Create_Button_Clicked(object sender, RoutedEventArgs e)
         {
             MonitorTab monitor = new MonitorTab();
+
             monitor.Width = 383;
             monitor.Height = 30;
             monitor.MinWidth = MonitorMenu.MinWidth;
@@ -47,6 +48,7 @@ namespace WPF_Practice
             monitor.MouseDown += Monitor_clicked;
             monitor.order = configScreensSaverControl.createnewGroup();
             currentScreen = configScreensSaverControl.getTotalNumberofGroups() - 1;
+            monitor.passtitleRef(ref configScreensSaverControl.getGroupSettings(monitor.order).groupName);
             MonitorMenu.Children.Add(monitor);
         }
 
@@ -87,5 +89,9 @@ namespace WPF_Practice
             XMLHandler.save(configScreensSaverControl.getGroupSettings());
         }
 
+        private void textchanged(object sender, TextChangedEventArgs e)
+        {
+            
+        }
     }
 }
