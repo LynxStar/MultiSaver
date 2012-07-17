@@ -40,24 +40,27 @@ namespace WPF_Practice
         private void Create_Button_Clicked(object sender, RoutedEventArgs e)
         {
             MonitorTab monitor = new MonitorTab();
+
             monitor.Width = 383;
             monitor.Height = 30;
             monitor.MinWidth = MonitorMenu.MinWidth;
             monitor.MaxWidth = MonitorMenu.MaxWidth;
-            monitor.MouseDoubleClick += Monitor_clicked;
+            monitor.MouseDown += Monitor_clicked;
             monitor.order = configScreensSaverControl.createnewGroup();
             currentScreen = configScreensSaverControl.getTotalNumberofGroups() - 1;
+            monitor.passtitleRef(ref configScreensSaverControl.getGroupSettings(monitor.order).groupName);
             MonitorMenu.Children.Add(monitor);
         }
 
         private void Monitor_clicked(object sender, EventArgs e)
         {
             MonitorTab tab = (MonitorTab)sender;
+            
             //resetting the color
             foreach(MonitorTab mt in MonitorMenu.Children)
                 mt.Background = null;
             currentScreen = tab.order;
-            tab.Background = Brushes.YellowGreen;
+            tab.Background = Brushes.DarkTurquoise;
             if (!firstAppear)
                 configScreensSaverControl.saveGroupSettings();
             else
@@ -77,14 +80,18 @@ namespace WPF_Practice
             }
 
             MonitorMenu.Children.RemoveAt(currentScreen);
-            mainControl.Children.Clear();
             firstAppear = true;
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
+
             XMLHandler.save(configScreensSaverControl.getGroupSettings());
         }
 
+        private void textchanged(object sender, TextChangedEventArgs e)
+        {
+            
+        }
     }
 }

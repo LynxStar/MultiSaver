@@ -59,8 +59,8 @@ namespace WPF_Practice.MonitorControls
         public MonitorSetting(int id)
         {
             monitorId = id;
-            fadeTime = 3;
-            displayTime = 3;
+            fadeTime = 1;
+            displayTime = 1;
             panTime = 3;
             dirIn = 90;
             dirOut = 270;
