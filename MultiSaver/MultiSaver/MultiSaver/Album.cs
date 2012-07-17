@@ -106,22 +106,20 @@ namespace MultiSaver
             if (IsLeft)
             {
 
-                Images.Add(Content.Load<Texture2D>("Megaman1"));
-                Images.Add(Content.Load<Texture2D>("Megaman2"));
-                Images.Add(Content.Load<Texture2D>("Megaman3"));
-                Images.Add(Content.Load<Texture2D>("Megaman4"));
-                Images.Add(Content.Load<Texture2D>("Megaman5"));
+                Images.Add(Content.Load<Texture2D>("Alex1"));
+                Images.Add(Content.Load<Texture2D>("F22"));
+                Images.Add(Content.Load<Texture2D>("Tim1"));
+                Images.Add(Content.Load<Texture2D>("CPU1"));
 
             }
 
             else
             {
-
-                Images.Add(Content.Load<Texture2D>("Zelda1"));
-                Images.Add(Content.Load<Texture2D>("Zelda2"));
-                Images.Add(Content.Load<Texture2D>("Zelda3"));
-                Images.Add(Content.Load<Texture2D>("Zelda4"));
-                Images.Add(Content.Load<Texture2D>("Zelda5"));
+                
+                Images.Add(Content.Load<Texture2D>("Alex1"));
+                Images.Add(Content.Load<Texture2D>("F22"));
+                Images.Add(Content.Load<Texture2D>("Tim1"));
+                Images.Add(Content.Load<Texture2D>("CPU1"));
 
             }
 

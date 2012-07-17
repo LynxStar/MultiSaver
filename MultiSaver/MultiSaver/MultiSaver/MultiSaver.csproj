@@ -78,20 +78,18 @@
     <Compile Include="Camera.cs" />
     <Compile Include="Cell.cs" />
     <Compile Include="FreeCamera.cs" />
-    <Compile Include="Map.cs" />
     <Compile Include="Maze.cs" />
     <Compile Include="MazeAI.cs" />
-    <Compile Include="Minimap.cs" />
-    <Compile Include="Mode.cs" />
-    <Compile Include="Monitor.cs" />
-    <Compile Include="MultiView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Screensaver.cs" />
+    <Compile Include="Album.cs" />
     <Compile Include="TargetCamera.cs" />
     <Compile Include="User32.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>

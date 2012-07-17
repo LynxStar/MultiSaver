@@ -5,7 +5,8 @@ using System.Text;
 using System.Xml;
 namespace ConfigPanel
 {
-    class XMLHandler
+    
+    public class XMLHandler
     {
         public static void save(List<GroupSetting> groups)
         {
@@ -61,6 +62,10 @@ namespace ConfigPanel
                     {
                         case "Group":
                             tempGroup = new GroupSetting();
+                            break;
+                        case "Type":
+                            reader.Read();
+                            tempGroup.ssType = reader.Value.Trim();
                             break;
                         case "Name":
                             reader.Read();

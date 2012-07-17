@@ -95,7 +95,7 @@ namespace MultiSaver
             MovableCamera.Update();
 
             MazeEffect = Content.Load<Effect>("MazeEffect");
-            MazeTexture = Content.Load<Texture2D>("Alex");
+            MazeTexture = Content.Load<Texture2D>("Alex1");
 
             BEffect = new BasicEffect(GraphicsDevice);
             BEffect.VertexColorEnabled = true;
