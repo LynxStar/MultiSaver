@@ -45,8 +45,13 @@ namespace WPF_Practice
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            XMLHandler.save(groupSettings, saveLocation.Text);
+            XMLHandler.save(groupSettings, saveLocation.Text + "//");
             this.Close();
+        }
+
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+            XMLHandler.save(groupSettings);
         }
 
     }
