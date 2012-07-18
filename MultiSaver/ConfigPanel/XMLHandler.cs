@@ -5,7 +5,8 @@ using System.Text;
 using System.Xml;
 namespace ConfigPanel
 {
-    class XMLHandler
+    
+    public class XMLHandler
     {
         public static void save(List<GroupSetting> groups)
         {

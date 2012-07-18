@@ -2,6 +2,8 @@ using System;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Xna.Framework;
+using ConfigPanel;
+using System.Collections.Generic;
 
 namespace MultiSaver
 {
@@ -18,20 +20,56 @@ namespace MultiSaver
         static void Main(string[] args)
         {
 
-            //Thread Monitor1 = new Thread(RunAlbum);
-            Thread Monitor2 = new Thread(RunAlbum);
+            List<GroupSetting> Groups = XMLHandler.load("./config.xml");
 
-            //Monitor1.Start(new Rectangle(0, 0, 1600, 900));
-            //Thread.Sleep(1);
-            //Monitor2.Start(new Rectangle(-1000, 0, 1680, 1050));
+            foreach (GroupSetting Group in Groups)
+            {
 
-            Thread MazeAICenter = new Thread(RunMaze);
-            Thread MazeAILeft = new Thread(RunMaze);
+                //int Mode = Group.ssType == "SlideShow" ? 1 : 3;
 
-            MazeAICenter.Start(new object[] {new Rectangle(0, 0, 1600, 900), 0, 0 });//Stagger should be 5ish to account for Provost-DTS Fail
-            Thread.Sleep(1000);
-            MazeAILeft.Start(new object[] {new Rectangle(-1000, 0, 1680, 1050), 1, 10 });//Stagger to account for XNA and DirectX and Windows 
-            //and generally computers not being designed for MM
+                int Mode = 1;
+
+                switch (Mode)
+                {
+
+                    case 1:
+
+                        Thread Monitor1 = new Thread(RunAlbum);
+                        Thread Monitor2 = new Thread(RunAlbum);
+
+                        Monitor1.Start(new Rectangle(0, 0, 1680, 1050));
+                        Thread.Sleep(1);
+                        Monitor2.Start(new Rectangle(-1000, 0, 1680, 1050));
+
+                        break;
+
+                    case 2:
+
+                        Thread MazeAICenterSolo = new Thread(RunMaze);
+
+                        MazeAICenterSolo.Start(new object[] { new Rectangle(0, 0, 1600, 900), 0, 0 });
+
+                        Thread Monitor3 = new Thread(RunAlbum);
+
+                        Monitor3.Start(new Rectangle(-1000, 0, 1680, 1050));
+
+                        break;
+
+                    case 3:
+
+                        Thread MazeAICenter = new Thread(RunMaze);
+                        Thread MazeAILeft = new Thread(RunMaze);
+
+                        MazeAICenter.Start(new object[] { new Rectangle(0, 0, 1680, 1050), 0, 0 });
+                        Thread.Sleep(1000);
+                        MazeAILeft.Start(new object[] { new Rectangle(-1000, 0, 1680, 1050), 1, 10 });//Stagger to account for XNA and DirectX and Windows 
+                        //and generally computers not being designed for MM
+
+                        break;
+
+                }
+
+            }
 
         }
 

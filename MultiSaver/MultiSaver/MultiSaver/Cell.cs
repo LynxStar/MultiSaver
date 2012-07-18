@@ -8,6 +8,7 @@ using System.Collections.Concurrent;
 namespace MultiSaver
 {
     
+    [Serializable]
     public class Cell
     {
 
@@ -34,6 +35,7 @@ namespace MultiSaver
         public Color BottomColor;
 
         public bool IsEnd = false;
+        public bool IsFake = false;
 
         public Cell(Vector2 Location)
         {

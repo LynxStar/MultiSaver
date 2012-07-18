@@ -133,8 +133,27 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Alex.jpg">
-      <Name>Alex</Name>
+    <Compile Include="Alex1.jpg">
+      <Name>Alex1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CPU1.jpg">
+      <Name>CPU1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Tim1.jpg">
+      <Name>Tim1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="F22.jpg">
+      <Name>F22</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
