@@ -55,7 +55,8 @@ namespace WPF_Practice
         private void Monitor_clicked(object sender, EventArgs e)
         {
             MonitorTab tab = (MonitorTab)sender;
-            
+            MonitorTab prevtab = (MonitorTab)MonitorMenu.Children[currentScreen];
+            prevtab.title = configScreensSaverControl.getGroupSettings()[currentScreen].groupName;
             //resetting the color
             foreach(MonitorTab mt in MonitorMenu.Children)
                 mt.Background = null;
@@ -85,13 +86,19 @@ namespace WPF_Practice
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-
-            XMLHandler.save(configScreensSaverControl.getGroupSettings());
+            Window save = new Save(configScreensSaverControl.getGroupSettings());
+            save.ShowDialog();
+            //XMLHandler.save(configScreensSaverControl.getGroupSettings());
         }
 
         private void textchanged(object sender, TextChangedEventArgs e)
         {
             
+        }
+
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+            XMLHandler.save(configScreensSaverControl.getGroupSettings());
         }
     }
 }

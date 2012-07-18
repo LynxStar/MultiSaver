@@ -23,7 +23,7 @@ namespace WPF_Practice.MonitorControls
        private GroupControl gcontrol = new GroupControl();
        private List<GroupSetting> groupsettings = new List<GroupSetting>();
        private List<List<string>> ownedmonitors = new List<List<string>>();
-       private List<List<string>> unassignedMonitors = new List<List<string>>();
+       //private List<List<string>> unassignedMonitors = new List<List<string>>();
         //Common Classes holds the classes in which we transfer things from the form to the listsz
        private int currentActiveGroup;
 
@@ -38,13 +38,13 @@ namespace WPF_Practice.MonitorControls
             List<string> tmpMonitors = new List<string>();
 
             //groupsettings = XMLHandler.load("./config.xml");
-            foreach (System.Windows.Forms.Screen Screen in System.Windows.Forms.Screen.AllScreens)
+           /* foreach (System.Windows.Forms.Screen Screen in System.Windows.Forms.Screen.AllScreens)
             {
 
                 tmpMonitors.Add((Screen.Primary ? "Primary" : "Secondary") + "Monitor");
 
             }
-            unassignedMonitors.Add(tmpMonitors);
+            unassignedMonitors.Add(tmpMonitors);*/
 
         }
 
@@ -60,9 +60,9 @@ namespace WPF_Practice.MonitorControls
             List<string> tmpstring = new List<string>();
             groupsettings.Add(new GroupSetting());
             ownedmonitors.Add(new List<string>());
-            foreach (string str in unassignedMonitors[0])
+           /* foreach (string str in unassignedMonitors[0])
                 tmpstring.Add(str);
-            unassignedMonitors.Add(tmpstring);
+            unassignedMonitors.Add(tmpstring); */
             groupsettings[groupsettings.Count - 1].groupName = "Unnamed";
 
             Debug.WriteLine(String.Format("GroupSettings: {0} Ownded MOnitors: {1}", groupsettings.Count, ownedmonitors.Count));
@@ -94,7 +94,18 @@ namespace WPF_Practice.MonitorControls
             reset();
             gcontrol = new GroupControl();
             gcontrol.groupSetting = groupsettings[selectedScreen];
-            gcontrol.AvailableMonitors = unassignedMonitors[selectedScreen + 1];
+            //gcontrol.AvailableMonitors = unassignedMonitors[selectedScreen + 1];
+            List<string> unassignedMonitors = new List<string>();
+            foreach (System.Windows.Forms.Screen Screen in System.Windows.Forms.Screen.AllScreens)
+            {
+                string tmpMonitor =((Screen.Primary ? "Primary" : "Secondary") + "Monitor");
+                if (!ownedmonitors[selectedScreen].Contains(tmpMonitor))
+                {
+                    unassignedMonitors.Add(tmpMonitor);
+                }
+
+            }
+            gcontrol.AvailableMonitors = unassignedMonitors;
             gcontrol.OwnedMonitors = ownedmonitors[selectedScreen];
             mainPanel.Children.Add(gcontrol);
             currentActiveGroup = selectedScreen;
@@ -105,14 +116,14 @@ namespace WPF_Practice.MonitorControls
 
             groupsettings[currentActiveGroup] = gcontrol.groupSetting;
             ownedmonitors[currentActiveGroup] = gcontrol.OwnedMonitors;
-            unassignedMonitors[currentActiveGroup] = gcontrol.AvailableMonitors;
+            //unassignedMonitors[currentActiveGroup] = gcontrol.AvailableMonitors;
         }
         public void deleteGroup(int selectedScreen)
         {
             Debug.WriteLine("Selected Screen: {0}", selectedScreen);
             groupsettings.RemoveAt(selectedScreen);
             ownedmonitors.RemoveAt(selectedScreen);
-            unassignedMonitors.RemoveAt(selectedScreen + 1);
+            //unassignedMonitors.RemoveAt(selectedScreen + 1);
             reset();
         }
     }
