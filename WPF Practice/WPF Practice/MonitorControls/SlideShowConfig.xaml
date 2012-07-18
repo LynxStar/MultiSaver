@@ -39,7 +39,7 @@
         </ComboBox>
         <TextBox Height="23" HorizontalAlignment="Left" Margin="97,48,0,0" Name="pictureLocation" VerticalAlignment="Top" Width="94" TextChanged="pictureLocation_TextChanged" />
         <Label Content="Location:" Height="28" HorizontalAlignment="Left" Margin="12,46,0,0" Name="label8" VerticalAlignment="Top" />
-        <Button Content="..." Height="23" HorizontalAlignment="Left" Margin="191,48,0,0" Name="button1" VerticalAlignment="Top" Width="24" Click="fineFileButtonClick" />
+        <Button Content="..." Height="23" HorizontalAlignment="Right" Margin="0,48,12,0" Name="button1" VerticalAlignment="Top" Width="24" Click="fineFileButtonClick" />
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="97,233,0,0" Name="comboRotation" VerticalAlignment="Top" Width="96" DropDownClosed="comboRotation_DropDownClosed">
             <ComboBoxItem>1</ComboBoxItem>
             <ComboBoxItem>2</ComboBoxItem>

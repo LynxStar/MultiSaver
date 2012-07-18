@@ -9,7 +9,7 @@
         <Label Content="Maze Config" Height="28" HorizontalAlignment="Left" Name="label1" VerticalAlignment="Top" Margin="0,13,0,0" />
         <Label Content="Maze Size:" Height="28" HorizontalAlignment="Left" Margin="0,47,0,0" Name="label2" VerticalAlignment="Top" />
         <Label Content="Maze Pallet Name:" Height="24" HorizontalAlignment="Left" Margin="0,74,0,0" Name="label3" VerticalAlignment="Top" />
-        <ComboBox Height="23" HorizontalAlignment="Left" Margin="107,47,0,0" Name="comboMazeSize" VerticalAlignment="Top" Width="120">
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="107,47,0,0" Name="comboMazeSize" VerticalAlignment="Top" Width="120" DropDownClosed="comboMazeSize_DropDownClosed">
             <ComboBoxItem>1</ComboBoxItem>
             <ComboBoxItem>2</ComboBoxItem>
             <ComboBoxItem>3</ComboBoxItem>
@@ -21,17 +21,17 @@
             <ComboBoxItem>9</ComboBoxItem>
             <ComboBoxItem>10</ComboBoxItem>
         </ComboBox>
-        <ComboBox Height="23" HorizontalAlignment="Left" Margin="106,105,0,0" Name="comboAIView" VerticalAlignment="Top" Width="120">
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="106,105,0,0" Name="comboAIView" VerticalAlignment="Top" Width="120" DropDownClosed="comboAIView_DropDownClosed">
             <ComboBoxItem>First Person</ComboBoxItem>
-            <ComboBoxItem>Top Dowm</ComboBoxItem>
+            <ComboBoxItem>Top Down</ComboBoxItem>
         </ComboBox>
-        <ComboBox Height="23" HorizontalAlignment="Left" Margin="107,0,0,143" Name="comboAIMethod" VerticalAlignment="Bottom" Width="120">
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="107,0,0,143" Name="comboAIMethod" VerticalAlignment="Bottom" Width="120" DropDownClosed="comboAIMethod_DropDownClosed">
             <ComboBoxItem>Depth First</ComboBoxItem>
             <ComboBoxItem>Breadth First</ComboBoxItem>
             <ComboBoxItem>Left Hand Rule</ComboBoxItem>
         </ComboBox>
         <Label Content="Ai View:" Height="24" HorizontalAlignment="Left" Margin="0,105,0,0" Name="label4" VerticalAlignment="Top" />
         <Label Content="Search Method:" Height="24" HorizontalAlignment="Left" Margin="0,134,0,0" Name="label5" VerticalAlignment="Top" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="106,76,0,0" Name="textBoxPalletN" VerticalAlignment="Top" Width="120" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="106,76,0,0" Name="textBoxPalletN" VerticalAlignment="Top" Width="120" TextChanged="textBoxPalletN_TextChanged" />
     </Grid>
 </UserControl>
