@@ -55,6 +55,8 @@ namespace WPF_Practice
         private void Monitor_clicked(object sender, EventArgs e)
         {
             MonitorTab tab = (MonitorTab)sender;
+            MonitorTab prevtab = (MonitorTab)MonitorMenu.Children[currentScreen];
+            prevtab.title = configScreensSaverControl.getGroupSettings()[currentScreen].groupName;
             
             //resetting the color
             foreach(MonitorTab mt in MonitorMenu.Children)
