@@ -34,18 +34,43 @@ namespace WPF_Practice.MonitorControls
         public String MazeView
         {
             get { return (comboAIView.SelectedValue as ComboBoxItem).Content.ToString(); }
-            set { (comboAIView.SelectedValue as ComboBoxItem).Content = value; }
+            set { setMazeView(value, comboAIView); }
+        }
+
+        private void setMazeView(string view, ComboBox cb)
+        {
+            if (view.Equals("First Person"))
+                cb.SelectedIndex = 0;
+            else if (view.Equals("Top Down"))
+                cb.SelectedIndex = 1;
         }
 
         public String SearchMethod
         {
             get { return (comboAIMethod.SelectedValue as ComboBoxItem).Content.ToString();}
-            set { (comboAIMethod.SelectedValue as ComboBoxItem).Content = value; }
+            set { setSearchMethod(value, comboAIMethod); }
         }
 
         public MazeConfig()
         {
             InitializeComponent();
+        }
+
+        private void setSearchMethod(string method, ComboBox cb)
+        {
+            switch (method)
+            {
+                case "Depth First":
+                    cb.SelectedIndex = 0;
+                    break;
+                case "Breadth First":
+                    cb.SelectedIndex = 1;
+                    break;
+                case "Left Hand Rule":
+                    cb.SelectedIndex = 2;
+                    break;
+            }
+
         }
 
         public void fillPage(GroupSetting gSettings, MonitorSetting mSettings)
@@ -67,9 +92,9 @@ namespace WPF_Practice.MonitorControls
 
         public void setGroupSettings(GroupSetting gSettings, int numberscreen)
         {
+            MazeSize = gSettings.mazeSize;
             SearchMethod = gSettings.monitors[numberscreen].aiMethod;
             MazeView = gSettings.monitors[numberscreen].aiView;
-            MazeSize = gSettings.mazeSize;
             MazePalletName = gSettings.mazePalletName;
         } 
 

@@ -22,13 +22,13 @@
             <ComboBoxItem>10</ComboBoxItem>
         </ComboBox>
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="106,105,0,0" Name="comboAIView" VerticalAlignment="Top" Width="120">
-            <ComboBoxItem Content="First Person" />
-            <ComboBoxItem Content="Top Down" />
+            <ComboBoxItem>First Person</ComboBoxItem>
+            <ComboBoxItem>Top Dowm</ComboBoxItem>
         </ComboBox>
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="107,0,0,143" Name="comboAIMethod" VerticalAlignment="Bottom" Width="120">
-            <ComboBoxItem Content="Depth First" />
-            <ComboBoxItem Content="Breadth First" />
-            <ComboBoxItem Content="Left Hand First" />
+            <ComboBoxItem>Depth First</ComboBoxItem>
+            <ComboBoxItem>Breadth First</ComboBoxItem>
+            <ComboBoxItem>Left Hand Rule</ComboBoxItem>
         </ComboBox>
         <Label Content="Ai View:" Height="24" HorizontalAlignment="Left" Margin="0,105,0,0" Name="label4" VerticalAlignment="Top" />
         <Label Content="Search Method:" Height="24" HorizontalAlignment="Left" Margin="0,134,0,0" Name="label5" VerticalAlignment="Top" />

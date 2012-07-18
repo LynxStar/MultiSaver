@@ -24,7 +24,7 @@
             <ComboBoxItem>West</ComboBoxItem>
             <ComboBoxItem>East</ComboBoxItem>
         </ComboBox>
-        <ComboBox Height="23" HorizontalAlignment="Left" Margin="97,204,0,0" Name="directionoutBox" VerticalAlignment="Top" Width="94" DropDownClosed="directionoutBox_DropDownClosed">
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="97,204,0,0" Name="directionoutBox" VerticalAlignment="Top" Width="94" DropDownClosed="directionoutBox_DropDownClosed" >
             <ComboBoxItem>North</ComboBoxItem>
             <ComboBoxItem>South</ComboBoxItem>
             <ComboBoxItem>West</ComboBoxItem>
