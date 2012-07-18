@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace MultiSaver
 {
@@ -29,7 +31,7 @@ namespace MultiSaver
 
         public Stack<Cell> CellStack = new Stack<Cell>();
 
-        public Random Random = new Random(526);
+        public Random Random = new Random(1);//526
         public Cell Location;
         public Cell End;
 
@@ -387,6 +389,13 @@ namespace MultiSaver
 
                 Cell Temp = PathStack.Pop();
 
+                if (Temp.IsFake)
+                {
+
+                    return PathStack.Peek();
+
+                }
+
                 //Check if at the end
                 if (Temp.Location == End.Location)
                 {
@@ -459,8 +468,20 @@ namespace MultiSaver
 
                 if (!Neighbors)
                 {
+                    
+                    //Adds fake steps in so that the AI will animate the retracing of its steps
+                    List<Cell> Fakes = GetPathDFS(Temp, PathStack.Peek());
+                    Fakes.RemoveAt(0);
+                    Fakes.RemoveAt(Fakes.Count - 1);
+                    
+                    foreach (Cell C in Fakes)
+                    {
 
-                    Next = Temp.Previous(ID);
+                        PathStack.Push(C);
+
+                    }
+
+                    Next = PathStack.Peek();
 
                 }
 
@@ -478,6 +499,151 @@ namespace MultiSaver
 
         }
 
+        public List<Cell> GetPathDFS(Cell Start, Cell End)
+        {
+
+            DFS Solver = new DFS(Cells, (int)Dimensions.X, (int)Dimensions.Y);
+
+            if (Solver.DFSSolve(Solver.Maze[(int)Start.Location.X, (int)Start.Location.Y], Solver.Maze[(int)End.Location.X, (int)End.Location.Y]))
+                return Solver.Path;
+
+            else
+                return null;
+
+        }
+
+    }
+
+    public class DFS
+    {
+
+        public List<Cell> Path;
+        public Cell[,] Maze;
+
+        int Height;
+        int Width;
+
+        public DFS(Cell[,] MazeData, int Height, int Width)
+        {
+
+            this.Height = Height;
+            this.Width = Width;
+
+            Maze = GenericCopier<Cell[,]>.DeepCopy(MazeData);
+            
+            foreach (Cell C in Maze)
+            {
+
+                C.SetVisit(1, false);
+                C.IsFake = true;
+
+            }
+
+            Path = new List<Cell>();
+
+        }
+
+        public bool DFSSolve(Cell Start, Cell End)
+        {
+            // base condition
+            if (Start.Location == End.Location)
+            {
+                // make it visited in order to be drawed with green
+                Maze[(int)Start.Location.X, (int)Start.Location.Y].SetVisit(1, true);
+                // add end point to the foundPath
+                Path.Add(Start);
+                return true;
+            }
+
+
+            // has been visited alread, return
+            if (Maze[(int)Start.Location.X, (int)Start.Location.Y].VisitedBy(1))
+                return false;
+
+
+            // mark as visited
+            Maze[(int)Start.Location.X, (int)Start.Location.Y].SetVisit(1, true);
+
+            // Check every neighbor cell
+            // If it exists (not outside the maze bounds)
+            // and if there is no wall between start and it
+            // recursive call this method with it
+            // if it returns true, add the current start to foundPath and return true too
+            // else complete
+
+            // Left
+            if (Start.Location.X - 1 >= 0 && !Maze[(int)Start.Location.X - 1, (int)Start.Location.Y].RightWall)
+            {
+                //Maze[(int)Start.Location.X, (int)Start.Location.Y].Path = Cell.Paths.Left;
+                Cell Next = Maze[(int)Start.Location.X - 1, (int)Start.Location.Y];
+                {
+                    if (DFSSolve(Next, End))
+                    {
+                        Path.Add(Start);
+                        return true;
+                    }
+                }
+            }
+            // Right
+            if (Start.Location.X + 1 < Width && !Maze[(int)Start.Location.X + 1, (int)Start.Location.Y].LeftWall)
+            {
+                //Maze[(int)Start.Location.X, (int)Start.Location.Y].Path = Cell.Paths.Right;
+                Cell Next = Maze[(int)Start.Location.X + 1, (int)Start.Location.Y];
+                {
+                    if (DFSSolve(Next, End))
+                    {
+                        Path.Add(Start);
+                        return true;
+                    }
+                }
+            }
+
+            // Up
+            if (Start.Location.Y - 1 >= 0 && !Maze[(int)Start.Location.X, (int)Start.Location.Y - 1].BottomWall)
+            {
+                //Maze[(int)Start.Location.X, (int)Start.Location.Y].Path = Cell.Paths.Up;
+                Cell Next = Maze[(int)Start.Location.X, (int)Start.Location.Y - 1];
+                {
+                    if (DFSSolve(Next, End))
+                    {
+                        Path.Add(Start);
+                        return true;
+                    }
+                }
+            }
+
+
+            // Down
+            if (Start.Location.Y + 1 < Height && !Maze[(int)Start.Location.X, (int)Start.Location.Y + 1].TopWall)
+            {
+                //Maze[(int)Start.Location.X, (int)Start.Location.Y].Path = Cell.Paths.Down;
+                Cell Next = Maze[(int)Start.Location.X, (int)Start.Location.Y + 1];
+                {
+                    if (DFSSolve(Next, End))
+                    {
+                        Path.Add(Start);
+                        return true;
+                    }
+                }
+            }
+            //Maze[(int)Start.Location.X, (int)Start.Location.Y].Path = Cell.Paths.None;
+            return false;
+        }
+
+    }
+
+    public static class GenericCopier<T>//deep copy a list
+    {
+        public static T DeepCopy(object objectToCopy)
+        {
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+                binaryFormatter.Serialize(memoryStream, objectToCopy);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                return (T)binaryFormatter.Deserialize(memoryStream);
+            }
+        }
     }
 
 }

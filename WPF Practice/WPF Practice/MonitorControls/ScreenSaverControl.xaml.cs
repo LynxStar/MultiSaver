@@ -37,6 +37,7 @@ namespace WPF_Practice.MonitorControls
             InitializeComponent();
             List<string> tmpMonitors = new List<string>();
 
+            //groupsettings = XMLHandler.load("./config.xml");
             foreach (System.Windows.Forms.Screen Screen in System.Windows.Forms.Screen.AllScreens)
             {
 
