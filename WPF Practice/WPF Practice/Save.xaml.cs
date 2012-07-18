@@ -49,10 +49,6 @@ namespace WPF_Practice
             this.Close();
         }
 
-        private void button2_Click(object sender, RoutedEventArgs e)
-        {
-            XMLHandler.save(groupSettings);
-        }
 
     }
 }
