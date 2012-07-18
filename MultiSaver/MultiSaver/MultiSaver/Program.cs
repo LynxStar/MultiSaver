@@ -35,7 +35,7 @@ namespace MultiSaver
                         Thread Monitor1 = new Thread(RunAlbum);
                         Thread Monitor2 = new Thread(RunAlbum);
 
-                        Monitor1.Start(new Rectangle(0, 0, 1600, 900));
+                        Monitor1.Start(new Rectangle(0, 0, 1680, 1050));
                         Thread.Sleep(1);
                         Monitor2.Start(new Rectangle(-1000, 0, 1680, 1050));
 
@@ -60,7 +60,7 @@ namespace MultiSaver
                         Thread MazeAICenter = new Thread(RunMaze);
                         Thread MazeAILeft = new Thread(RunMaze);
 
-                        MazeAICenter.Start(new object[] { new Rectangle(0, 0, 1600, 900), 0, 0 });//Stagger should be 5ish to account for Provost-DTS Fail
+                        MazeAICenter.Start(new object[] { new Rectangle(0, 0, 1680, 1050), 0, 0 });//Stagger should be 5ish to account for Provost-DTS Fail
                         Thread.Sleep(1000);
                         MazeAILeft.Start(new object[] { new Rectangle(-1000, 0, 1680, 1050), 1, 10 });//Stagger to account for XNA and DirectX and Windows 
                         //and generally computers not being designed for MM
