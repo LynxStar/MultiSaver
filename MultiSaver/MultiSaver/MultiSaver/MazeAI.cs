@@ -27,6 +27,9 @@ namespace MultiSaver
         FreeCamera MovableCamera;
 
         int SmallTimer;
+        int Delay;
+
+        public String CameraState = "Waiting";
 
         public Rectangle Bounds = Rectangle.Empty;
 
@@ -51,6 +54,10 @@ namespace MultiSaver
         public VertexBuffer WallVerticesBuffer;
         public IndexBuffer WallIndicesBuffer;
 
+        Vector2 HasMoved;
+        Vector2 ShouldMove;
+        Vector3 Start;
+        
         public MazeAI()
         {
             
@@ -71,6 +78,8 @@ namespace MultiSaver
 
         protected override void LoadContent()
         {
+
+            Delay = Program.Rand.Next(300, 3000);
 
             graphics.PreferredBackBufferHeight = Bounds.Height;
             graphics.PreferredBackBufferWidth = Bounds.Width;
@@ -109,10 +118,6 @@ namespace MultiSaver
 
 
         }
-
-        Vector2 HasMoved;
-        Vector2 ShouldMove;
-        Vector3 Start;
 
         protected override void Update(GameTime gameTime)
         {
@@ -198,6 +203,8 @@ namespace MultiSaver
 
                 case "Ready":
 
+                    #region Maze Stuff
+
                     if (SelfMode == "Ready")
                     {
 
@@ -274,6 +281,7 @@ namespace MultiSaver
                         ShouldMove = new Vector2(Difference.X + 110, Difference.Z + 110);
                         HasMoved = new Vector2(110) - ShouldMove;
                         Start = MovableCamera.Position;
+                        Start.Y = 55;
                         
                         RotateBy = NeedsRotate();
 
@@ -356,6 +364,72 @@ namespace MultiSaver
                         SelfMode = "Transition";
 
                     }
+
+                    #endregion
+
+                    #region Overview
+
+                    if (Delay <= 0)
+                    {
+
+                        if (CameraState == "Waiting")
+                        {
+
+                            CameraState = "Up";
+                            Delay = 60;
+
+                        }
+
+                        else if (CameraState == "Up")
+                        {
+
+                            CameraState = "Observe";
+                            Delay = 600;
+
+                        }
+
+                        else if (CameraState == "Observe")
+                        {
+
+                            CameraState = "Down";
+                            Delay = 60;
+
+                        }
+
+                        else if (CameraState == "Down")
+                        {
+
+                            CameraState = "Waiting";
+                            Delay = Program.Rand.Next(1500, 3000);
+
+                        }
+
+                    }
+
+                    else
+                    {
+
+                        if (CameraState == "Up")
+                        {
+
+                            MovableCamera.Rotate(0, -MathHelper.ToRadians(90) / 60);
+                            MovableCamera.Position += new Vector3(0, 500 / 60, 0);
+
+                        }
+
+                        else if (CameraState == "Down")
+                        {
+
+                            MovableCamera.Rotate(0, MathHelper.ToRadians(90) / 60);
+                            MovableCamera.Position -= new Vector3(0, 500 / 60, 0);
+
+                        }
+
+                        Delay--;
+
+                    }
+
+                    #endregion
 
                     break;
 
