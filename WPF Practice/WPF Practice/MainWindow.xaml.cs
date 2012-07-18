@@ -91,11 +91,6 @@ namespace WPF_Practice
             //XMLHandler.save(configScreensSaverControl.getGroupSettings());
         }
 
-        private void textchanged(object sender, TextChangedEventArgs e)
-        {
-            
-        }
-
         private void button2_Click(object sender, RoutedEventArgs e)
         {
             XMLHandler.save(configScreensSaverControl.getGroupSettings());
