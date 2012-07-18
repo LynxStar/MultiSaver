@@ -19,7 +19,7 @@ namespace WPF_Practice.MonitorControls
     /// </summary>
     public partial class GroupControl : UserControl
     {
-        private MazeConfig mazeConfig = new MazeConfig();
+        private MazeConfig mazeConfig;
         private GroupSetting gSetting = new GroupSetting();
         private SlideShowConfig slideshowConfig;
         private int previoussetting = 0; 
@@ -51,7 +51,7 @@ namespace WPF_Practice.MonitorControls
         public GroupControl()
         {
             slideshowConfig = new SlideShowConfig(gSetting);
-            mazeConfig = new MazeConfig();
+            mazeConfig = new MazeConfig(gSetting);
             InitializeComponent();
         }
 
