@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using Winforms = System.Windows.Forms;
 
 namespace WPF_Practice.MonitorControls
 {
@@ -111,9 +112,13 @@ namespace WPF_Practice.MonitorControls
             currentActiveGroup = selectedScreen;
         }
 
+        private void isActive_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
         public void saveGroupSettings()
         {
-
             groupsettings[currentActiveGroup] = gcontrol.groupSetting;
             ownedmonitors[currentActiveGroup] = gcontrol.OwnedMonitors;
             //unassignedMonitors[currentActiveGroup] = gcontrol.AvailableMonitors;

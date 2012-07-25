@@ -3,4 +3,5 @@
 
 
 
-Monitor settings equal to slideshow settings
+fix switching groups problems
+
