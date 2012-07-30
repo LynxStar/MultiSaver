@@ -12,11 +12,11 @@
             <ComboBoxItem>Spiral</ComboBoxItem>
             <ComboBoxItem>Random</ComboBoxItem>
         </ComboBox>
-        <Label Content="Fade Time:" Height="28" HorizontalAlignment="Left" Margin="14,76,0,0" Name="label1" VerticalAlignment="Top" />
+        <Label Content="Fade Time:" Height="28" HorizontalAlignment="Left" Margin="14,80,0,0" Name="label1" VerticalAlignment="Top" />
         <Label Content="DisplayTime:" Height="28" HorizontalAlignment="Left" Margin="12,0,0,176" Name="label2" VerticalAlignment="Bottom" Width="79" />
-        <Label Content="Pan Time:" HorizontalAlignment="Left" Margin="12,144,0,144" Name="label3" Width="67" />
-        <Label Content="Direction In:" Height="28" HorizontalAlignment="Left" Margin="12,176,0,0" Name="label4" VerticalAlignment="Top" />
-        <Label Content="Direction Out:" Height="28" HorizontalAlignment="Left" Margin="10,199,0,0" Name="label5" VerticalAlignment="Top" />
+        <Label Content="Pan Time:" HorizontalAlignment="Left" Margin="12,142,0,146" Name="label3" Width="67" />
+        <Label Content="Direction In:" Height="28" HorizontalAlignment="Left" Margin="12,172,0,0" Name="label4" VerticalAlignment="Top" />
+        <Label Content="Direction Out:" Height="28" HorizontalAlignment="Left" Margin="10,202,0,0" Name="label5" VerticalAlignment="Top" />
         <Label Content="Rotation:" Height="28" HorizontalAlignment="Left" Margin="12,233,0,0" Name="label7" VerticalAlignment="Top" />
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="97,173,0,0" Name="directionInBox" VerticalAlignment="Top" Width="94" DropDownClosed="directionInBox_DropDownClosed">
             <ComboBoxItem>North</ComboBoxItem>

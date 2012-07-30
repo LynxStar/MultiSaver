@@ -31,7 +31,7 @@ namespace WPF_Practice.MonitorControls
                 foreach(MonitorSetting ms in gs.monitors)
                 {
                     writer.WriteStartElement("Monitor");
-                    writer.WriteElementString("ID", ms.monitorId.ToString());
+                    writer.WriteElementString("ID", ms.monitorId);
                     writer.WriteElementString("TransitionType", ms.transitionType);
                     writer.WriteElementString("FadeTime", ms.fadeTime.ToString());
                     writer.WriteElementString("DisplayTime", ms.displayTime.ToString());
@@ -56,7 +56,7 @@ namespace WPF_Practice.MonitorControls
             XmlReader reader = XmlReader.Create(pathname);
             List<GroupSetting> groups = new List<GroupSetting>();
             GroupSetting tempGroup = new GroupSetting();
-            MonitorSetting tempMonitor = new MonitorSetting(0);
+            MonitorSetting tempMonitor = new MonitorSetting("temp");
             while (reader.Read())
             {
                 if (reader.IsStartElement())
@@ -95,7 +95,7 @@ namespace WPF_Practice.MonitorControls
                             if (reader.Name == "ID")
                             { 
                                 reader.Read();
-                                tempMonitor = new MonitorSetting(int.Parse(reader.Value.Trim()));
+                                tempMonitor = new MonitorSetting(reader.Value.Trim());
                             }
                             else
                             {
