@@ -7,10 +7,11 @@
             <ColumnDefinition Width="552*" />
             <ColumnDefinition Width="308*" />
         </Grid.ColumnDefinitions>
-        <StackPanel Name="MonitorMenu" Margin="0,0,390,68" MaxHeight="426" MinHeight="59" MaxWidth="426"></StackPanel>
+        <StackPanel Name="MonitorMenu" Margin="0,0,390,96" MaxHeight="426" MinHeight="59" MaxWidth="426"></StackPanel>
         <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="0,401,0,0" Name="DeleteButton" VerticalAlignment="Top" Width="162" Click="DeleteButton_Click" />
         <StackPanel  HorizontalAlignment="Left" Margin="165,0,0,0" Name="mainControl" VerticalAlignment="Top" Width="690" Height="422" Grid.ColumnSpan="2"></StackPanel>
         <Button Content="CreateGroup" Height="23" Name="createButton" Width="162" Click="Create_Button_Clicked" Margin="0,353,390,0" VerticalAlignment="Top" />
         <Button Content="Save" Height="23" Name="button1" Margin="0,377,390,24" Click="button1_Click" />
+        <Button Content="Load" Height="23" HorizontalAlignment="Left" Margin="0,334,0,0" Name="btnLoad" VerticalAlignment="Top" Width="162" Click="btnLoad_Click" />
     </Grid>
 </Window>
