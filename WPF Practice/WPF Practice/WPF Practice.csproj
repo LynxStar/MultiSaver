@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MonitorControls\ScreenSaverListener.cs" />
     <Compile Include="MonitorControls\XMLHandler.cs" />
     <Compile Include="Save.xaml.cs">
       <DependentUpon>Save.xaml</DependentUpon>

@@ -231,8 +231,11 @@ namespace WPF_Practice.MonitorControls
 
         }
 
-        private void isActive_Click(object sender, RoutedEventArgs e)
+        public void isActive_Click(object sender, RoutedEventArgs e)
         {
+            if (abductedScreens.Children.Capacity == 0)
+                return;
+
             if (String.Equals(isActive.Content.ToString(), "Not Active", StringComparison.InvariantCultureIgnoreCase))
             {
                 isActive.Content = "Active";
