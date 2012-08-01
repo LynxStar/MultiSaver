@@ -29,7 +29,7 @@ namespace WPF_Practice.MonitorControls
             monitors = new List<MonitorSetting>();
         }
 
-        public void addMonitor(int id)
+        public void addMonitor(string id)
         {
             monitors.Add(new MonitorSetting(id));
         }
@@ -43,7 +43,7 @@ namespace WPF_Practice.MonitorControls
 
     public class MonitorSetting
     {
-        public int monitorId; //missing
+        public  string monitorId; //missing
         public string transitionType;
         public int fadeTime;
         public int displayTime;
@@ -56,7 +56,7 @@ namespace WPF_Practice.MonitorControls
         public string aiView;
         public string aiMethod;
 
-        public MonitorSetting(int id)
+        public MonitorSetting(string id)
         {
             monitorId = id;
             fadeTime = 1;

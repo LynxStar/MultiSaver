@@ -122,7 +122,7 @@ namespace WPF_Practice.MonitorControls
                 abductedScreens.Children.Add(tab);
 
                 //Adding the monitor settings
-                gSetting.monitors.Add(new MonitorSetting(0));
+                gSetting.monitors.Add(new MonitorSetting(System.Windows.Forms.Screen.AllScreens[int.Parse(tab.title.Substring(8,1))-1].DeviceName));
 
                 ComboBoxItem tmpItem = new ComboBoxItem();
                 tmpItem.Content = tab.title;
