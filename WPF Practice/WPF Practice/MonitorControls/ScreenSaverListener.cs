@@ -35,8 +35,8 @@ namespace WPF_Practice.MonitorControls
             for (int i = 0; i < main.MonitorMenu.Children.Capacity - 1; i++)
             {
                 MonitorTab tab = (MonitorTab)main.MonitorMenu.Children[i];
-                tab.title = String.Format("{0}   {1}\nOwned:  {2}",saver.getGroupSettings(i).groupName, saver.getGroupSettings(i).ssType, 
-                    saver.getGroupSettings(i).monitors.Capacity);
+                tab.title = String.Format("{0}   {1}\nOwned:  {2} Active:  {3}",saver.getGroupSettings(i).groupName, saver.getGroupSettings(i).ssType, 
+                    saver.getGroupSettings(i).monitors.Capacity, saver.getGroupSettings(i).isActive);
                 main.MonitorMenu.Children[i] = tab;
             }
         }
