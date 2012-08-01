@@ -36,14 +36,15 @@ namespace WPF_Practice.MonitorControls
 
        protected virtual void OnChanged(EventArgs e)
        {
-           return ownedmonitors;
-       }
-
-       {
            if (changed != null)
                changed(this, e);
        }
-       
+
+       public List<List<string>> getOwnedMonitors()
+       {
+           return ownedmonitors;
+       }
+
         public ScreenSaverControl()
         {
             InitializeComponent();
