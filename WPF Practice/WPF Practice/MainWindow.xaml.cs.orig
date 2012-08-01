@@ -21,8 +21,7 @@ namespace WPF_Practice
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ScreenSaverControl configScreensSaverControl;
-        private ScreenSaverListener listener;
+        private ScreenSaverControl configScreensSaverControl = new ScreenSaverControl();
         private int currentScreen = -1;
 
         bool firstAppear = true;
@@ -30,8 +29,7 @@ namespace WPF_Practice
         public MainWindow()
         {
             InitializeComponent();
-            configScreensSaverControl = new ScreenSaverControl();
-            listener = new ScreenSaverListener(this, configScreensSaverControl);
+            
         }
 
         public void form_Loaded(object sender, RoutedEventArgs e)
@@ -44,7 +42,7 @@ namespace WPF_Practice
             MonitorTab monitor = new MonitorTab();
 
             monitor.Width = 383;
-            monitor.Height = 40;
+            monitor.Height = 30;
             monitor.MinWidth = MonitorMenu.MinWidth;
             monitor.MaxWidth = MonitorMenu.MaxWidth;
             monitor.MouseDown += Monitor_clicked;
@@ -57,7 +55,12 @@ namespace WPF_Practice
         private void Monitor_clicked(object sender, EventArgs e)
         {
             MonitorTab tab = (MonitorTab)sender;
-
+            MonitorTab prevtab = (MonitorTab)MonitorMenu.Children[currentScreen];
+            prevtab.title = configScreensSaverControl.getGroupSettings()[currentScreen].groupName;
+<<<<<<< HEAD
+=======
+            
+>>>>>>> dd53ad63920230377b2e35bb2e766c2253fde674
             //resetting the color
             foreach(MonitorTab mt in MonitorMenu.Children)
                 mt.Background = null;
@@ -87,40 +90,13 @@ namespace WPF_Practice
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            Window save = new Save(configScreensSaverControl.getGroupSettings());
-            save.ShowDialog();
-            //XMLHandler.save(configScreensSaverControl.getGroupSettings());
-        }
 
-        private void button2_Click(object sender, RoutedEventArgs e)
-        {
             XMLHandler.save(configScreensSaverControl.getGroupSettings());
         }
 
-        private void btnLoad_Click(object sender, RoutedEventArgs e)
+        private void textchanged(object sender, TextChangedEventArgs e)
         {
-            List<GroupSetting> loaded = new List<GroupSetting>();
-            loaded = XMLHandler.load("config.xml");
-            foreach (GroupSetting gs in loaded)
-            {
-                MonitorTab monitor = new MonitorTab();
-                configScreensSaverControl.getGroupSettings().Add(gs);
-                monitor.Width = 383;
-                monitor.Height = 30;
-                monitor.MinWidth = MonitorMenu.MinWidth;
-                monitor.MaxWidth = MonitorMenu.MaxWidth;
-                monitor.MouseDown += Monitor_clicked;
-                monitor.order = configScreensSaverControl.getGroupSettings().Count -1;
-                currentScreen = configScreensSaverControl.getTotalNumberofGroups() - 1;
-                monitor.passtitleRef(ref gs.groupName);
-                MonitorMenu.Children.Add(monitor);
-
-                configScreensSaverControl.getOwnedMonitors().Add(new List<string>());
-                foreach (MonitorSetting ms in gs.monitors)
-                {
-                    configScreensSaverControl.getOwnedMonitors()[configScreensSaverControl.getOwnedMonitors().Count - 1].Add(ms.monitorId);
-                }
-            }
+            
         }
     }
 }
