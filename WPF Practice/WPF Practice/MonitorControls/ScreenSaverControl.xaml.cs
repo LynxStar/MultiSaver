@@ -102,7 +102,7 @@ namespace WPF_Practice.MonitorControls
             foreach (System.Windows.Forms.Screen Screen in System.Windows.Forms.Screen.AllScreens)
             {
                 string tmpMonitor ="Monitor " + monitorcount;
-                if (!ownedmonitors[selectedScreen].Contains(Screen.DeviceName))
+                if (!ownedmonitors[selectedScreen].Contains(tmpMonitor))
                 {
                     unassignedMonitors.Add(tmpMonitor);
                 }
@@ -110,6 +110,7 @@ namespace WPF_Practice.MonitorControls
                 {
                     gcontrol.OwnedMonitors.Add(tmpMonitor);
                 }
+                monitorcount++;
 
             }
             gcontrol.AvailableMonitors = unassignedMonitors;
