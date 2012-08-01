@@ -96,5 +96,31 @@ namespace WPF_Practice
         {
             XMLHandler.save(configScreensSaverControl.getGroupSettings());
         }
+
+        private void btnLoad_Click(object sender, RoutedEventArgs e)
+        {
+            List<GroupSetting> loaded = new List<GroupSetting>();
+            loaded = XMLHandler.load("config.xml");
+            foreach (GroupSetting gs in loaded)
+            {
+                MonitorTab monitor = new MonitorTab();
+                configScreensSaverControl.getGroupSettings().Add(gs);
+                monitor.Width = 383;
+                monitor.Height = 30;
+                monitor.MinWidth = MonitorMenu.MinWidth;
+                monitor.MaxWidth = MonitorMenu.MaxWidth;
+                monitor.MouseDown += Monitor_clicked;
+                monitor.order = configScreensSaverControl.getGroupSettings().Count -1;
+                currentScreen = configScreensSaverControl.getTotalNumberofGroups() - 1;
+                monitor.passtitleRef(ref gs.groupName);
+                MonitorMenu.Children.Add(monitor);
+
+                configScreensSaverControl.getOwnedMonitors().Add(new List<string>());
+                foreach (MonitorSetting ms in gs.monitors)
+                {
+                    configScreensSaverControl.getOwnedMonitors()[configScreensSaverControl.getOwnedMonitors().Count - 1].Add(ms.monitorId);
+                }
+            }
+        }
     }
 }

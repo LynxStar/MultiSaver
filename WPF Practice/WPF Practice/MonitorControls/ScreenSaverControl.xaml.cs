@@ -36,6 +36,10 @@ namespace WPF_Practice.MonitorControls
 
        protected virtual void OnChanged(EventArgs e)
        {
+           return ownedmonitors;
+       }
+
+       {
            if (changed != null)
                changed(this, e);
        }
@@ -59,7 +63,7 @@ namespace WPF_Practice.MonitorControls
 
         public int createnewGroup()
         {
-            int groupid = groupsettings.Count + 1;
+            
             List<string> tmpstring = new List<string>();
             groupsettings.Add(new GroupSetting());
             ownedmonitors.Add(new List<string>());
@@ -100,7 +104,7 @@ namespace WPF_Practice.MonitorControls
             foreach (System.Windows.Forms.Screen Screen in System.Windows.Forms.Screen.AllScreens)
             {
                 string tmpMonitor ="Monitor " + monitorcount;
-                if (!ownedmonitors[selectedScreen].Contains(Screen.DeviceName))
+                if (!ownedmonitors[selectedScreen].Contains(tmpMonitor))
                 {
                     unassignedMonitors.Add(tmpMonitor);
                 }
@@ -108,6 +112,7 @@ namespace WPF_Practice.MonitorControls
                 {
                     gcontrol.OwnedMonitors.Add(tmpMonitor);
                 }
+                monitorcount++;
 
             }
             gcontrol.AvailableMonitors = unassignedMonitors;
