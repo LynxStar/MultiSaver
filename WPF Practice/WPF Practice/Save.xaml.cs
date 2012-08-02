@@ -21,9 +21,11 @@ namespace WPF_Practice
     public partial class Save : Window
     {
         List<GroupSetting> groupSettings;
-        public Save(List<GroupSetting> gs)
+        MainWindow mainWindow;
+        public Save(List<GroupSetting> gs, MainWindow mw)
         {
             groupSettings = gs;
+            mainWindow = mw;
             InitializeComponent();
         }
 
@@ -51,6 +53,24 @@ namespace WPF_Practice
             this.Close();
         }
 
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (saveLocation.Text != "")
+                saveLocation.Text += "//";
+            mainWindow.load(saveLocation.Text);
+            this.Close();
+        }
+        public void setLoad()
+        {
+            btnLoad.Visibility = System.Windows.Visibility.Visible;
+            btnSave.Visibility = System.Windows.Visibility.Hidden;
+        }
+        public void setSave()
+        {
+            btnLoad.Visibility = System.Windows.Visibility.Hidden;
+            btnSave.Visibility = System.Windows.Visibility.Visible;
+        }
 
     }
 }

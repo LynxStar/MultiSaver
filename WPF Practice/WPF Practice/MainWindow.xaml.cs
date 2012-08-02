@@ -21,7 +21,7 @@ namespace WPF_Practice
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ScreenSaverControl configScreensSaverControl = new ScreenSaverControl();
+        public ScreenSaverControl configScreensSaverControl = new ScreenSaverControl();
         private int currentScreen = -1;
 
         bool firstAppear = true;
@@ -29,7 +29,8 @@ namespace WPF_Practice
         public MainWindow()
         {
             InitializeComponent();
-            
+
+                load("");
         }
 
         public void form_Loaded(object sender, RoutedEventArgs e)
@@ -86,7 +87,8 @@ namespace WPF_Practice
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            Window save = new Save(configScreensSaverControl.getGroupSettings());
+            Save save = new Save(configScreensSaverControl.getGroupSettings(), this);
+            save.setSave();
             save.ShowDialog();
             //XMLHandler.save(configScreensSaverControl.getGroupSettings());
         }
@@ -96,10 +98,10 @@ namespace WPF_Practice
             XMLHandler.save(configScreensSaverControl.getGroupSettings());
         }
 
-        private void btnLoad_Click(object sender, RoutedEventArgs e)
+        public void load(string pathname)
         {
             List<GroupSetting> loaded = new List<GroupSetting>();
-            loaded = XMLHandler.load("config.xml");
+            loaded = XMLHandler.load(pathname + "config.xml");
             foreach (GroupSetting gs in loaded)
             {
                 MonitorTab monitor = new MonitorTab();
@@ -120,6 +122,13 @@ namespace WPF_Practice
                     configScreensSaverControl.getOwnedMonitors()[configScreensSaverControl.getOwnedMonitors().Count - 1].Add(ms.monitorId);
                 }
             }
+
+        }
+        private void btnLoad_Click(object sender, RoutedEventArgs e)
+        {
+            Save load = new Save(configScreensSaverControl.getGroupSettings(), this);
+            load.setLoad();
+            load.ShowDialog();
         }
     }
 }
