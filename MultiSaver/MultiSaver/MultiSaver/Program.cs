@@ -27,7 +27,7 @@ namespace MultiSaver
 
                 //int Mode = Group.ssType == "SlideShow" ? 1 : 3;
 
-                int Mode = 1;
+                int Mode = 3;
 
                 switch (Mode)
                 {
@@ -62,7 +62,7 @@ namespace MultiSaver
 
                         MazeAICenter.Start(new object[] { new Rectangle(0, 0, 1680, 1050), 0, 0 });
                         Thread.Sleep(1000);
-                        MazeAILeft.Start(new object[] { new Rectangle(-1000, 0, 1680, 1050), 1, 10 });//Stagger to account for XNA and DirectX and Windows 
+                        //MazeAILeft.Start(new object[] { new Rectangle(-1000, 0, 1680, 1050), 1, 10 });//Stagger to account for XNA and DirectX and Windows 
                         //and generally computers not being designed for MM
 
                         break;
