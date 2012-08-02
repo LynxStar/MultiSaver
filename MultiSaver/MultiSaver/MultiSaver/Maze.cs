@@ -24,7 +24,7 @@ namespace MultiSaver
         public int[] Indices;
         public IndexBuffer IndicesBuffer;
 
-        public VertexPositionColor[] WallVertices;
+        public VertexPositionColorTexture[] WallVertices;
         public VertexBuffer WallVerticesBuffer;
         public int[] WallIndices;
         public IndexBuffer WallIndicesBuffer;
@@ -187,10 +187,10 @@ namespace MultiSaver
 
                     Vector3 Location = new Vector3(x * 110, 0, y * 110);
 
-                    Vertices[i++] = new VertexPositionNormalTexture(Location, Vector3.Zero, new Vector2(0));
-                    Vertices[i++] = new VertexPositionNormalTexture(Location + new Vector3(110, 0, 0), Vector3.Zero, new Vector2(1f, 0));
-                    Vertices[i++] = new VertexPositionNormalTexture(Location + new Vector3(0, 0, 110), Vector3.Zero, new Vector2(0, 1f));
-                    Vertices[i++] = new VertexPositionNormalTexture(Location + new Vector3(110, 0, 110), Vector3.Zero, new Vector2(1f, 1f));
+                    Vertices[i++] = new VertexPositionNormalTexture(Location, Vector3.Zero, new Vector2(Location.X / 128, Location.Z / 128));
+                    Vertices[i++] = new VertexPositionNormalTexture(Location + new Vector3(110, 0, 0), Vector3.Zero, new Vector2((Location.X + 110) / 128, Location.Z / 128));
+                    Vertices[i++] = new VertexPositionNormalTexture(Location + new Vector3(0, 0, 110), Vector3.Zero, new Vector2(Location.X / 128, (Location.Z + 110) / 128));
+                    Vertices[i++] = new VertexPositionNormalTexture(Location + new Vector3(110, 0, 110), Vector3.Zero, new Vector2((Location.X + 110) / 128, (Location.Z + 110) / 128));
 
                     Indices[j++] = i - 4;
                     Indices[j++] = i - 3;
@@ -213,16 +213,16 @@ namespace MultiSaver
         public void GenerateWallPrimatives()
         {
 
-            WallVertices = new VertexPositionColor[(int)(Dimensions.X * Dimensions.Y) * 5 * 8];
-            WallIndices = new int[(int)(Dimensions.X * Dimensions.Y) * 5 * 30];
+            WallVertices = new VertexPositionColorTexture[(int)(Dimensions.X * Dimensions.Y) * 4 * 8];
+            WallIndices = new int[(int)(Dimensions.X * Dimensions.Y) * 4 * 30];
 
-            WallVerticesBuffer = new VertexBuffer(Graphics, typeof(VertexPositionColor), WallVertices.Length, BufferUsage.WriteOnly);
+            WallVerticesBuffer = new VertexBuffer(Graphics, typeof(VertexPositionColorTexture), WallVertices.Length, BufferUsage.WriteOnly);
             WallIndicesBuffer = new IndexBuffer(Graphics, IndexElementSize.ThirtyTwoBits, WallIndices.Length, BufferUsage.WriteOnly);
 
             int i = 0;
             int j = 0;
 
-            List<VertexPositionColor> Vertices = new List<VertexPositionColor>();
+            List<VertexPositionColorTexture> Vertices = new List<VertexPositionColorTexture>();
             List<int> Indices = new List<int>();
 
             for (int y = 0; y < Dimensions.Y; y++)
@@ -233,13 +233,13 @@ namespace MultiSaver
                     
                     #region Left
                     int[] Inds = new int[30];
-                    VertexPositionColor[] Verts = new VertexPositionColor[8];
+                    VertexPositionColorTexture[] Verts = new VertexPositionColorTexture[8];
 
-                    int Y = Cells[x, y].LeftWall ? 110 : 0;
+                    int Y = Cells[x, y].LeftWall ? 110 : -100;
 
-                    BoundingBox Temp = new BoundingBox(new Vector3(x * 110, 0, y * 110), new Vector3(x * 110 + 5, Y, y * 110 + 110));
+                    BoundingBox Temp = new BoundingBox(new Vector3(x * 110, Y - 110, y * 110), new Vector3(x * 110 + 5, Y, y * 110 + 110));
 
-                    GenerateBoxVertices(Temp, Inds, Verts, Cells[x, y].LeftColor, i);
+                    GenerateBoxVertices(Temp, Inds, Verts, new Vector2(.5f, 0), i);
 
                     i += 8;
                     Indices.AddRange(Inds);
@@ -249,13 +249,13 @@ namespace MultiSaver
                     
                     #region Right
                     Inds = new int[30];
-                    Verts = new VertexPositionColor[8];
+                    Verts = new VertexPositionColorTexture[8];
 
-                    Y = Cells[x, y].RightWall ? 110 : 0;
+                    Y = Cells[x, y].RightWall ? 110 : -100;
 
-                    Temp = new BoundingBox(new Vector3(x * 110 + 105, 0, y * 110), new Vector3(x * 110 + 110, Y, y * 110 + 110));
+                    Temp = new BoundingBox(new Vector3(x * 110 + 105, Y - 110, y * 110), new Vector3(x * 110 + 110, Y, y * 110 + 110));
 
-                    GenerateBoxVertices(Temp, Inds, Verts, Cells[x, y].RightColor, i);
+                    GenerateBoxVertices(Temp, Inds, Verts, new Vector2(.5f, .5f), i);
 
                     i += 8;
                     Indices.AddRange(Inds);
@@ -265,13 +265,13 @@ namespace MultiSaver
 
                     #region Top
                     Inds = new int[30];
-                    Verts = new VertexPositionColor[8];
+                    Verts = new VertexPositionColorTexture[8];
 
-                    Y = Cells[x, y].TopWall ? 110 : 0;
+                    Y = Cells[x, y].TopWall ? 110 : -100;
 
-                    Temp = new BoundingBox(new Vector3(x * 110, 0, y * 110), new Vector3(x * 110 + 110, Y, y * 110 + 5));
+                    Temp = new BoundingBox(new Vector3(x * 110, Y - 110, y * 110), new Vector3(x * 110 + 110, Y, y * 110 + 5));
 
-                    GenerateBoxVertices(Temp, Inds, Verts, Cells[x, y].TopColor, i);
+                    GenerateBoxVertices(Temp, Inds, Verts, new Vector2(0, 0), i);
 
                     i += 8;
                     Indices.AddRange(Inds);
@@ -281,13 +281,13 @@ namespace MultiSaver
 
                     #region Bottom
                     Inds = new int[30];
-                    Verts = new VertexPositionColor[8];
+                    Verts = new VertexPositionColorTexture[8];
 
-                    Y = Cells[x, y].BottomWall ? 110 : 0;
+                    Y = Cells[x, y].BottomWall ? 110 : -100;
 
-                    Temp = new BoundingBox(new Vector3(x * 110, 0, y * 110 + 105), new Vector3(x * 110 + 110, Y, y * 110 + 110));
+                    Temp = new BoundingBox(new Vector3(x * 110, Y -110, y * 110 + 105), new Vector3(x * 110 + 110, Y, y * 110 + 110));
 
-                    GenerateBoxVertices(Temp, Inds, Verts, Cells[x, y].BottomColor, i);
+                    GenerateBoxVertices(Temp, Inds, Verts, new Vector2(0, .5f), i);
 
                     i += 8;
                     Indices.AddRange(Inds);
@@ -296,18 +296,18 @@ namespace MultiSaver
                     #endregion
 
                     #region Floor
-                    Inds = new int[30];
-                    Verts = new VertexPositionColor[8];
+                    //Inds = new int[30];
+                    //Verts = new VertexPositionColor[8];
 
-                    Color C = Cells[x, y].AllWallsIntact() ? Color.Transparent : (Cells[x,y].IsEnd ? Color.White : Color.Gray);
+                    //Color C = Cells[x, y].AllWallsIntact() ? Color.Transparent : (Cells[x,y].IsEnd ? Color.White : Color.Gray);
 
-                    Temp = new BoundingBox(new Vector3(x * 110, -1, y * 110), new Vector3(x * 110 + 110, -1, y * 110 + 110));
+                    //Temp = new BoundingBox(new Vector3(x * 110, -1, y * 110), new Vector3(x * 110 + 110, -1, y * 110 + 110));
 
-                    GenerateBoxVertices(Temp, Inds, Verts, C, i);
+                    //GenerateBoxVertices(Temp, Inds, Verts, C, i);
 
-                    i += 8;
-                    Indices.AddRange(Inds);
-                    Vertices.AddRange(Verts);
+                    //i += 8;
+                    //Indices.AddRange(Inds);
+                    //Vertices.AddRange(Verts);
 
                     #endregion
 
@@ -319,19 +319,51 @@ namespace MultiSaver
             WallIndices = Indices.ToArray();
             WallVertices = Vertices.ToArray();
 
-            WallVerticesBuffer.SetData<VertexPositionColor>(WallVertices);
+            WallVerticesBuffer.SetData<VertexPositionColorTexture>(WallVertices);
             WallIndicesBuffer.SetData<int>(WallIndices);
 
         }
 
-        public void GenerateBoxVertices(BoundingBox Box, int[] Indices, VertexPositionColor[] Vertices, Color C, int Offset)
+        public void GenerateBoxVertices(BoundingBox Box, int[] Indices, VertexPositionColorTexture[] Vertices, Vector2 UVOffset, int Offset)
         {
 
             Vector3[] corners = Box.GetCorners();
             for (int i = 0; i < 8; i++)
             {
+
                 Vertices[i].Position = corners[i];
-                Vertices[i].Color = C;
+                Vertices[i].Color = Color.White;
+
+            }
+
+            if (UVOffset.X == 0)
+            {
+
+                Vertices[0].TextureCoordinate = new Vector2(0, 0) + UVOffset;
+                Vertices[3].TextureCoordinate = new Vector2(0, .5f) + UVOffset;
+                Vertices[1].TextureCoordinate = new Vector2(.5f, 0) + UVOffset;
+                Vertices[2].TextureCoordinate = new Vector2(.5f, .5f) + UVOffset;
+
+                Vertices[4].TextureCoordinate = new Vector2(0, 0) + UVOffset;
+                Vertices[7].TextureCoordinate = new Vector2(0, .5f) + UVOffset;
+                Vertices[5].TextureCoordinate = new Vector2(.5f, 0) + UVOffset;
+                Vertices[6].TextureCoordinate = new Vector2(.5f, .5f) + UVOffset;
+
+            }
+
+            else
+            {
+
+                Vertices[0].TextureCoordinate = new Vector2(0, 0) + UVOffset;
+                Vertices[3].TextureCoordinate = new Vector2(0, .5f) + UVOffset;
+                Vertices[4].TextureCoordinate = new Vector2(.5f, 0) + UVOffset;
+                Vertices[7].TextureCoordinate = new Vector2(.5f, .5f) + UVOffset;
+
+                Vertices[1].TextureCoordinate = new Vector2(0, 0) + UVOffset;
+                Vertices[2].TextureCoordinate = new Vector2(0, .5f) + UVOffset;
+                Vertices[5].TextureCoordinate = new Vector2(.5f, 0) + UVOffset;
+                Vertices[6].TextureCoordinate = new Vector2(.5f, .5f) + UVOffset;
+
             }
 
             //Left Side
