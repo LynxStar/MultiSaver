@@ -27,7 +27,7 @@ namespace MultiSaver
 
                 //int Mode = Group.ssType == "SlideShow" ? 1 : 3;
 
-                int Mode = 3;
+                int Mode = 1;
 
                 switch (Mode)
                 {
@@ -37,7 +37,7 @@ namespace MultiSaver
                         Thread Monitor1 = new Thread(RunAlbum);
                         Thread Monitor2 = new Thread(RunAlbum);
 
-                        Monitor1.Start(new Rectangle(0, 0, 1680, 1050));
+                        Monitor1.Start(new Rectangle(0, 0, 1600, 900));
                         Thread.Sleep(1);
                         Monitor2.Start(new Rectangle(-1000, 0, 1680, 1050));
 
@@ -60,9 +60,9 @@ namespace MultiSaver
                         Thread MazeAICenter = new Thread(RunMaze);
                         Thread MazeAILeft = new Thread(RunMaze);
 
-                        MazeAICenter.Start(new object[] { new Rectangle(0, 0, 1680, 1050), 0, 0 });
+                        MazeAICenter.Start(new object[] { new Rectangle(0, 0, 1600, 900), 0, 0 });
                         Thread.Sleep(1000);
-                        //MazeAILeft.Start(new object[] { new Rectangle(-1000, 0, 1680, 1050), 1, 10 });//Stagger to account for XNA and DirectX and Windows 
+                        MazeAILeft.Start(new object[] { new Rectangle(-1000, 0, 1680, 1050), 1, 10 });//Stagger to account for XNA and DirectX and Windows 
                         //and generally computers not being designed for MM
 
                         break;

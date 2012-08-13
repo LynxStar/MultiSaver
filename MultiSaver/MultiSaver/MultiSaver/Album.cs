@@ -106,9 +106,7 @@ namespace MultiSaver
             if (IsLeft)
             {
 
-                Images.Add(Content.Load<Texture2D>("Alex1"));
                 Images.Add(Content.Load<Texture2D>("F22"));
-                Images.Add(Content.Load<Texture2D>("Tim1"));
                 Images.Add(Content.Load<Texture2D>("CPU1"));
 
             }
