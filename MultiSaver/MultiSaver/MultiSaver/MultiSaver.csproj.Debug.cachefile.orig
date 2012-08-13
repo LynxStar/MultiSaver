@@ -1,4 +1,10 @@
 Content\FadeOut.xnb
+<<<<<<< HEAD
+Content\MazeEffect.xnb
+=======
+Content\SpiralIn.xnb
+Content\SpiralOut.xnb
+>>>>>>> origin/HEAD
 Content\Zelda1.xnb
 Content\Zelda2.xnb
 Content\Zelda3.xnb
@@ -9,12 +15,15 @@ Content\Megaman2.xnb
 Content\Megaman3.xnb
 Content\Megaman4.xnb
 Content\Megaman5.xnb
+<<<<<<< HEAD
 Content\PanIn.xnb
 Content\PanOut.xnb
 Content\FadeIn.xnb
 Content\SpiralIn.xnb
 Content\SpiralOut.xnb
+=======
 Content\MazeEffect.xnb
+>>>>>>> origin/HEAD
 Content\Alex1.xnb
 Content\CPU1.xnb
 Content\Tim1.xnb

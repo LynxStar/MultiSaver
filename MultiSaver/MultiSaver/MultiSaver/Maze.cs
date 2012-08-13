@@ -31,7 +31,7 @@ namespace MultiSaver
 
         public Stack<Cell> CellStack = new Stack<Cell>();
 
-        public Random Random = new Random(1);//526
+        public Random Random = new Random();//526
         public Cell Location;
         public Cell End;
 

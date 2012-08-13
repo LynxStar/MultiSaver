@@ -41,6 +41,8 @@ namespace MultiSaver
 
         Stack<Cell> PathStack;
 
+        bool DoOnce = true;
+
         Cell Current;
         Cell Next;
 
@@ -53,6 +55,11 @@ namespace MultiSaver
 
         public VertexBuffer WallVerticesBuffer;
         public IndexBuffer WallIndicesBuffer;
+
+        public VertexPositionNormalTexture[] Vertices;
+        public VertexBuffer VerticesBuffer;
+        public int[] Indices;
+        public IndexBuffer IndicesBuffer;
 
         Vector2 HasMoved;
         Vector2 ShouldMove;
@@ -191,11 +198,27 @@ namespace MultiSaver
                     else
                     {
 
-                        WallVerticesBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionColor), Program.MasterMaze.WallVertices.Length, BufferUsage.WriteOnly);
+                        WallVerticesBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionColorTexture), Program.MasterMaze.WallVertices.Length, BufferUsage.WriteOnly);
                         WallIndicesBuffer = new IndexBuffer(GraphicsDevice, IndexElementSize.ThirtyTwoBits, Program.MasterMaze.WallIndices.Length, BufferUsage.WriteOnly);
 
                         WallVerticesBuffer.SetData<VertexPositionColorTexture>(Program.MasterMaze.WallVertices);
                         WallIndicesBuffer.SetData<int>(Program.MasterMaze.WallIndices);
+
+                        if (DoOnce)
+                        {
+
+                            DoOnce = false;
+
+                            Vertices = new VertexPositionNormalTexture[Program.MasterMaze.Vertices.Length];
+                            Indices = new int[Program.MasterMaze.Indices.Length];
+
+                            VerticesBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionNormalTexture), Vertices.Length, BufferUsage.WriteOnly);
+                            IndicesBuffer = new IndexBuffer(GraphicsDevice, IndexElementSize.ThirtyTwoBits, Indices.Length, BufferUsage.WriteOnly);
+
+                            VerticesBuffer.SetData<VertexPositionNormalTexture>(Vertices);
+                            IndicesBuffer.SetData<int>(Indices);
+
+                        }
 
                     }
 
@@ -537,8 +560,23 @@ namespace MultiSaver
             if (Program.MasterMaze.State != "None")
             {
 
-                GraphicsDevice.SetVertexBuffer(Program.MasterMaze.VerticesBuffer);
-                GraphicsDevice.Indices = Program.MasterMaze.IndicesBuffer;
+                if (ID == 0)
+                {
+
+                    GraphicsDevice.SetVertexBuffer(Program.MasterMaze.VerticesBuffer);
+                    GraphicsDevice.Indices = Program.MasterMaze.IndicesBuffer;
+
+                }
+
+                else if (!DoOnce)
+                {
+
+                    GraphicsDevice.SetVertexBuffer(VerticesBuffer);
+                    GraphicsDevice.Indices = IndicesBuffer;
+
+                    return;
+
+                }
 
                 MazeEffect.Parameters["View"].SetValue(MovableCamera.View);
                 MazeEffect.Parameters["Projection"].SetValue(MovableCamera.Projection);
