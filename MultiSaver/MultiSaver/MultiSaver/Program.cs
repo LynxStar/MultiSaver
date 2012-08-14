@@ -37,9 +37,9 @@ namespace MultiSaver
                         Thread Monitor1 = new Thread(RunAlbum);
                         Thread Monitor2 = new Thread(RunAlbum);
 
-                        Monitor1.Start(new Rectangle(0, 0, 1600, 900));
+                        Monitor1.Start(new Rectangle(0, 0, 1680, 1050));
                         Thread.Sleep(1);
-                        Monitor2.Start(new Rectangle(-1000, 0, 1680, 1050));
+                        //Monitor2.Start(new Rectangle(-1000, 0, 1680, 1050));
 
                         break;
 

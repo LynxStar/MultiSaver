@@ -212,6 +212,9 @@ namespace MultiSaver
                             Vertices = new VertexPositionNormalTexture[Program.MasterMaze.Vertices.Length];
                             Indices = new int[Program.MasterMaze.Indices.Length];
 
+                            Vertices = (VertexPositionNormalTexture[])Program.MasterMaze.Vertices.Clone();
+                            Indices = (int[])Program.MasterMaze.Indices.Clone();
+
                             VerticesBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionNormalTexture), Vertices.Length, BufferUsage.WriteOnly);
                             IndicesBuffer = new IndexBuffer(GraphicsDevice, IndexElementSize.ThirtyTwoBits, Indices.Length, BufferUsage.WriteOnly);
 
@@ -574,7 +577,6 @@ namespace MultiSaver
                     GraphicsDevice.SetVertexBuffer(VerticesBuffer);
                     GraphicsDevice.Indices = IndicesBuffer;
 
-                    return;
 
                 }
 
@@ -585,7 +587,6 @@ namespace MultiSaver
                 MazeEffect.Techniques[0].Passes[0].Apply();
 
                 GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, Program.MasterMaze.VerticesBuffer.VertexCount, 0, Program.MasterMaze.IndicesBuffer.IndexCount / 3);
-
 
                 
                 if (ID == 0)
