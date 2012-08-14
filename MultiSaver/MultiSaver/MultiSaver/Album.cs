@@ -146,7 +146,7 @@ namespace MultiSaver
             SpiralInEffect = Content.Load<Effect>("SpiralIn");
             SpiralOutEffect = Content.Load<Effect>("SpiralOut");
 
-            String[] Files = File.Exists(Location) ? Directory.GetFiles(Location) : new string[0];
+            String[] Files = Directory.Exists(Location) ? Directory.GetFiles(Location) : new string[0];
 
             foreach (String Picture in Files)
             {
@@ -403,7 +403,14 @@ namespace MultiSaver
                 else
                 {
 
-                    ImageIndex = new Random().Next(0, Images.Count);
+                    int Old = ImageIndex;
+
+                    while (ImageIndex == Old)
+                    {
+
+                        ImageIndex = new Random().Next(0, Images.Count);
+
+                    }
 
                     Mode = RandomMode();
                     GeneratePrimatives(Program.Rand.Next(10, 25), Images[ImageIndex]);

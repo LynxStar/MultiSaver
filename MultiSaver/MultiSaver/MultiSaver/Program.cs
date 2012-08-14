@@ -91,8 +91,8 @@ namespace MultiSaver
                                         {
 
                                             Thread MonitorThread = new Thread(RunAlbum);
-                                            MonitorThread.Start(new object[] { new Rectangle(S.Bounds.X, S.Bounds.Y, S.Bounds.Width, S.Bounds.Height), Group.albumLocation });
-                                            Thread.Sleep(10000);
+                                            MonitorThread.Start(new object[] { new Rectangle(S.Bounds.X, S.Bounds.Y, S.Bounds.Width, S.Bounds.Height), MS.albumLocation });
+                                            
 
                                             break;
 
