@@ -99,6 +99,7 @@ namespace WPF_Practice.MonitorControls
         {
             gSetting = gs;
             InitializeComponent();
+            updateFields();
         }
 
         //function is only used to set direction txt boxes
@@ -136,9 +137,10 @@ namespace WPF_Practice.MonitorControls
             directionInBox.SelectedIndex = gSetting.monitors[numberscreen].dirIn;
             directionoutBox.SelectedIndex = gSetting.monitors[numberscreen].dirOut;
             Clockwise = gSetting.monitors[numberscreen].clockwise;
-            Order = gSetting.order;
-            location = gSetting.albumLocation;
+            Order = gSetting.monitors[numberscreen].order;
+            location = gSetting.monitors[numberscreen].albumLocation;
             TransitionTypes.Text = gSetting.monitors[numberscreen].transitionType;
+            updateFields();
 
             
         }
@@ -152,8 +154,8 @@ namespace WPF_Practice.MonitorControls
             gSetting.monitors[numberscreen].dirIn = directionInBox.SelectedIndex;
             gSetting.monitors[numberscreen].dirOut = directionoutBox.SelectedIndex;
             gSetting.monitors[numberscreen].clockwise = Clockwise;
-            gSetting.order = Order;
-            gSetting.albumLocation = location;
+            gSetting.monitors[numberscreen].order = Order;
+            gSetting.monitors[numberscreen].albumLocation = location;
 
             gSetting.mazeSize = 0;
             gSetting.mazePalletName = " ";
@@ -162,10 +164,6 @@ namespace WPF_Practice.MonitorControls
             gSetting.ssType = "SlideShow";
         }
 
-        private void Grid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
 
         private void fineFileButtonClick(object sender, RoutedEventArgs e)
         {
@@ -177,15 +175,11 @@ namespace WPF_Practice.MonitorControls
                 pictureLocation.Text = folderDialog.SelectedPath;
         }
 
-        private void TransitionTypes_DropDownClosed(object sender, EventArgs e)
-        {
-            gSetting.monitors[monitor].transitionType = (sender as ComboBox).Text;
-        }
 
         private void pictureLocation_TextChanged(object sender, TextChangedEventArgs e)
         {
 
-            gSetting.albumLocation = (sender as TextBox).Text;
+            gSetting.monitors[monitor].albumLocation = (sender as TextBox).Text;
         }
 
         private void comboFadeTime_DropDownClosed(object sender, EventArgs e)
@@ -210,6 +204,8 @@ namespace WPF_Practice.MonitorControls
         {
 
             gSetting.monitors[monitor].dirIn = (sender as ComboBox).SelectedIndex;
+
+        
         }
 
         private void directionoutBox_DropDownClosed(object sender, EventArgs e)
@@ -227,7 +223,7 @@ namespace WPF_Practice.MonitorControls
         private void orderComboBox_DropDownClosed(object sender, EventArgs e)
         {
 
-            gSetting.order = (sender as ComboBox).Text;
+            gSetting.monitors[monitor].order = (sender as ComboBox).Text;
         }
 
         private void isClockwise_Checked(object sender, RoutedEventArgs e)
@@ -236,5 +232,88 @@ namespace WPF_Practice.MonitorControls
             gSetting.monitors[monitor].clockwise = (sender as CheckBox).IsChecked.HasValue ? (sender as CheckBox).IsChecked.Value : false;
         }
 
+        private void updateFields()
+        {
+            switch (TransitionTypes.Text)
+            {
+                case "Fade":
+                    comboFadeTime.Visibility = System.Windows.Visibility.Visible;
+                    comboPanTime.Visibility = System.Windows.Visibility.Hidden;
+                    comboRotation.Visibility = System.Windows.Visibility.Hidden;
+                    directionInBox.Visibility = System.Windows.Visibility.Hidden;
+                    directionoutBox.Visibility = System.Windows.Visibility.Hidden;
+                    isClockwise.Visibility = System.Windows.Visibility.Hidden;
+
+                    lblFade.Visibility = System.Windows.Visibility.Visible;
+                    lblDirIn.Visibility = System.Windows.Visibility.Hidden;
+                    lblpanTime.Visibility = System.Windows.Visibility.Hidden;
+                    lblDirOut.Visibility = System.Windows.Visibility.Hidden;
+                    lblRotation.Visibility = System.Windows.Visibility.Hidden;
+
+                    break;
+                case "Pan":
+                    comboFadeTime.Visibility = System.Windows.Visibility.Hidden;
+                    comboPanTime.Visibility = System.Windows.Visibility.Visible;
+                    comboRotation.Visibility = System.Windows.Visibility.Hidden;
+                    directionInBox.Visibility = System.Windows.Visibility.Visible;
+                    directionoutBox.Visibility = System.Windows.Visibility.Visible;
+                    isClockwise.Visibility = System.Windows.Visibility.Hidden;
+
+                    lblFade.Visibility = System.Windows.Visibility.Hidden;
+                    lblDirIn.Visibility = System.Windows.Visibility.Visible;
+                    lblRotation.Visibility = System.Windows.Visibility.Hidden;
+                    lblpanTime.Visibility = System.Windows.Visibility.Visible;
+                    lblDirOut.Visibility = System.Windows.Visibility.Visible;
+
+                    break;
+                case "Spiral":
+                    comboFadeTime.Visibility = System.Windows.Visibility.Hidden;
+                    comboPanTime.Visibility = System.Windows.Visibility.Hidden;
+                    comboRotation.Visibility = System.Windows.Visibility.Visible;
+                    directionInBox.Visibility = System.Windows.Visibility.Hidden;
+                    directionoutBox.Visibility = System.Windows.Visibility.Hidden;
+                    isClockwise.Visibility = System.Windows.Visibility.Visible;
+
+                    lblFade.Visibility = System.Windows.Visibility.Hidden;
+                    lblDirIn.Visibility = System.Windows.Visibility.Hidden;
+                    lblpanTime.Visibility = System.Windows.Visibility.Hidden;
+                    lblDirOut.Visibility = System.Windows.Visibility.Hidden;
+                    lblRotation.Visibility = System.Windows.Visibility.Visible;
+
+                    break;
+
+                case "Random":
+                    comboFadeTime.Visibility = System.Windows.Visibility.Hidden;
+                    comboPanTime.Visibility = System.Windows.Visibility.Hidden;
+                    comboRotation.Visibility = System.Windows.Visibility.Hidden;
+                    directionInBox.Visibility = System.Windows.Visibility.Hidden;
+                    directionoutBox.Visibility = System.Windows.Visibility.Hidden;
+                    isClockwise.Visibility = System.Windows.Visibility.Hidden;
+
+                    lblFade.Visibility = System.Windows.Visibility.Hidden;
+                    lblDirIn.Visibility = System.Windows.Visibility.Hidden;
+                    lblpanTime.Visibility = System.Windows.Visibility.Hidden;
+                    lblDirOut.Visibility = System.Windows.Visibility.Hidden;
+                    lblRotation.Visibility = System.Windows.Visibility.Hidden;
+
+                    break;
+
+
+            }
+        }
+
+        private void TransitionTypes_DropDownClosed(object sender, EventArgs e)
+        {
+
+            gSetting.monitors[monitor].transitionType = (sender as ComboBox).Text;
+            updateFields();
+        }
+
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            updateFields();
+        }
+
+        
     }
 }
