@@ -57,7 +57,9 @@ namespace MultiSaver
 
         public bool IsLeft = false;
 
-        public Vector2 CurrentSize = new Vector2(); 
+        public Vector2 CurrentSize = new Vector2();
+
+        public IntPtr Handler;
 
         public Album()
         {
@@ -93,11 +95,43 @@ namespace MultiSaver
 
         protected override void LoadContent()
         {
+            
+            if (Handler.ToInt32() != 0)
+            {
 
-            graphics.PreferredBackBufferHeight = Bounds.Height;
-            graphics.PreferredBackBufferWidth = Bounds.Width;
-            graphics.ApplyChanges();
-            User32.SetWindowPos((uint)this.Window.Handle, 0, Bounds.X, Bounds.Y, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, 0);
+                
+                User32.SetWindowPos((uint)this.Window.Handle, 0, 0, 0, 0, 0, 0);
+
+                System.Drawing.Rectangle ParentRect;
+                User32.GetClientRect(Handler, out ParentRect);
+
+                User32.SetParent(this.Window.Handle, Handler);
+                User32.SetWindowLong(this.Window.Handle, -16, new IntPtr(User32.GetWindowLong(this.Window.Handle, -16) | 0x40000000));
+
+                PresentationParameters PP = GraphicsDevice.PresentationParameters;
+
+                PP.DeviceWindowHandle = Handler;
+
+                GraphicsDevice.Reset(PP);
+
+                //graphics.PreferredBackBufferHeight = ParentRect.Height;
+                //graphics.PreferredBackBufferWidth = ParentRect.Width;
+                //graphics.ApplyChanges();
+
+            }
+
+            else
+            {
+
+                graphics.PreferredBackBufferHeight = Bounds.Height;
+                graphics.PreferredBackBufferWidth = Bounds.Width;
+                graphics.ApplyChanges();
+                User32.SetWindowPos((uint)this.Window.Handle, 0, Bounds.X, Bounds.Y, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, 0);
+
+            }
+            
+            
+            
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -112,7 +146,7 @@ namespace MultiSaver
             SpiralInEffect = Content.Load<Effect>("SpiralIn");
             SpiralOutEffect = Content.Load<Effect>("SpiralOut");
 
-            String[] Files = Directory.GetFiles(Location);
+            String[] Files = File.Exists(Location) ? Directory.GetFiles(Location) : new string[0];
 
             foreach (String Picture in Files)
             {
@@ -124,6 +158,16 @@ namespace MultiSaver
                     FS.Close();
 
                 }
+
+            }
+
+            if (Images.Count == 0)
+            {
+
+                Images.Add(Content.Load<Texture2D>("Cell"));
+                Images.Add(Content.Load<Texture2D>("Japan"));
+                Images.Add(Content.Load<Texture2D>("Galaxy"));
+                Images.Add(Content.Load<Texture2D>("AbstractBars"));
 
             }
 

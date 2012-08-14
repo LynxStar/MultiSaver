@@ -1,10 +1,14 @@
+Content\FadeOut.xnb
 Content\PanIn.xnb
 Content\PanOut.xnb
 Content\FadeIn.xnb
-Content\FadeOut.xnb
 Content\SpiralIn.xnb
 Content\SpiralOut.xnb
 Content\MazeEffect.xnb
 Content\Floor.xnb
 Content\Walls.xnb
+Content\AbstractBars.xnb
+Content\Cell.xnb
+Content\Galaxy.xnb
+Content\Japan.xnb
 config.xml
