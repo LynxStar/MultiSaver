@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.IO;
 
 namespace MultiSaver
 {
@@ -50,11 +51,15 @@ namespace MultiSaver
         int TransitionInTime;
         int TransitionOutTime;
 
+        public String Location;
+
         public Rectangle Bounds = Rectangle.Empty;
 
         public bool IsLeft = false;
 
-        public Vector2 CurrentSize = new Vector2(); 
+        public Vector2 CurrentSize = new Vector2();
+
+        public IntPtr Handler;
 
         public Album()
         {
@@ -90,11 +95,43 @@ namespace MultiSaver
 
         protected override void LoadContent()
         {
+            
+            if (Handler.ToInt32() != 0)
+            {
 
-            graphics.PreferredBackBufferHeight = Bounds.Height;
-            graphics.PreferredBackBufferWidth = Bounds.Width;
-            graphics.ApplyChanges();
-            User32.SetWindowPos((uint)this.Window.Handle, 0, Bounds.X, Bounds.Y, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, 0);
+                
+                User32.SetWindowPos((uint)this.Window.Handle, 0, 0, 0, 0, 0, 0);
+
+                System.Drawing.Rectangle ParentRect;
+                User32.GetClientRect(Handler, out ParentRect);
+
+                User32.SetParent(this.Window.Handle, Handler);
+                User32.SetWindowLong(this.Window.Handle, -16, new IntPtr(User32.GetWindowLong(this.Window.Handle, -16) | 0x40000000));
+
+                PresentationParameters PP = GraphicsDevice.PresentationParameters;
+
+                PP.DeviceWindowHandle = Handler;
+
+                GraphicsDevice.Reset(PP);
+
+                //graphics.PreferredBackBufferHeight = ParentRect.Height;
+                //graphics.PreferredBackBufferWidth = ParentRect.Width;
+                //graphics.ApplyChanges();
+
+            }
+
+            else
+            {
+
+                graphics.PreferredBackBufferHeight = Bounds.Height;
+                graphics.PreferredBackBufferWidth = Bounds.Width;
+                graphics.ApplyChanges();
+                User32.SetWindowPos((uint)this.Window.Handle, 0, Bounds.X, Bounds.Y, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, 0);
+
+            }
+            
+            
+            
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -109,31 +146,38 @@ namespace MultiSaver
             SpiralInEffect = Content.Load<Effect>("SpiralIn");
             SpiralOutEffect = Content.Load<Effect>("SpiralOut");
 
-            if (IsLeft)
+            String[] Files = File.Exists(Location) ? Directory.GetFiles(Location) : new string[0];
+
+            foreach (String Picture in Files)
             {
 
-                Images.Add(Content.Load<Texture2D>("F22"));
-                Images.Add(Content.Load<Texture2D>("CPU1"));
+                if (Picture.Contains(".png") || Picture.Contains(".PNG") || Picture.Contains(".jpg") || Picture.Contains(".JPG"))
+                {
+                    FileStream FS = new FileStream(Picture, FileMode.Open);
+                    Images.Add(Texture2D.FromStream(GraphicsDevice, FS));
+                    FS.Close();
+
+                }
 
             }
 
-            else
+            if (Images.Count == 0)
             {
 
-                Images.Add(Content.Load<Texture2D>("Megaman1"));
-                Images.Add(Content.Load<Texture2D>("Megaman2"));
-                Images.Add(Content.Load<Texture2D>("Megaman3"));
-                Images.Add(Content.Load<Texture2D>("Megaman4"));
-                Images.Add(Content.Load<Texture2D>("Megaman5"));
+                Images.Add(Content.Load<Texture2D>("Cell"));
+                Images.Add(Content.Load<Texture2D>("Japan"));
+                Images.Add(Content.Load<Texture2D>("Galaxy"));
+                Images.Add(Content.Load<Texture2D>("AbstractBars"));
 
             }
 
             Mode = RandomMode();
             Mode = "Spiral";
             //GeneratePrimatives(Program.Rand.Next(10, 25), Images[0]);
-            GeneratePrimatives(10, Images[0]);
+            ImageIndex = new Random().Next(0, Images.Count);
+            GeneratePrimatives(10, Images[ImageIndex]);
 
-            MovableCamera = new FreeCamera(new Vector3(Bounds.Width / 2, Bounds.Height / 2, 10), 0, 0, GraphicsDevice);
+            MovableCamera = new FreeCamera(new Vector3(Bounds.Width / 2, Bounds.Height / 2, 10), 0, 0, GraphicsDevice, false);
             MovableCamera.Update();
 
         }
@@ -359,10 +403,7 @@ namespace MultiSaver
                 else
                 {
 
-                    ImageIndex++;
-
-                    if (ImageIndex >= Images.Count)
-                        ImageIndex = 0;
+                    ImageIndex = new Random().Next(0, Images.Count);
 
                     Mode = RandomMode();
                     GeneratePrimatives(Program.Rand.Next(10, 25), Images[ImageIndex]);

@@ -101,7 +101,7 @@ namespace WPF_Practice.MonitorControls
             int monitorcount = 1;
             foreach (System.Windows.Forms.Screen Screen in System.Windows.Forms.Screen.AllScreens)
             {
-                string tmpMonitor ="Monitor " + monitorcount;
+                string tmpMonitor ="Monitor " + monitorcount++;
                 if (!ownedmonitors[selectedScreen].Contains(Screen.DeviceName) && !ownedmonitors[selectedScreen].Contains(tmpMonitor))
                 {
                     unassignedMonitors.Add(tmpMonitor);

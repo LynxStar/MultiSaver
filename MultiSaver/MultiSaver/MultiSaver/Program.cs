@@ -2,8 +2,10 @@ using System;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Xna.Framework;
-using ConfigPanel;
+using WPF_Practice;
 using System.Collections.Generic;
+using WPF_Practice.MonitorControls;
+using System.IO;
 
 namespace MultiSaver
 {
@@ -17,57 +19,168 @@ namespace MultiSaver
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        [STAThread()]
         static void Main(string[] args)
         {
 
-            List<GroupSetting> Groups = XMLHandler.load("./config.xml");
+            int SuperMode = 0;
 
-            foreach (GroupSetting Group in Groups)
+            if (args.Length > 0)
+            {
+                string firstArgument = args[0].ToLower().Trim();
+                string secondArgument = null;
+
+                
+                if (firstArgument.Length > 2)
+                {
+                    secondArgument = firstArgument.Substring(3).Trim();
+                    firstArgument = firstArgument.Substring(0, 2);
+                }
+                else if (args.Length > 1)
+                    secondArgument = args[1];
+
+                if (firstArgument == "/c")           // Configuration mode
+                {
+                    SuperMode = 1;
+                }
+                else if (firstArgument == "/p")      // Preview mode
+                {
+                    SuperMode = 2;
+                }
+                else if (firstArgument == "/s")      // Full-screen mode
+                {
+                    SuperMode = 0;
+                }
+                else    // Undefined argument
+                {
+                    MessageBox.Show("Sorry, but the command line argument \"" + firstArgument + "\" is not valid.", "ScreenSaver", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+            else    // No arguments - treat like /c
+            {
+                SuperMode = 0;
+            }
+
+            #region Screensaver
+
+            if (SuperMode == 0)
             {
 
-                //int Mode = Group.ssType == "SlideShow" ? 1 : 3;
-
-                int Mode = 1;
-
-                switch (Mode)
+                if (File.Exists("./MultiSaverConfig.xml"))
                 {
 
-                    case 1:
+                    List<GroupSetting> Groups = XMLHandler.load("./MultiSaverConfig.xml");
 
-                        Thread Monitor1 = new Thread(RunAlbum);
-                        Thread Monitor2 = new Thread(RunAlbum);
+                    foreach (GroupSetting Group in Groups)
+                    {
 
-                        Monitor1.Start(new Rectangle(0, 0, 1680, 1050));
-                        Thread.Sleep(1);
-                        Monitor2.Start(new Rectangle(-1000, 0, 1680, 1050));
+                        int Mode = Group.ssType == "SlideShow" ? 1 : 2;
 
-                        break;
+                        switch (Mode)
+                        {
 
-                    case 2:
+                            case 1:
 
-                        Thread MazeAICenterSolo = new Thread(RunMaze);
+                                foreach (MonitorSetting MS in Group.monitors)
+                                {
 
-                        MazeAICenterSolo.Start(new object[] { new Rectangle(0, 0, 1600, 900), 0, 0 });
+                                    foreach (Screen S in System.Windows.Forms.Screen.AllScreens)
+                                    {
 
-                        Thread Monitor3 = new Thread(RunAlbum);
+                                        if (S.DeviceName == MS.monitorId)
+                                        {
 
-                        Monitor3.Start(new Rectangle(-1000, 0, 1680, 1050));
+                                            Thread MonitorThread = new Thread(RunAlbum);
+                                            MonitorThread.Start(new object[] { new Rectangle(S.Bounds.X, S.Bounds.Y, S.Bounds.Width, S.Bounds.Height), Group.albumLocation });
+                                            Thread.Sleep(10000);
 
-                        break;
+                                            break;
 
-                    case 3:
+                                        }
 
-                        Thread MazeAICenter = new Thread(RunMaze);
-                        Thread MazeAILeft = new Thread(RunMaze);
+                                    }
 
-                        MazeAICenter.Start(new object[] { new Rectangle(0, 0, 1600, 900), 0, 0 });
-                        Thread.Sleep(1000);
-                        MazeAILeft.Start(new object[] { new Rectangle(-1000, 0, 1680, 1050), 1, 10 });//Stagger to account for XNA and DirectX and Windows 
-                        //and generally computers not being designed for MM
+                                }
 
-                        break;
+                                break;
+
+                            case 2:
+
+                                foreach (MonitorSetting MS in Group.monitors)
+                                {
+
+                                    foreach (Screen S in System.Windows.Forms.Screen.AllScreens)
+                                    {
+
+                                        if (S.DeviceName == MS.monitorId)
+                                        {
+
+                                            Thread MazeAICenter = new Thread(RunMaze);
+                                            MazeAICenter.Start(new object[] { new Rectangle(S.Bounds.X, S.Bounds.Y, S.Bounds.Width, S.Bounds.Height), S.Primary ? 0 : 1, S.Primary ? 0 : 10 });
+                                            Thread.Sleep(1000);
+                                            break;
+
+                                        }
+
+
+                                    }
+
+
+                                }
+
+                                break;
+
+                        }
+
+                    }
 
                 }
+
+                else
+                {
+
+                    foreach (Screen S in System.Windows.Forms.Screen.AllScreens)
+                    {
+
+                        Thread MonitorThread = new Thread(RunAlbum);
+                        MonitorThread.Start(new object[] { new Rectangle(S.Bounds.X, S.Bounds.Y, S.Bounds.Width, S.Bounds.Height), "" });
+
+                    }
+
+                }
+
+            }
+
+            #endregion
+
+            if (SuperMode == 1)
+            {
+
+                WPF_Practice.MainWindow ConfigPanel = new MainWindow();
+                ConfigPanel.ShowDialog();
+
+            }
+
+            if (SuperMode == 2)
+            {
+
+                string firstArgument = args[0].ToLower().Trim();
+                string secondArgument = null;
+
+
+                if (firstArgument.Length > 2)
+                {
+                    secondArgument = firstArgument.Substring(3).Trim();
+                    firstArgument = firstArgument.Substring(0, 2);
+                }
+                else if (args.Length > 1)
+                    secondArgument = args[1];
+
+                IntPtr previewWndHandle = new IntPtr(long.Parse(secondArgument));
+
+                Thread MonitorThread = new Thread(RunDemo);
+                MonitorThread.Start(new object[] { new Rectangle(0, 0, 800, 600), previewWndHandle });
+
 
             }
 
@@ -83,12 +196,35 @@ namespace MultiSaver
                 Form F = C.FindForm();
 
                 F.FormBorderStyle = FormBorderStyle.None;
-                game.Bounds = (Rectangle)Bounds;
+                game.Bounds = (Rectangle)(Bounds as object[])[0];
+                game.Location = (String)(Bounds as object[])[1];
 
-                game.IsLeft = (Bounds as Rectangle?).Value.X < 0 ? true : false;
+                //game.IsLeft = (Bounds as Rectangle?).Value.X < 0 ? true : false;
 
                 game.Run();
             
+            }
+
+        }
+
+        public static void RunDemo(object Bounds)
+        {
+
+            
+            using (Album game = new Album())
+            {
+
+                Control C = Form.FromHandle(game.Window.Handle);
+                Form F = C.FindForm();
+
+                F.FormBorderStyle = FormBorderStyle.None;
+                game.Bounds = (Rectangle)(Bounds as object[])[0];
+                game.Handler = (IntPtr)(Bounds as object[])[1];
+
+                //game.IsLeft = (Bounds as Rectangle?).Value.X < 0 ? true : false;
+
+                game.Run();
+
             }
 
         }
@@ -107,7 +243,7 @@ namespace MultiSaver
                 game.ID = (int)(Bounds as object[])[1];
                 game.Stagger = (int)(Bounds as object[])[2];
 
-                game.IsLeft = game.Bounds.X < 0 ? true : false;
+                game.IsLeft = game.ID == 0 ? false : true;
 
                 game.Run();
 

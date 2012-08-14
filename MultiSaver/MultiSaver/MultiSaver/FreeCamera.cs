@@ -21,9 +21,7 @@ namespace MultiSaver
 
         private Vector3 translation;
 
-        public FreeCamera(Vector3 Position, float Yaw, float Pitch,
-            GraphicsDevice graphicsDevice)
-            : base(graphicsDevice)
+        public FreeCamera(Vector3 Position, float Yaw, float Pitch, GraphicsDevice graphicsDevice, Boolean Perspective = true): base(graphicsDevice, Perspective)
         {
             this.Position = Position;
             this.Yaw = Yaw;
