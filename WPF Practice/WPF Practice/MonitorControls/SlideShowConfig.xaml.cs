@@ -137,8 +137,8 @@ namespace WPF_Practice.MonitorControls
             directionInBox.SelectedIndex = gSetting.monitors[numberscreen].dirIn;
             directionoutBox.SelectedIndex = gSetting.monitors[numberscreen].dirOut;
             Clockwise = gSetting.monitors[numberscreen].clockwise;
-            Order = gSetting.order;
-            location = gSetting.albumLocation;
+            Order = gSetting.monitors[numberscreen].order;
+            location = gSetting.monitors[numberscreen].albumLocation;
             TransitionTypes.Text = gSetting.monitors[numberscreen].transitionType;
 
             
@@ -153,8 +153,8 @@ namespace WPF_Practice.MonitorControls
             gSetting.monitors[numberscreen].dirIn = directionInBox.SelectedIndex;
             gSetting.monitors[numberscreen].dirOut = directionoutBox.SelectedIndex;
             gSetting.monitors[numberscreen].clockwise = Clockwise;
-            gSetting.order = Order;
-            gSetting.albumLocation = location;
+            gSetting.monitors[numberscreen].order = Order;
+            gSetting.monitors[numberscreen].albumLocation = location;
 
             gSetting.mazeSize = 0;
             gSetting.mazePalletName = " ";
@@ -178,7 +178,7 @@ namespace WPF_Practice.MonitorControls
         private void pictureLocation_TextChanged(object sender, TextChangedEventArgs e)
         {
 
-            gSetting.albumLocation = (sender as TextBox).Text;
+            gSetting.monitors[monitor].albumLocation = (sender as TextBox).Text;
         }
 
         private void comboFadeTime_DropDownClosed(object sender, EventArgs e)
@@ -222,7 +222,7 @@ namespace WPF_Practice.MonitorControls
         private void orderComboBox_DropDownClosed(object sender, EventArgs e)
         {
 
-            gSetting.order = (sender as ComboBox).Text;
+            gSetting.monitors[monitor].order = (sender as ComboBox).Text;
         }
 
         private void isClockwise_Checked(object sender, RoutedEventArgs e)

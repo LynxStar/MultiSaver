@@ -25,14 +25,14 @@ namespace WPF_Practice.MonitorControls
                 writer.WriteElementString("Name", gs.groupName);
                 writer.WriteElementString("Type", gs.ssType);
                 writer.WriteElementString("isActive", gs.isActive.ToString());
-                writer.WriteElementString("Album", gs.albumLocation);
-                writer.WriteElementString("PictureOrder", gs.order);
                 writer.WriteElementString("MazeSize", gs.mazeSize.ToString());
                 writer.WriteElementString("Pallet", gs.mazePalletName);
                 foreach(MonitorSetting ms in gs.monitors)
                 {
                     writer.WriteStartElement("Monitor");
                     writer.WriteElementString("ID", ms.monitorId);
+                    writer.WriteElementString("Album", ms.albumLocation);
+                    writer.WriteElementString("PictureOrder", ms.order);
                     writer.WriteElementString("TransitionType", ms.transitionType);
                     writer.WriteElementString("FadeTime", ms.fadeTime.ToString());
                     writer.WriteElementString("DisplayTime", ms.displayTime.ToString());
@@ -77,14 +77,6 @@ namespace WPF_Practice.MonitorControls
                                 reader.Read();
                                 tempGroup.isActive = bool.Parse(reader.Value.Trim());
                                 break;
-                            case "Album":
-                                reader.Read();
-                                tempGroup.albumLocation = reader.Value.Trim();
-                                break;
-                            case "PictureOrder":
-                                reader.Read();
-                                tempGroup.order = reader.Value.Trim();
-                                break;
                             case "MazeSize":
                                 reader.Read();
                                 tempGroup.mazeSize = int.Parse(reader.Value);
@@ -104,6 +96,14 @@ namespace WPF_Practice.MonitorControls
                                 {
                                     throw new Exception("No Monitor ID");
                                 }
+                                break;
+                            case "Album":
+                                reader.Read();
+                                tempMonitor.albumLocation = reader.Value.Trim();
+                                break;
+                            case "PictureOrder":
+                                reader.Read();
+                                tempMonitor.order = reader.Value.Trim();
                                 break;
                             case "transitionType":
                                 reader.Read();
