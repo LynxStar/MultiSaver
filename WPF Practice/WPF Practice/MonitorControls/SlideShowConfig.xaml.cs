@@ -140,6 +140,7 @@ namespace WPF_Practice.MonitorControls
             Order = gSetting.monitors[numberscreen].order;
             location = gSetting.monitors[numberscreen].albumLocation;
             TransitionTypes.Text = gSetting.monitors[numberscreen].transitionType;
+            updateFields();
 
             
         }

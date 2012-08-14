@@ -85,6 +85,10 @@ namespace WPF_Practice.MonitorControls
                                 reader.Read();
                                 tempGroup.mazePalletName = reader.Value.Trim();
                                 break;
+                            case "Type":
+                                reader.Read();
+                                tempGroup.ssType = reader.Value.Trim();
+                                break;
                             case "Monitor":
                                 reader.Read();
                                 if (reader.Name == "ID")
