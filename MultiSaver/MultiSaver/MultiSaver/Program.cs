@@ -60,7 +60,7 @@ namespace MultiSaver
                         Thread MazeAICenter = new Thread(RunMaze);
                         Thread MazeAILeft = new Thread(RunMaze);
 
-                        MazeAICenter.Start(new object[] { new Rectangle(0, 0, 1680, 1050), 0, 0 });
+                        MazeAICenter.Start(new object[] { new Rectangle(0, 0, 1600, 900), 0, 0 });
                         Thread.Sleep(1000);
                         MazeAILeft.Start(new object[] { new Rectangle(-1000, 0, 1680, 1050), 1, 10 });//Stagger to account for XNA and DirectX and Windows 
                         //and generally computers not being designed for MM

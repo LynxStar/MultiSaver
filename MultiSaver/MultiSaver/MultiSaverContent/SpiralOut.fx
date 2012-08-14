@@ -4,6 +4,8 @@ float4x4 Projection;
 int Time;
 float Rotation;
 
+float2 Origin = float2(0, 0);
+
 texture PhotoTexture;
 sampler PhotoSampler = sampler_state 
 {
@@ -38,8 +40,6 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput Input)
 
     VertexShaderOutput Output;
 
-	float2 Origin = float2(250, 250);
-
 	//float2 Offset = Origin - float2(Input.Normal.y, Input.Normal.z) * clamp((Time - Input.Normal.x) / 180, 0, 1);
 
 	float2 Offset = float2(Input.Position.x, Input.Position.y) - float2(Input.Normal.y, Input.Normal.z) * clamp((Time - Input.Normal.x) / 180, 0, 1);
@@ -53,7 +53,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput Input)
 	 	     
     float2x2 rotationMatrix = float2x2(c, -s, s, c);
 
-	float2 Pos = mul(float2(Offset.x - 250, Offset.y - 250), rotationMatrix) + 250;
+	float2 Pos = mul(float2(Offset.x - Origin.x, Offset.y - Origin.y), rotationMatrix) + Origin;
 
 	float4 PosF = float4(Pos.x, Pos.y, Input.Position.z - clamp((Time - Input.Normal.x) / 180, 0, 1), Input.Position.w);
 

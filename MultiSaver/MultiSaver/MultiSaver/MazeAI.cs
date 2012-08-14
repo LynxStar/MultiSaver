@@ -41,6 +41,8 @@ namespace MultiSaver
 
         Stack<Cell> PathStack;
 
+        bool DoOnce = true;
+
         Cell Current;
         Cell Next;
 
@@ -54,9 +56,16 @@ namespace MultiSaver
         public VertexBuffer WallVerticesBuffer;
         public IndexBuffer WallIndicesBuffer;
 
+        public VertexPositionNormalTexture[] Vertices;
+        public VertexBuffer VerticesBuffer;
+        public int[] Indices;
+        public IndexBuffer IndicesBuffer;
+
         Vector2 HasMoved;
         Vector2 ShouldMove;
         Vector3 Start;
+        
+        public Texture2D WallTiling;
         
         public MazeAI()
         {
@@ -104,7 +113,8 @@ namespace MultiSaver
             MovableCamera.Update();
 
             MazeEffect = Content.Load<Effect>("MazeEffect");
-            MazeTexture = Content.Load<Texture2D>("Alex1");
+            MazeTexture = Content.Load<Texture2D>("Floor");
+            WallTiling = Content.Load<Texture2D>("Walls");
 
             BEffect = new BasicEffect(GraphicsDevice);
             BEffect.VertexColorEnabled = true;
@@ -188,11 +198,30 @@ namespace MultiSaver
                     else
                     {
 
-                        WallVerticesBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionColor), Program.MasterMaze.WallVertices.Length, BufferUsage.WriteOnly);
+                        WallVerticesBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionColorTexture), Program.MasterMaze.WallVertices.Length, BufferUsage.WriteOnly);
                         WallIndicesBuffer = new IndexBuffer(GraphicsDevice, IndexElementSize.ThirtyTwoBits, Program.MasterMaze.WallIndices.Length, BufferUsage.WriteOnly);
 
-                        WallVerticesBuffer.SetData<VertexPositionColor>(Program.MasterMaze.WallVertices);
+                        WallVerticesBuffer.SetData<VertexPositionColorTexture>(Program.MasterMaze.WallVertices);
                         WallIndicesBuffer.SetData<int>(Program.MasterMaze.WallIndices);
+
+                        if (DoOnce)
+                        {
+
+                            DoOnce = false;
+
+                            Vertices = new VertexPositionNormalTexture[Program.MasterMaze.Vertices.Length];
+                            Indices = new int[Program.MasterMaze.Indices.Length];
+
+                            Vertices = (VertexPositionNormalTexture[])Program.MasterMaze.Vertices.Clone();
+                            Indices = (int[])Program.MasterMaze.Indices.Clone();
+
+                            VerticesBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionNormalTexture), Vertices.Length, BufferUsage.WriteOnly);
+                            IndicesBuffer = new IndexBuffer(GraphicsDevice, IndexElementSize.ThirtyTwoBits, Indices.Length, BufferUsage.WriteOnly);
+
+                            VerticesBuffer.SetData<VertexPositionNormalTexture>(Vertices);
+                            IndicesBuffer.SetData<int>(Indices);
+
+                        }
 
                     }
 
@@ -533,6 +562,32 @@ namespace MultiSaver
 
             if (Program.MasterMaze.State != "None")
             {
+
+                if (ID == 0)
+                {
+
+                    GraphicsDevice.SetVertexBuffer(Program.MasterMaze.VerticesBuffer);
+                    GraphicsDevice.Indices = Program.MasterMaze.IndicesBuffer;
+
+                }
+
+                else if (!DoOnce)
+                {
+
+                    GraphicsDevice.SetVertexBuffer(VerticesBuffer);
+                    GraphicsDevice.Indices = IndicesBuffer;
+
+
+                }
+
+                MazeEffect.Parameters["View"].SetValue(MovableCamera.View);
+                MazeEffect.Parameters["Projection"].SetValue(MovableCamera.Projection);
+                MazeEffect.Parameters["MazeTexture"].SetValue(MazeTexture);
+
+                MazeEffect.Techniques[0].Passes[0].Apply();
+
+                GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, Program.MasterMaze.VerticesBuffer.VertexCount, 0, Program.MasterMaze.IndicesBuffer.IndexCount / 3);
+
                 
                 if (ID == 0)
                 {
@@ -552,6 +607,8 @@ namespace MultiSaver
 
                 BEffect.View = MovableCamera.View;
                 BEffect.Projection = MovableCamera.Projection;
+                BEffect.Texture = WallTiling;
+                BEffect.TextureEnabled = true;
 
                 BEffect.Techniques[0].Passes[0].Apply();
 

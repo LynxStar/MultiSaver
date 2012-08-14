@@ -20,6 +20,8 @@ namespace MultiSaver
 
         bool TransitionIn = true;
 
+        BasicEffect BE;
+
         Effect PanInEffect;
         Effect PanOutEffect;
 
@@ -51,6 +53,8 @@ namespace MultiSaver
         public Rectangle Bounds = Rectangle.Empty;
 
         public bool IsLeft = false;
+
+        public Vector2 CurrentSize = new Vector2(); 
 
         public Album()
         {
@@ -94,6 +98,8 @@ namespace MultiSaver
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            BE = new BasicEffect(GraphicsDevice);
+
             PanInEffect = Content.Load<Effect>("PanIn");
             PanOutEffect = Content.Load<Effect>("PanOut");
 
@@ -106,9 +112,7 @@ namespace MultiSaver
             if (IsLeft)
             {
 
-                Images.Add(Content.Load<Texture2D>("Alex1"));
                 Images.Add(Content.Load<Texture2D>("F22"));
-                Images.Add(Content.Load<Texture2D>("Tim1"));
                 Images.Add(Content.Load<Texture2D>("CPU1"));
 
             }
@@ -125,12 +129,11 @@ namespace MultiSaver
             }
 
             Mode = RandomMode();
-            GeneratePrimatives(Program.Rand.Next(10, 25), Images[0]);
+            Mode = "Spiral";
+            //GeneratePrimatives(Program.Rand.Next(10, 25), Images[0]);
+            GeneratePrimatives(10, Images[0]);
 
-            FixedCamera = new TargetCamera(new Vector3(100, 50, 300), new Vector3(100, 50, 0), GraphicsDevice);
-            FixedCamera.Update();
-
-            MovableCamera = new FreeCamera(new Vector3(250, 225, 750), 0, 0, GraphicsDevice);
+            MovableCamera = new FreeCamera(new Vector3(Bounds.Width / 2, Bounds.Height / 2, 10), 0, 0, GraphicsDevice);
             MovableCamera.Update();
 
         }
@@ -139,6 +142,34 @@ namespace MultiSaver
         {
 
             CurrentImage = Image;
+
+            CurrentSize = new Vector2(Image.Width, Image.Height);
+
+            float WPer = Image.Width * 100f / Bounds.Width;
+            float HPer = Image.Height * 100f / Bounds.Height;
+
+            if (WPer > 100 || HPer > 100)
+            {
+
+                if (WPer > HPer)
+                    CurrentSize *= 100f / WPer;
+                else
+                    CurrentSize *= 100f / HPer;
+
+            }
+
+            else if (WPer < 65 || HPer < 65)
+            {
+
+                WPer = Image.Width * 100f / Bounds.Width * 100f / 65;
+                HPer = Image.Height * 100f / Bounds.Height * 100f / 65;
+
+                if (WPer > HPer)
+                    CurrentSize *= 100f / WPer;
+                else
+                    CurrentSize *= 100f / HPer;
+
+            }
 
             Vertices = new VertexPositionNormalTexture[Tiling * Tiling * 4];
             Indices = new int[Tiling * Tiling * 6];
@@ -158,11 +189,13 @@ namespace MultiSaver
 
                 for (int x = 0; x < Tiling; x++)
                 {
-                    
-                    int Length = 500 / Tiling;
+
+                    int Length = (int)CurrentSize.X / Tiling;
+                    int LengthX = (int)CurrentSize.X / Tiling;
+                    int LengthY = (int)CurrentSize.Y / Tiling;
                     float UVLength = 1f / Tiling;
 
-                    Vector2 Coords = new Vector2(x * Length, 500 - y * Length);
+                    Vector2 Coords = new Vector2(((Bounds.Width - CurrentSize.X) / 2) + x * LengthX, Bounds.Height - ((Bounds.Height - CurrentSize.Y) / 2) - y * LengthY);
                     Vector2 UVCoords = new Vector2((float)x * UVLength, (float)y * UVLength);
 
                     #region Pan
@@ -170,15 +203,15 @@ namespace MultiSaver
                     if (Mode == "Pan")
                     {
 
-                        int Offset = Rand.Next(500, 1000);
-                        int Speed = Rand.Next(2, 7);
+                        float Offset = Rand.Next(Bounds.Width - Convert.ToInt32(Coords.X), Bounds.Width);
+                        float Speed = Convert.ToSingle(3 + Rand.NextDouble() * 5);
 
-                        Time = (int)(Time < (250 + Coords.X + Offset) / (Speed) ? (250 + Coords.X + Offset) / (Speed) : Time);
+                        Time = (int)(Time < (Coords.X + Offset) / (Speed) ? (Coords.X + Offset) / (Speed) : Time);
 
-                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(250 + Coords.X, Coords.Y, 0), new Vector3(Offset, 250 + Coords.X, Speed), new Vector2(UVCoords.X, UVCoords.Y));
-                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(250 + Coords.X + Length, Coords.Y, 0), new Vector3(Offset, 250 + Coords.X + Length, Speed), new Vector2(UVCoords.X + UVLength, UVCoords.Y));
-                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(250 + Coords.X, Coords.Y - Length, 0), new Vector3(Offset, 250 + Coords.X, Speed), new Vector2(UVCoords.X, UVCoords.Y + UVLength));
-                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(250 + Coords.X + Length, Coords.Y - Length, 0), new Vector3(Offset, 250 + Coords.X + Length, Speed), new Vector2(UVCoords.X + UVLength, UVCoords.Y + UVLength));
+                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X, Coords.Y, 0), new Vector3(Offset, Coords.X, Speed), new Vector2(UVCoords.X, UVCoords.Y));
+                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X + LengthX, Coords.Y, 0), new Vector3(Offset, Coords.X + LengthX, Speed), new Vector2(UVCoords.X + UVLength, UVCoords.Y));
+                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X, Coords.Y - LengthY, 0), new Vector3(Offset, Coords.X, Speed), new Vector2(UVCoords.X, UVCoords.Y + UVLength));
+                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X + LengthX, Coords.Y - LengthY, 0), new Vector3(Offset, Coords.X + LengthX, Speed), new Vector2(UVCoords.X + UVLength, UVCoords.Y + UVLength));
 
                     }
 
@@ -197,9 +230,9 @@ namespace MultiSaver
                         Time = (int)(Delay + 255 / Speed > Time ? Delay + 255 / Speed : Time);
 
                         Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X, Coords.Y, 0), N1, new Vector2(UVCoords.X, UVCoords.Y));
-                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X + Length, Coords.Y, 0), N1, new Vector2(UVCoords.X + UVLength, UVCoords.Y));
-                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X, Coords.Y - Length, 0), N1, new Vector2(UVCoords.X, UVCoords.Y + UVLength));
-                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X + Length, Coords.Y - Length, 0), N1, new Vector2(UVCoords.X + UVLength, UVCoords.Y + UVLength));
+                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X + LengthX, Coords.Y, 0), N1, new Vector2(UVCoords.X + UVLength, UVCoords.Y));
+                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X, Coords.Y - LengthY, 0), N1, new Vector2(UVCoords.X, UVCoords.Y + UVLength));
+                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X + LengthX, Coords.Y - LengthY, 0), N1, new Vector2(UVCoords.X + UVLength, UVCoords.Y + UVLength));
 
                     }
 
@@ -207,22 +240,36 @@ namespace MultiSaver
 
                     #region Spiral
 
-                    else
+                    else if  (Mode == "Spiral")
                     {
 
                         int Delay = Rand.Next(0, 10) * 30;
 
-                        Vector3 N1 = new Vector3(Delay, Coords.X - 250, Coords.Y - 250);
-                        Vector3 N2 = new Vector3(Delay, Coords.X + Length - 250, Coords.Y - 250);
-                        Vector3 N3 = new Vector3(Delay, Coords.X - 250, Coords.Y - Length - 250);
-                        Vector3 N4 = new Vector3(Delay, Coords.X + Length - 250, Coords.Y - Length - 250);
+                        Vector3 N1 = new Vector3(Delay, Coords.X - Bounds.Width / 2, Coords.Y - Bounds.Height / 2);
+                        Vector3 N2 = new Vector3(Delay, Coords.X + LengthX - Bounds.Width / 2, Coords.Y - Bounds.Height / 2);
+                        Vector3 N3 = new Vector3(Delay, Coords.X - Bounds.Width / 2, Coords.Y - LengthY - Bounds.Height / 2);
+                        Vector3 N4 = new Vector3(Delay, Coords.X + LengthX - Bounds.Width / 2, Coords.Y - LengthY - Bounds.Height / 2);
 
                         //Time = (int)(Delay + 255 / Speed > Time ? Delay + 255 / Speed : Time);
 
                         Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X, Coords.Y, 0), N1, new Vector2(UVCoords.X, UVCoords.Y));
-                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X + Length, Coords.Y, 0), N2, new Vector2(UVCoords.X + UVLength, UVCoords.Y));
-                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X, Coords.Y - Length, 0), N3, new Vector2(UVCoords.X, UVCoords.Y + UVLength));
-                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X + Length, Coords.Y - Length, 0), N4, new Vector2(UVCoords.X + UVLength, UVCoords.Y + UVLength));
+                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X + LengthX, Coords.Y, 0), N2, new Vector2(UVCoords.X + UVLength, UVCoords.Y));
+                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X, Coords.Y - LengthY, 0), N3, new Vector2(UVCoords.X, UVCoords.Y + UVLength));
+                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X + LengthX, Coords.Y - LengthY, 0), N4, new Vector2(UVCoords.X + UVLength, UVCoords.Y + UVLength));
+
+                    }
+
+                    #endregion
+
+                    #region Test
+
+                    else
+                    {
+
+                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X, Coords.Y, 0), Vector3.Zero, new Vector2(UVCoords.X, UVCoords.Y));
+                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X + LengthX, Coords.Y, 0), Vector3.Zero, new Vector2(UVCoords.X + UVLength, UVCoords.Y));
+                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X, Coords.Y - LengthY, 0), Vector3.Zero, new Vector2(UVCoords.X, UVCoords.Y + UVLength));
+                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X + LengthX, Coords.Y - LengthY, 0), Vector3.Zero, new Vector2(UVCoords.X + UVLength, UVCoords.Y + UVLength));
 
                     }
 
@@ -349,8 +396,13 @@ namespace MultiSaver
                     Used = PanInEffect;
                 else if (Mode == "Fade")
                     Used = FadeInEffect;
-                else
+                else if (Mode == "Spiral")
+                {
+
                     Used = SpiralInEffect;
+                    Used.Parameters["Origin"].SetValue(new Vector2(Bounds.Width / 2, Bounds.Height / 2));
+
+                }
 
             }
 
@@ -360,17 +412,41 @@ namespace MultiSaver
                     Used = PanOutEffect;
                 else if (Mode == "Fade")
                     Used = FadeOutEffect;
-                else
+                else if (Mode == "Spiral")
+                {
+
                     Used = SpiralOutEffect;
+                    Used.Parameters["Origin"].SetValue(new Vector2(Bounds.Width / 2, Bounds.Height / 2));
+
+                }
                 
             }
 
-            Used.Parameters["View"].SetValue(MovableCamera.View);
-            Used.Parameters["Projection"].SetValue(MovableCamera.Projection);
-            Used.Parameters["PhotoTexture"].SetValue(CurrentImage);
-            Used.Parameters["Time"].SetValue(Time);
 
-            Used.Techniques[0].Passes[0].Apply();
+
+            if (Mode != "Test")
+            {
+
+                Used.Parameters["View"].SetValue(MovableCamera.View);
+                Used.Parameters["Projection"].SetValue(MovableCamera.Projection);
+                Used.Parameters["PhotoTexture"].SetValue(CurrentImage);
+                Used.Parameters["Time"].SetValue(Time);
+                Used.Techniques[0].Passes[0].Apply();
+
+            }
+
+            else
+            {
+
+                BE.View = MovableCamera.View;
+                BE.Projection = MovableCamera.Projection;
+                BE.TextureEnabled = true;
+                BE.Texture = CurrentImage;
+                BE.Techniques[0].Passes[0].Apply();
+
+            }
+
+            
 
             GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, VerticesBuffer.VertexCount, 0, IndicesBuffer.IndexCount / 3);
 

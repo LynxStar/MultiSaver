@@ -50,8 +50,8 @@ namespace MultiSaver
             float aspectRatio = (float)pp.BackBufferWidth /
                 (float)pp.BackBufferHeight;
 
-            this.Projection = Matrix.CreatePerspectiveFieldOfView(
-                MathHelper.ToRadians(45), aspectRatio, 10.0f, 100000.0f);
+            //this.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), aspectRatio, 1.0f, 10000.0f);
+            this.Projection = Matrix.CreateOrthographic(pp.BackBufferWidth, pp.BackBufferHeight, 1.0f, 10000.0f);
         }
 
         public virtual void Update()
