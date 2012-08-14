@@ -64,6 +64,7 @@ namespace WPF_Practice.MonitorControls
                 {
                     if (reader.IsStartElement())
                     {
+<<<<<<< HEAD
                         switch (reader.Name)
                         {
                             case "Group":
@@ -72,10 +73,6 @@ namespace WPF_Practice.MonitorControls
                             case "Name":
                                 reader.Read();
                                 tempGroup.groupName = reader.Value.Trim();
-                            break;
-                        case "Type":
-                            reader.Read();
-                            tempGroup.ssType = reader.Value.Trim();
                                 break;
                             case "isActive":
                                 reader.Read();
@@ -88,6 +85,10 @@ namespace WPF_Practice.MonitorControls
                             case "Pallet":
                                 reader.Read();
                                 tempGroup.mazePalletName = reader.Value.Trim();
+                                break;
+                            case "Type":
+                                reader.Read();
+                                tempGroup.ssType = reader.Value.Trim();
                                 break;
                             case "Monitor":
                                 reader.Read();
@@ -149,6 +150,91 @@ namespace WPF_Practice.MonitorControls
                                 reader.Read();
                                 tempMonitor.aiMethod = reader.Value.Trim();
                                 break;
+=======
+                        case "Group":
+                            tempGroup = new GroupSetting();
+                            break;
+                        case "Name":
+                            reader.Read();
+                            tempGroup.groupName = reader.Value.Trim();
+                            break;
+                        case "Type":
+                            reader.Read();
+                            tempGroup.ssType = reader.Value.Trim();
+                            break;
+                        case "isActive":
+                            reader.Read();
+                            tempGroup.isActive = bool.Parse(reader.Value.Trim());
+                            break;
+                        case "Album":
+                            reader.Read();
+                            tempGroup.albumLocation = reader.Value.Trim();
+                            break;
+                        case "PictureOrder":
+                            reader.Read();
+                            tempGroup.order = reader.Value.Trim();
+                            break;
+                        case "MazeSize":
+                            reader.Read();
+                            tempGroup.mazeSize = int.Parse(reader.Value);
+                            break;
+                        case "Pallet":
+                            reader.Read();
+                            tempGroup.mazePalletName = reader.Value.Trim();
+                            break;
+                        case "Monitor":
+                            reader.Read();
+                            if (reader.Name == "ID")
+                            { 
+                                reader.Read();
+                                tempMonitor = new MonitorSetting(reader.Value.Trim());
+                            }
+                            else
+                            {
+                                throw new Exception("No Monitor ID");
+                            }
+                            break;
+                        case "transitionType":
+                            reader.Read();
+                            tempMonitor.transitionType = reader.Value.Trim();
+                            break;
+                        case "FadeTime":
+                            reader.Read();
+                            tempMonitor.fadeTime = int.Parse(reader.Value.Trim());
+                            break;
+                        case "DisplayTime":
+                            reader.Read();
+                            tempMonitor.displayTime = int.Parse(reader.Value.Trim());
+                            break;
+                        case "PanTime":
+                            reader.Read();
+                            tempMonitor.panTime = int.Parse(reader.Value.Trim());
+                            break;
+                        case "PanDirIn":
+                            reader.Read();
+                            tempMonitor.dirIn = int.Parse(reader.Value.Trim());
+                            break;
+                        case "PanDirOut":
+                            reader.Read();
+                            tempMonitor.dirOut = int.Parse(reader.Value.Trim());
+                            break;
+                        case "IsClockwise":
+                            reader.Read();
+                            tempMonitor.clockwise = bool.Parse(reader.Value.Trim());
+                            break;
+                        case "NumRotations":
+                            reader.Read();
+                            tempMonitor.numRotations = int.Parse(reader.Value.Trim());
+                            break;
+                        case "AIView":
+                            reader.Read();
+                            tempMonitor.aiView = reader.Value.Trim();
+                            break;
+                        case "AIMethod":
+                            reader.Read();
+                            tempMonitor.aiMethod = reader.Value.Trim();
+                            break;
+>>>>>>> 521e1fd3b6805aeb7588a4adcd91a35075bd9323
 
                         }
 
