@@ -5,17 +5,17 @@ using System.Text;
 using System.Xml;
 namespace WPF_Practice.MonitorControls
 {
-    class XMLHandler
+    public class XMLHandler
     {
         public static void save(List<GroupSetting> groups)
         {
-            XMLHandler.save(groups, "");
+            XMLHandler.save(groups, "./");
         }
         public static void save(List<GroupSetting> groups, string pathname)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.ConformanceLevel = ConformanceLevel.Auto;
-            XmlWriter writer = XmlWriter.Create(pathname + "config.xml", settings);
+            XmlWriter writer = XmlWriter.Create(pathname + "MultiSaverConfig.xml", settings);
             writer.WriteStartDocument();
             writer.WriteStartElement("Groups");
             foreach(GroupSetting gs in groups)
@@ -69,6 +69,10 @@ namespace WPF_Practice.MonitorControls
                         case "Name":
                             reader.Read();
                             tempGroup.groupName = reader.Value.Trim();
+                            break;
+                        case "Type":
+                            reader.Read();
+                            tempGroup.ssType = reader.Value.Trim();
                             break;
                         case "isActive":
                             reader.Read();

@@ -96,9 +96,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ConfigPanel\ConfigPanel.csproj">
-      <Project>{10B1A386-B43C-48DE-8A66-981E0DACFE75}</Project>
-      <Name>ConfigPanel</Name>
+    <ProjectReference Include="..\..\..\WPF Practice\WPF Practice\WPF Practice.csproj">
+      <Project>{B90D20B4-EC99-4EEA-98AD-15CEE294720A}</Project>
+      <Name>WPF Practice</Name>
     </ProjectReference>
     <ProjectReference Include="..\MultiSaverContent\MultiSaverContent.contentproj">
       <Name>MultiSaverContent</Name>
