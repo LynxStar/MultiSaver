@@ -32,6 +32,11 @@ namespace WPF_Practice.MonitorControls
            return groupsettings[place];
        }
 
+       public List<List<string>> getOwnedMonitors()
+       {
+           return ownedmonitors;
+       }
+
         public ScreenSaverControl()
         {
             InitializeComponent();
@@ -56,13 +61,10 @@ namespace WPF_Practice.MonitorControls
 
         public int createnewGroup()
         {
-            int groupid = groupsettings.Count + 1;
+            
             List<string> tmpstring = new List<string>();
             groupsettings.Add(new GroupSetting());
             ownedmonitors.Add(new List<string>());
-           /* foreach (string str in unassignedMonitors[0])
-                tmpstring.Add(str);
-            unassignedMonitors.Add(tmpstring); */
             groupsettings[groupsettings.Count - 1].groupName = "New Group";
 
             Debug.WriteLine(String.Format("GroupSettings: {0} Ownded MOnitors: {1}", groupsettings.Count, ownedmonitors.Count));
@@ -100,7 +102,7 @@ namespace WPF_Practice.MonitorControls
             foreach (System.Windows.Forms.Screen Screen in System.Windows.Forms.Screen.AllScreens)
             {
                 string tmpMonitor ="Monitor " + monitorcount++;
-                if (!ownedmonitors[selectedScreen].Contains(Screen.DeviceName))
+                if (!ownedmonitors[selectedScreen].Contains(Screen.DeviceName) && !ownedmonitors[selectedScreen].Contains(tmpMonitor))
                 {
                     unassignedMonitors.Add(tmpMonitor);
                 }
@@ -108,6 +110,7 @@ namespace WPF_Practice.MonitorControls
                 {
                     gcontrol.OwnedMonitors.Add(tmpMonitor);
                 }
+                monitorcount++;
 
             }
             gcontrol.AvailableMonitors = unassignedMonitors;

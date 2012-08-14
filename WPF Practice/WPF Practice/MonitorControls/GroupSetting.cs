@@ -12,8 +12,6 @@ namespace WPF_Practice.MonitorControls
 
         public string ssType;
         public bool isActive;
-        public string albumLocation;
-        public string order;
         public int mazeSize;
         public string mazePalletName;
 
@@ -22,8 +20,6 @@ namespace WPF_Practice.MonitorControls
             groupName = "Group";
             
             isActive = false;
-            albumLocation = "C:\\Users\\Public\\Pictures";
-            order = "Alphabetical";
             mazeSize = 10;
             mazePalletName = "Basic.png";
             monitors = new List<MonitorSetting>();
@@ -52,6 +48,8 @@ namespace WPF_Practice.MonitorControls
         public int dirOut;
         public bool clockwise;
         public int numRotations;
+        public string albumLocation;
+        public string order;
 
         public string aiView;
         public string aiMethod;
@@ -70,6 +68,9 @@ namespace WPF_Practice.MonitorControls
 
             aiMethod = "Depth First";
             aiView = "First Person";
+
+            albumLocation = "C:\\Users\\Public\\Pictures";
+            order = "Alphabetical";
         }
     }
 }
