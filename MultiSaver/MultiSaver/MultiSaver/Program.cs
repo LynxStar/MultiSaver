@@ -18,6 +18,7 @@ namespace MultiSaver
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        [STAThread()]
         static void Main(string[] args)
         {
 
@@ -28,8 +29,7 @@ namespace MultiSaver
                 string firstArgument = args[0].ToLower().Trim();
                 string secondArgument = null;
 
-                // Handle cases where arguments are separated by colon.
-                // Examples: /c:1234567 or /P:1234567
+                
                 if (firstArgument.Length > 2)
                 {
                     secondArgument = firstArgument.Substring(3).Trim();
@@ -52,9 +52,7 @@ namespace MultiSaver
                 }
                 else    // Undefined argument
                 {
-                    MessageBox.Show("Sorry, but the command line argument \"" + firstArgument +
-                        "\" is not valid.", "ScreenSaver",
-                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("Sorry, but the command line argument \"" + firstArgument + "\" is not valid.", "ScreenSaver", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
             else    // No arguments - treat like /c
@@ -89,8 +87,8 @@ namespace MultiSaver
                                     {
 
                                         Thread MonitorThread = new Thread(RunAlbum);
-                                        MonitorThread.Start(new Rectangle(S.Bounds.X, S.Bounds.Y, S.Bounds.Width, S.Bounds.Height), Group.albumLocation);
-                                        Thread.Sleep(1);
+                                        MonitorThread.Start(new object[] {new Rectangle(S.Bounds.X, S.Bounds.Y, S.Bounds.Width, S.Bounds.Height), Group.albumLocation});
+                                        Thread.Sleep(10000);
 
                                         break;
 
@@ -104,13 +102,27 @@ namespace MultiSaver
 
                         case 2:
 
-                            Thread MazeAICenter = new Thread(RunMaze);
-                            Thread MazeAILeft = new Thread(RunMaze);
+                            foreach (MonitorSetting MS in Group.monitors)
+                            {
 
-                            MazeAICenter.Start(new object[] { new Rectangle(0, 0, 1600, 900), 0, 0 });
-                            Thread.Sleep(1000);
-                            MazeAILeft.Start(new object[] { new Rectangle(-1000, 0, 1680, 1050), 1, 10 });//Stagger to account for XNA and DirectX and Windows 
-                            //and generally computers not being designed for MM
+                                foreach (Screen S in System.Windows.Forms.Screen.AllScreens)
+                                {
+
+                                    if (S.DeviceName == MS.monitorId)
+                                    {
+
+                                        Thread MazeAICenter = new Thread(RunMaze);
+                                        MazeAICenter.Start(new object[] { new Rectangle(S.Bounds.X, S.Bounds.Y, S.Bounds.Width, S.Bounds.Height), S.Primary ? 0 : 1, S.Primary ? 0 : 10 });
+                                        Thread.Sleep(1000);
+                                        break;
+
+                                    }
+
+
+                                }
+
+
+                            }
 
                             break;
 
@@ -121,6 +133,14 @@ namespace MultiSaver
             }
 
             #endregion
+
+            if (SuperMode == 1)
+            {
+
+                WPF_Practice.MainWindow ConfigPanel = new MainWindow();
+                ConfigPanel.ShowDialog();
+
+            }
 
         }
 
@@ -134,7 +154,8 @@ namespace MultiSaver
                 Form F = C.FindForm();
 
                 F.FormBorderStyle = FormBorderStyle.None;
-                game.Bounds = (Rectangle)Bounds;
+                game.Bounds = (Rectangle)(Bounds as object[])[0];
+                game.Location = (String)(Bounds as object[])[1];
 
                 //game.IsLeft = (Bounds as Rectangle?).Value.X < 0 ? true : false;
 
@@ -158,7 +179,7 @@ namespace MultiSaver
                 game.ID = (int)(Bounds as object[])[1];
                 game.Stagger = (int)(Bounds as object[])[2];
 
-                game.IsLeft = game.Bounds.X < 0 ? true : false;
+                game.IsLeft = game.ID == 0 ? false : true;
 
                 game.Run();
 

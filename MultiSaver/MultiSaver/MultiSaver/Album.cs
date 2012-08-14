@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.IO;
 
 namespace MultiSaver
 {
@@ -49,6 +50,8 @@ namespace MultiSaver
         int Time;
         int TransitionInTime;
         int TransitionOutTime;
+
+        public String Location;
 
         public Rectangle Bounds = Rectangle.Empty;
 
@@ -109,31 +112,28 @@ namespace MultiSaver
             SpiralInEffect = Content.Load<Effect>("SpiralIn");
             SpiralOutEffect = Content.Load<Effect>("SpiralOut");
 
-            if (IsLeft)
+            String[] Files = Directory.GetFiles(Location);
+
+            foreach (String Picture in Files)
             {
 
-                Images.Add(Content.Load<Texture2D>("F22"));
-                Images.Add(Content.Load<Texture2D>("CPU1"));
+                if (Picture.Contains(".png") || Picture.Contains(".PNG") || Picture.Contains(".jpg") || Picture.Contains(".JPG"))
+                {
+                    FileStream FS = new FileStream(Picture, FileMode.Open);
+                    Images.Add(Texture2D.FromStream(GraphicsDevice, FS));
+                    FS.Close();
 
-            }
-
-            else
-            {
-
-                Images.Add(Content.Load<Texture2D>("Megaman1"));
-                Images.Add(Content.Load<Texture2D>("Megaman2"));
-                Images.Add(Content.Load<Texture2D>("Megaman3"));
-                Images.Add(Content.Load<Texture2D>("Megaman4"));
-                Images.Add(Content.Load<Texture2D>("Megaman5"));
+                }
 
             }
 
             Mode = RandomMode();
             Mode = "Spiral";
             //GeneratePrimatives(Program.Rand.Next(10, 25), Images[0]);
-            GeneratePrimatives(10, Images[0]);
+            ImageIndex = new Random().Next(0, Images.Count);
+            GeneratePrimatives(10, Images[ImageIndex]);
 
-            MovableCamera = new FreeCamera(new Vector3(Bounds.Width / 2, Bounds.Height / 2, 10), 0, 0, GraphicsDevice);
+            MovableCamera = new FreeCamera(new Vector3(Bounds.Width / 2, Bounds.Height / 2, 10), 0, 0, GraphicsDevice, false);
             MovableCamera.Update();
 
         }
@@ -359,10 +359,7 @@ namespace MultiSaver
                 else
                 {
 
-                    ImageIndex++;
-
-                    if (ImageIndex >= Images.Count)
-                        ImageIndex = 0;
+                    ImageIndex = new Random().Next(0, Images.Count);
 
                     Mode = RandomMode();
                     GeneratePrimatives(Program.Rand.Next(10, 25), Images[ImageIndex]);

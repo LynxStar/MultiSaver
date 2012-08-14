@@ -213,8 +213,13 @@ namespace MultiSaver
         public void GenerateWallPrimatives()
         {
 
-            WallVertices = new VertexPositionColorTexture[(int)(Dimensions.X * Dimensions.Y) * 4 * 8];
-            WallIndices = new int[(int)(Dimensions.X * Dimensions.Y) * 4 * 30];
+            if (WallIndices == null)
+            {
+
+                WallVertices = new VertexPositionColorTexture[(int)(Dimensions.X * Dimensions.Y) * 4 * 8];
+                WallIndices = new int[(int)(Dimensions.X * Dimensions.Y) * 4 * 30];
+
+            }
 
             WallVerticesBuffer = new VertexBuffer(Graphics, typeof(VertexPositionColorTexture), WallVertices.Length, BufferUsage.WriteOnly);
             WallIndicesBuffer = new IndexBuffer(Graphics, IndexElementSize.ThirtyTwoBits, WallIndices.Length, BufferUsage.WriteOnly);

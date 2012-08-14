@@ -14,7 +14,7 @@ namespace MultiSaver
 
         public TargetCamera(Vector3 Position, Vector3 Target,
             GraphicsDevice graphicsDevice)
-            : base(graphicsDevice)
+            : base(graphicsDevice, true)
         {
             this.Position = Position;
             this.Target = Target;

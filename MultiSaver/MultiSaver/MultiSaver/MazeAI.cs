@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Threading;
 
 namespace MultiSaver
 {
@@ -136,6 +137,25 @@ namespace MultiSaver
             {
 
                 MasterMode = Program.MasterMaze.State;
+
+            }
+
+            if (Program.MasterMaze.State.Contains("Win"))
+            {
+
+                if (ID == 0)
+                {
+
+                    Program.MasterMaze.State = "Generate";
+
+                }
+
+                else
+                {
+
+                    Thread.Sleep(1000);
+
+                }
 
             }
 
