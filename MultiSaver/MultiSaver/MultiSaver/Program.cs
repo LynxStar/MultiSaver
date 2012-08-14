@@ -39,7 +39,7 @@ namespace MultiSaver
 
                         Monitor1.Start(new Rectangle(0, 0, 1680, 1050));
                         Thread.Sleep(1);
-                        //Monitor2.Start(new Rectangle(-1000, 0, 1680, 1050));
+                        Monitor2.Start(new Rectangle(-1000, 0, 1680, 1050));
 
                         break;
 

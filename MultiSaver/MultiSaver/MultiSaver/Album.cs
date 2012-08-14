@@ -245,17 +245,17 @@ namespace MultiSaver
 
                         int Delay = Rand.Next(0, 10) * 30;
 
-                        Vector3 N1 = new Vector3(Delay, Coords.X - 250, Coords.Y - 250);
-                        Vector3 N2 = new Vector3(Delay, Coords.X + Length - 250, Coords.Y - 250);
-                        Vector3 N3 = new Vector3(Delay, Coords.X - 250, Coords.Y - Length - 250);
-                        Vector3 N4 = new Vector3(Delay, Coords.X + Length - 250, Coords.Y - Length - 250);
+                        Vector3 N1 = new Vector3(Delay, Coords.X - Bounds.Width / 2, Coords.Y - Bounds.Height / 2);
+                        Vector3 N2 = new Vector3(Delay, Coords.X + LengthX - Bounds.Width / 2, Coords.Y - Bounds.Height / 2);
+                        Vector3 N3 = new Vector3(Delay, Coords.X - Bounds.Width / 2, Coords.Y - LengthY - Bounds.Height / 2);
+                        Vector3 N4 = new Vector3(Delay, Coords.X + LengthX - Bounds.Width / 2, Coords.Y - LengthY - Bounds.Height / 2);
 
                         //Time = (int)(Delay + 255 / Speed > Time ? Delay + 255 / Speed : Time);
 
                         Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X, Coords.Y, 0), N1, new Vector2(UVCoords.X, UVCoords.Y));
-                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X + Length, Coords.Y, 0), N2, new Vector2(UVCoords.X + UVLength, UVCoords.Y));
-                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X, Coords.Y - Length, 0), N3, new Vector2(UVCoords.X, UVCoords.Y + UVLength));
-                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X + Length, Coords.Y - Length, 0), N4, new Vector2(UVCoords.X + UVLength, UVCoords.Y + UVLength));
+                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X + LengthX, Coords.Y, 0), N2, new Vector2(UVCoords.X + UVLength, UVCoords.Y));
+                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X, Coords.Y - LengthY, 0), N3, new Vector2(UVCoords.X, UVCoords.Y + UVLength));
+                        Vertices[i++] = new VertexPositionNormalTexture(new Vector3(Coords.X + LengthX, Coords.Y - LengthY, 0), N4, new Vector2(UVCoords.X + UVLength, UVCoords.Y + UVLength));
 
                     }
 
@@ -397,7 +397,12 @@ namespace MultiSaver
                 else if (Mode == "Fade")
                     Used = FadeInEffect;
                 else if (Mode == "Spiral")
+                {
+
                     Used = SpiralInEffect;
+                    Used.Parameters["Origin"].SetValue(new Vector2(Bounds.Width / 2, Bounds.Height / 2));
+
+                }
 
             }
 
@@ -408,7 +413,12 @@ namespace MultiSaver
                 else if (Mode == "Fade")
                     Used = FadeOutEffect;
                 else if (Mode == "Spiral")
+                {
+
                     Used = SpiralOutEffect;
+                    Used.Parameters["Origin"].SetValue(new Vector2(Bounds.Width / 2, Bounds.Height / 2));
+
+                }
                 
             }
 
