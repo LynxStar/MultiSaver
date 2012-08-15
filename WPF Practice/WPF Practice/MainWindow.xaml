@@ -11,7 +11,7 @@
         <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="0,401,0,0" Name="DeleteButton" VerticalAlignment="Top" Width="162" Click="DeleteButton_Click" />
         <StackPanel  HorizontalAlignment="Left" Margin="165,0,0,0" Name="mainControl" VerticalAlignment="Top" Width="690" Height="422" Grid.ColumnSpan="2"></StackPanel>
         <Button Content="CreateGroup" Name="createButton" Width="162" Click="Create_Button_Clicked" Margin="0,332,390,69" />
-        <Button Content="Save" Height="23" Name="button1" Margin="0,377,390,24" Click="button1_Click" />
+        <Button Content="Save" Height="23" Name="button1" Margin="0,377,390,0" Click="button1_Click" VerticalAlignment="Top" />
         <Button Content="Load" Height="23" HorizontalAlignment="Left" Margin="0,356,0,0" Name="btnLoad" VerticalAlignment="Top" Width="162" Click="btnLoad_Click" />
     </Grid>
 </Window>
