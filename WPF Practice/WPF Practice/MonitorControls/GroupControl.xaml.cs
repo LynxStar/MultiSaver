@@ -55,15 +55,6 @@ namespace WPF_Practice.MonitorControls
             InitializeComponent();
         }
 
-        public void AssignAvailableString(List<string> AvailableString)
-        {
-            availabeString = AvailableString;
-        }
-        public void AssignOwnedStrings(List<string> targetStrings)
-        {
-            OwnedScreens = targetStrings;
-        }
-
         private void Load_Page(object sender, RoutedEventArgs e)
         {
             nametxtbox.Text = gSetting.groupName;
@@ -159,21 +150,6 @@ namespace WPF_Practice.MonitorControls
 
         }
 
-        private void clicked_OwnedGroupBox(object sender, EventArgs e)
-        {
-            MonitorTab tab = (MonitorTab)sender;
-
-
-        }
-
-        public void fillBox(Group targetGroup)
-        {
-            nametxtbox.Text = targetGroup.name;
-        }
-
-        private void comboScreenSaver_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-        }
 
         private void combomonitorSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

@@ -30,7 +30,7 @@ namespace WPF_Practice
         {
             InitializeComponent();
 
-            load("./MultiSaverConfig.xml");
+                load("");
         }
 
         public void form_Loaded(object sender, RoutedEventArgs e)
@@ -87,10 +87,16 @@ namespace WPF_Practice
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            //Save save = new Save(configScreensSaverControl.getGroupSettings(), this);
-            //save.setSave();
+<<<<<<< HEAD
+            Save save = new Save(configScreensSaverControl.getGroupSettings(), this);
+            save.setSave();
+            save.ShowDialog();
+            //XMLHandler.save(configScreensSaverControl.getGroupSettings());
+=======
+            //Window save = new Save(configScreensSaverControl.getGroupSettings());
             //save.ShowDialog();
             XMLHandler.save(configScreensSaverControl.getGroupSettings());
+>>>>>>> 521e1fd3b6805aeb7588a4adcd91a35075bd9323
         }
 
         private void button2_Click(object sender, RoutedEventArgs e)
@@ -101,7 +107,7 @@ namespace WPF_Practice
         public void load(string pathname)
         {
             List<GroupSetting> loaded = new List<GroupSetting>();
-            loaded = XMLHandler.load(pathname);
+            loaded = XMLHandler.load(pathname + "config.xml");
             foreach (GroupSetting gs in loaded)
             {
                 MonitorTab monitor = new MonitorTab();

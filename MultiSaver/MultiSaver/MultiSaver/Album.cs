@@ -140,6 +140,9 @@ namespace MultiSaver
 
             }
 
+            
+            
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             BE = new BasicEffect(GraphicsDevice);
