@@ -7,4 +7,8 @@ Content\SpiralOut.xnb
 Content\MazeEffect.xnb
 Content\Floor.xnb
 Content\Walls.xnb
+Content\AbstractBars.xnb
+Content\Cell.xnb
+Content\Galaxy.xnb
+Content\Japan.xnb
 config.xml

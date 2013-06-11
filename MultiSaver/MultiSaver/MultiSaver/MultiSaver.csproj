@@ -100,9 +100,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\WPF Practice\WPF Practice\WPF Practice.csproj">
-      <Project>{B90D20B4-EC99-4EEA-98AD-15CEE294720A}</Project>
-      <Name>WPF Practice</Name>
+    <ProjectReference Include="..\..\MultiSaver.ConfigData\MultiSaver.ConfigData.csproj">
+      <Project>{6624135A-A9BA-4E5F-AEAC-20BDE0786F1B}</Project>
+      <Name>MultiSaver.ConfigData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MultiSaver.ConfigPanel\MultiSaver.ConfigPanel.csproj">
+      <Project>{B7A1BC43-E9C8-4050-ACCD-1A9240BE0045}</Project>
+      <Name>MultiSaver.ConfigPanel</Name>
     </ProjectReference>
     <ProjectReference Include="..\MultiSaverContent\MultiSaverContent.contentproj">
       <Name>MultiSaverContent</Name>

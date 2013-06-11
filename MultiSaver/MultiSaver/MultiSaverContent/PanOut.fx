@@ -37,7 +37,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput Input)
     VertexShaderOutput Output;
 
 	Input.Position.x += Input.Normal.x;
-	Input.Position.x = Input.Normal.y - 250;
+	Input.Position.x = Input.Normal.y;
 	Input.Position.x -= (Time * Input.Normal.z);
 	
 	Output.Position = mul(Input.Position, mul(View, Projection));

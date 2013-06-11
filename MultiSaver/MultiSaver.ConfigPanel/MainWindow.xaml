@@ -1,0 +1,140 @@
+﻿<Window x:Class="MultiSaver.ConfigPanel.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="auto" Width="auto">
+    <Window.Resources>
+        <Style x:Key="MonitorIconText" TargetType="TextBlock">
+            <Setter Property="Background" Value="#70FFFFFF" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="-10, -20, 0, 0" />
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        <Style x:Key="MonitorGrid" TargetType="Grid">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightBlue" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="450" />
+            <ColumnDefinition Width="300" />
+        </Grid.ColumnDefinitions>
+        <GroupBox  Grid.Column="0" Header="Monitor Assignment">
+           <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <GroupBox Grid.Column="0" Header="Unassigned" MinHeight="200" Height="auto" MinWidth="140" Width="auto" Margin="12" HorizontalAlignment="Left" Name="UnassignedGroupBox" VerticalAlignment="Top">
+                <StackPanel Name="UnassignedStackPanel" Background="Transparent" DragEnter="StackPanel_DragEnter" Drop="StackPanel_Drop"  AllowDrop="True">
+
+                </StackPanel>
+            </GroupBox>
+            <GroupBox AllowDrop="True" Grid.Column="1" Header="Maze Mode" MinHeight="200" Height="auto" HorizontalAlignment="Left" Margin="12" Name="MazeGroupBox" VerticalAlignment="Top" MinWidth="140" Width="auto">
+                <StackPanel Name="MazeStackPanel" Background="Transparent" DragEnter="StackPanel_DragEnter" Drop="StackPanel_Drop"  AllowDrop="True">
+
+                </StackPanel>
+            </GroupBox>
+            <GroupBox AllowDrop="True" Grid.Column="2" Header="Slideshow Mode" MinHeight="200" Height="auto" HorizontalAlignment="Left" Margin="12" Name="SlideShowGroupBox" VerticalAlignment="Top" MinWidth="140" Width="auto">
+                <StackPanel Name="SlideshowStackPanel" Background="Transparent" DragEnter="StackPanel_DragEnter" Drop="StackPanel_Drop"  AllowDrop="True">
+                    
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Header="Monitor Options" Width="450">
+            <StackPanel HorizontalAlignment="Left">
+                <ComboBox Name="OptionComboBox" Height="23" Width="120" Margin="12" HorizontalAlignment="Left" />
+                <Label Visibility="Collapsed" Name="UnassignedLabel" HorizontalAlignment="Left">This monitor is currently unassigned.</Label>
+                <Label Visibility="Collapsed" Name="MazeLabel" HorizontalAlignment="Left">There are no configurable options for maze mode.</Label>
+                <StackPanel Margin="12" Visibility="Collapsed" Name="OptionsStackPanel" HorizontalAlignment="Left">
+                    <CheckBox Content="Sync Monitors" Height="16" Name="SyncCheckBox" />
+                    <GroupBox Header="Slideshow Transition Mode" Width="auto">
+                        <ComboBox Name="SlideShowMode" HorizontalAlignment="Left" VerticalAlignment="Top" Width="194" Height="30">
+                            <ComboBoxItem Content="Random" Selector.IsSelected="True"></ComboBoxItem>
+                            <ComboBoxItem Content="Fade"></ComboBoxItem>
+                            <ComboBoxItem Content="Pan"></ComboBoxItem>
+                            <ComboBoxItem Content="Spiral"></ComboBoxItem>
+                        </ComboBox>
+                    </GroupBox>
+                    <GroupBox Header="Slideshow Images">
+                        <StackPanel>
+                            <WrapPanel>
+                                <Label>Source</Label>
+                                <Button Content="Browse" Height="23" Name="BrowseButton" Width="75" Click="BrowseButton_Click" />
+                            </WrapPanel>                            
+                            <TextBox Height="23" Name="ImageSourceBox" HorizontalAlignment="Left" Width="300" />
+                            <WrapPanel>
+                                <Label>Folder Contains</Label>
+                                <Label Name="ImageCountLabel">0</Label>
+                                <Label>Images</Label>
+                            </WrapPanel>                            
+                            <RadioButton Content="Alphabetical Order" GroupName="FileOrder" Height="16" Name="AlphaOrder" />
+                            <RadioButton Content="Random Order" GroupName="FileOrder" Height="16" Name="RandomOrder" />
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Transition Tiles">
+                        <StackPanel>
+                            <WrapPanel>
+                                <RadioButton Content="Range" GroupName="TileCount" Height="16" Name="RangeTiles" Checked="RangeTiles_Checked" />
+                                <RadioButton Content="Fixed" GroupName="TileCount" Height="16" Name="FixedTiles" Checked="FixedTiles_Checked"/>
+                            </WrapPanel>
+                            <StackPanel Name="TileFixedStackPanel" Visibility="Visible">
+                                <WrapPanel>
+                                    <Label Content="Tile Count: " />
+                                    <TextBox Height="23" Name="FixedTileCount" Width="50" Text="10" TextChanged="TileCount_TextChanged" />
+                                </WrapPanel>
+                            </StackPanel>
+                            <StackPanel Name="TileRangeStackPanel" Visibility="Collapsed">
+                                <WrapPanel>
+                                    <Label Content="Min Count: " />
+                                    <TextBox Height="23" Name="MinRangeTileCount" Width="50" Text="10" TextChanged="TileCount_TextChanged" />
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <Label Content="Max Count: " />
+                                    <TextBox Height="23" Name="MaxRangeTileCount" Width="50" Text="25" TextChanged="TileCount_TextChanged" />
+                                </WrapPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Transition Time">
+                        <StackPanel>
+                            <WrapPanel>
+                                <RadioButton Content="Range" GroupName="TimeCount" Height="16" Name="RangeTime" Checked="RangeTime_Checked"/>
+                                <RadioButton Content="Fixed" GroupName="TimeCount" Height="16" Name="FixedTime" Checked="FixedTime_Checked"/>
+                            </WrapPanel>
+                            <StackPanel Name="TimeFixedStackPanel" Visibility="Visible">
+                                <WrapPanel>
+                                    <Label Content="Seconds: " />
+                                    <TextBox Height="23" Name="FixedTimeCount" Width="50" Text="10" TextChanged="TileCount_TextChanged" />
+                                </WrapPanel>
+                            </StackPanel>
+                            <StackPanel Name="TimeRangeStackPanel" Visibility="Collapsed">
+                                <WrapPanel>
+                                    <Label Content="Min Seconds: " />
+                                    <TextBox Height="23" Name="MinRangeTimeCount" Width="50" Text="10" TextChanged="TileCount_TextChanged" />
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <Label Content="Max Seconds: " />
+                                    <TextBox Height="23" Name="MaxRangeTimeCount" Width="50" Text="25" TextChanged="TileCount_TextChanged" />
+                                </WrapPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </StackPanel>            
+        </GroupBox>
+        <WrapPanel Margin="12" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <Button Content="Cancel" Height="23" Name="CancelButton" Width="75" Click="CancelButton_Click" />
+            <Button Content="Save and Close" Height="23" Name="SaveButton" Width="100" Click="SaveButton_Click" />
+        </WrapPanel>        
+    </Grid>    
+</Window>

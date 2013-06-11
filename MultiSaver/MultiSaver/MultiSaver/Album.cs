@@ -32,7 +32,19 @@ namespace MultiSaver
         Effect SpiralInEffect;
         Effect SpiralOutEffect;
 
-        String Mode = String.Empty;
+        public String Mode = String.Empty;
+        public String TransitionMode = "Random";
+        public String Order = "Random";
+
+        public String TileType = "Random";
+        public int FixedTiles = 10;
+        public int MinTiles = 10;
+        public int MaxTiles = 25;
+
+        public String TransitionTime = "Random";
+        public int FixedTime = 10;
+        public int MinTime = 10;
+        public int MaxTime = 25;
 
         public VertexPositionNormalTexture[] Vertices;
         public VertexBuffer VerticesBuffer;
@@ -57,15 +69,15 @@ namespace MultiSaver
 
         public bool IsLeft = false;
 
-        public Vector2 CurrentSize = new Vector2(); 
+        public Vector2 CurrentSize = new Vector2();
+
+        public IntPtr Handler;
 
         public Album()
         {
             
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-                        
-            //graphics.SynchronizeWithVerticalRetrace = false;
 
         }
 
@@ -93,11 +105,40 @@ namespace MultiSaver
 
         protected override void LoadContent()
         {
+            
+            if (Handler.ToInt32() != 0)
+            {
 
-            graphics.PreferredBackBufferHeight = Bounds.Height;
-            graphics.PreferredBackBufferWidth = Bounds.Width;
-            graphics.ApplyChanges();
-            User32.SetWindowPos((uint)this.Window.Handle, 0, Bounds.X, Bounds.Y, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, 0);
+                
+                User32.SetWindowPos((uint)this.Window.Handle, 0, 0, 0, 0, 0, 0);
+
+                System.Drawing.Rectangle ParentRect;
+                User32.GetClientRect(Handler, out ParentRect);
+
+                User32.SetParent(this.Window.Handle, Handler);
+                User32.SetWindowLong(this.Window.Handle, -16, new IntPtr(User32.GetWindowLong(this.Window.Handle, -16) | 0x40000000));
+
+                PresentationParameters PP = GraphicsDevice.PresentationParameters;
+
+                PP.DeviceWindowHandle = Handler;
+
+                GraphicsDevice.Reset(PP);
+
+                //graphics.PreferredBackBufferHeight = ParentRect.Height;
+                //graphics.PreferredBackBufferWidth = ParentRect.Width;
+                //graphics.ApplyChanges();
+
+            }
+
+            else
+            {
+
+                graphics.PreferredBackBufferHeight = Bounds.Height;
+                graphics.PreferredBackBufferWidth = Bounds.Width;
+                graphics.ApplyChanges();
+                User32.SetWindowPos((uint)this.Window.Handle, 0, Bounds.X, Bounds.Y, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, 0);
+
+            }
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -112,7 +153,7 @@ namespace MultiSaver
             SpiralInEffect = Content.Load<Effect>("SpiralIn");
             SpiralOutEffect = Content.Load<Effect>("SpiralOut");
 
-            String[] Files = Directory.GetFiles(Location);
+            String[] Files = Directory.Exists(Location) ? Directory.GetFiles(Location) : new string[0];
 
             foreach (String Picture in Files)
             {
@@ -127,11 +168,28 @@ namespace MultiSaver
 
             }
 
-            Mode = RandomMode();
-            Mode = "Spiral";
-            //GeneratePrimatives(Program.Rand.Next(10, 25), Images[0]);
-            ImageIndex = new Random().Next(0, Images.Count);
-            GeneratePrimatives(10, Images[ImageIndex]);
+            if (Images.Count == 0)
+            {
+
+                Images.Add(Content.Load<Texture2D>("Cell"));
+                Images.Add(Content.Load<Texture2D>("Japan"));
+                Images.Add(Content.Load<Texture2D>("Galaxy"));
+                Images.Add(Content.Load<Texture2D>("AbstractBars"));
+
+            }
+
+            if (TransitionMode == "Random")
+                Mode = RandomMode();
+            else
+                Mode = TransitionMode;
+
+            if (Order == "Random")
+                ImageIndex = new Random().Next(0, Images.Count);
+            else
+                ImageIndex = 0;
+
+            int Primatives = TileType == "Random" ? Program.Rand.Next(MinTiles, MaxTiles) : FixedTiles;
+            GeneratePrimatives(Primatives, Images[ImageIndex]);
 
             MovableCamera = new FreeCamera(new Vector3(Bounds.Width / 2, Bounds.Height / 2, 10), 0, 0, GraphicsDevice, false);
             MovableCamera.Update();
@@ -359,10 +417,29 @@ namespace MultiSaver
                 else
                 {
 
-                    ImageIndex = new Random().Next(0, Images.Count);
+                    int Old = ImageIndex;
 
-                    Mode = RandomMode();
-                    GeneratePrimatives(Program.Rand.Next(10, 25), Images[ImageIndex]);
+                    while (ImageIndex == Old)
+                    {
+
+                        if (Order == "Random")
+                            ImageIndex = new Random().Next(0, Images.Count);
+                        else
+                            ImageIndex++;
+
+                        if (ImageIndex == Images.Count)
+                            ImageIndex = 0;
+
+                    }
+
+                    if (TransitionMode == "Random")
+                        Mode = RandomMode();
+                    else
+                        Mode = TransitionMode;
+
+                    int Primatives = TileType == "Random" ? Program.Rand.Next(MinTiles, MaxTiles) : FixedTiles;
+                    GeneratePrimatives(Primatives, Images[ImageIndex]);
+
                     Time = 0;
                     TransitionIn = true;
 
