@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using System.Threading.Tasks;
 
-namespace MultiSaver
+namespace MultiSaver.Presentation
 {
-
     public class FreeCamera : Camera
     {
         public float Yaw { get; set; }
@@ -21,7 +21,8 @@ namespace MultiSaver
 
         private Vector3 translation;
 
-        public FreeCamera(Vector3 Position, float Yaw, float Pitch, GraphicsDevice graphicsDevice, Boolean Perspective = true): base(graphicsDevice, Perspective)
+        public FreeCamera(Vector3 Position, float Yaw, float Pitch, GraphicsDevice graphicsDevice, Boolean Perspective = true)
+            : base(graphicsDevice, Perspective)
         {
             this.Position = Position;
             this.Yaw = Yaw;
@@ -64,6 +65,5 @@ namespace MultiSaver
             this.Up = up;
             this.Right = Vector3.Cross(forward, up);
         }
-    }    
-
+    }  
 }

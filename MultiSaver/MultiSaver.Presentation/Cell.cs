@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using System.Collections.Concurrent;
+using System.Threading.Tasks;
 
-namespace MultiSaver
+namespace MultiSaver.Presentation
 {
-    
+
     [Serializable]
     public class Cell
     {
@@ -164,5 +164,5 @@ namespace MultiSaver
         }
 
     }
-
+    
 }

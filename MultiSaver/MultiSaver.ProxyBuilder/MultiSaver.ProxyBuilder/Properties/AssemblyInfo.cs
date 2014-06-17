@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MultiSaver")]
-[assembly: AssemblyProduct("MultiSaver")]
+[assembly: AssemblyTitle("MultiSaver.ProxyBuilder")]
+[assembly: AssemblyProduct("MultiSaver.ProxyBuilder")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 // On Windows, the following GUID is for the ID of the typelib if this
 // project is exposed to COM. On other platforms, it unique identifies the
 // title storage container when deploying this assembly to the device.
-[assembly: Guid("299fd5d6-beb6-4dfd-9a90-7616cb807f45")]
+[assembly: Guid("6bc7e1d2-849f-4ac1-9afe-43bfe49c35e5")]
 
 // Version information for an assembly consists of the following four values:
 //

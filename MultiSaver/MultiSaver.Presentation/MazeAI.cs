@@ -1,21 +1,21 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using System.Threading;
+using System.Threading.Tasks;
 
-namespace MultiSaver
+namespace MultiSaver.Presentation
 {
-    
-    public class MazeAI : Microsoft.Xna.Framework.Game
+    public class MazeAI : Game
     {
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
+
         Effect MazeEffect;
 
         String MasterMode = String.Empty;
@@ -65,19 +65,19 @@ namespace MultiSaver
         Vector2 HasMoved;
         Vector2 ShouldMove;
         Vector3 Start;
-        
+
         public Texture2D WallTiling;
-        
+
         public MazeAI()
         {
-            
+
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
             graphics.SynchronizeWithVerticalRetrace = false;
 
         }
-        
+
         protected override void Initialize()
         {
 
@@ -174,7 +174,7 @@ namespace MultiSaver
                 // Determine how much the camera should turn
                 float deltaX = (float)lastMouseState.X - (float)mouseState.X;
                 float deltaY = (float)lastMouseState.Y - (float)mouseState.Y;
-                
+
                 // Rotate the camera
                 MovableCamera.Rotate(deltaX * .005f, deltaY * .005f);
 
@@ -308,7 +308,7 @@ namespace MultiSaver
                                 PathStack.Push(Program.MasterMaze.Cells[0, 0]);
                             else
                                 PathStack.Push(Program.MasterMaze.Cells[0, (int)Program.MasterMaze.Dimensions.Y - 1]);
-                            
+
                             Current = PathStack.Peek();
 
                             CurrentDirection = ID == 0 ? "Down" : "Up";
@@ -331,7 +331,7 @@ namespace MultiSaver
                         HasMoved = new Vector2(110) - ShouldMove;
                         Start = MovableCamera.Position;
                         Start.Y = 55;
-                        
+
                         RotateBy = NeedsRotate();
 
                         if (RotateBy == 0)
@@ -575,7 +575,7 @@ namespace MultiSaver
             RasterizerState rs = new RasterizerState();
             rs.CullMode = CullMode.None;
             GraphicsDevice.RasterizerState = rs;
-            
+
             GraphicsDevice.BlendState = BlendState.NonPremultiplied;//Allow transparency
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
@@ -608,10 +608,10 @@ namespace MultiSaver
 
                 GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, Program.MasterMaze.VerticesBuffer.VertexCount, 0, Program.MasterMaze.IndicesBuffer.IndexCount / 3);
 
-                
+
                 if (ID == 0)
                 {
-                    
+
                     GraphicsDevice.SetVertexBuffer(Program.MasterMaze.WallVerticesBuffer);
                     GraphicsDevice.Indices = Program.MasterMaze.WallIndicesBuffer;
 
@@ -648,5 +648,4 @@ namespace MultiSaver
         }
 
     }
-
 }

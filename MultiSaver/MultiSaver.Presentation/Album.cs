@@ -1,21 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MultiSaver
+namespace MultiSaver.Presentation
 {
-
-    public class Album : Microsoft.Xna.Framework.Game
+    class Album: Game
     {
-
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -58,7 +54,7 @@ namespace MultiSaver
 
         TargetCamera FixedCamera;
         FreeCamera MovableCamera;
-        
+
         int Time;
         int TransitionInTime;
         int TransitionOutTime;
@@ -75,7 +71,7 @@ namespace MultiSaver
 
         public Album()
         {
-            
+
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
@@ -83,7 +79,7 @@ namespace MultiSaver
 
         public static string RandomMode()
         {
-            
+
             int Num = Program.Rand.Next(0, 3);
 
             if (Num == 0)
@@ -105,11 +101,11 @@ namespace MultiSaver
 
         protected override void LoadContent()
         {
-            
+
             if (Handler.ToInt32() != 0)
             {
 
-                
+
                 User32.SetWindowPos((uint)this.Window.Handle, 0, 0, 0, 0, 0, 0);
 
                 System.Drawing.Rectangle ParentRect;
@@ -122,7 +118,8 @@ namespace MultiSaver
 
                 PP.DeviceWindowHandle = Handler;
 
-                GraphicsDevice.Reset(PP);
+                //Removed for the moment because MonoGame didn't implement this
+                //GraphicsDevice.Reset(PP);
 
                 //graphics.PreferredBackBufferHeight = ParentRect.Height;
                 //graphics.PreferredBackBufferWidth = ParentRect.Width;
@@ -140,8 +137,8 @@ namespace MultiSaver
 
             }
 
-            
-            
+
+
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -301,7 +298,7 @@ namespace MultiSaver
 
                     #region Spiral
 
-                    else if  (Mode == "Spiral")
+                    else if (Mode == "Spiral")
                     {
 
                         int Delay = Rand.Next(0, 10) * 30;
@@ -341,7 +338,7 @@ namespace MultiSaver
                     Indices[j++] = i - 2;
 
                     Indices[j++] = i - 2;
-                    Indices[j++] = i  - 3;
+                    Indices[j++] = i - 3;
                     Indices[j++] = i - 1;
 
 
@@ -373,7 +370,7 @@ namespace MultiSaver
 
 
         }
-        
+
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
@@ -447,7 +444,7 @@ namespace MultiSaver
                     TransitionIn = true;
 
                 }
-                
+
             }
 
             base.Update(gameTime);
@@ -496,7 +493,7 @@ namespace MultiSaver
                     Used.Parameters["Origin"].SetValue(new Vector2(Bounds.Width / 2, Bounds.Height / 2));
 
                 }
-                
+
             }
 
 
@@ -523,7 +520,7 @@ namespace MultiSaver
 
             }
 
-            
+
 
             GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, VerticesBuffer.VertexCount, 0, IndicesBuffer.IndexCount / 3);
 
@@ -539,5 +536,4 @@ namespace MultiSaver
         }
 
     }
-
 }

@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MultiSaver
+namespace MultiSaver.Presentation
 {
-    
     public class Maze
     {
 
@@ -61,7 +61,7 @@ namespace MultiSaver
             CellStack.Push(Location);
 
         }
-        
+
         public void GenerateNext(Boolean ReRender = false)
         {
 
@@ -235,7 +235,7 @@ namespace MultiSaver
 
                 for (int x = 0; x < Dimensions.X; x++)
                 {
-                    
+
                     #region Left
                     int[] Inds = new int[30];
                     VertexPositionColorTexture[] Verts = new VertexPositionColorTexture[8];
@@ -249,9 +249,9 @@ namespace MultiSaver
                     i += 8;
                     Indices.AddRange(Inds);
                     Vertices.AddRange(Verts);
-                    
+
                     #endregion
-                    
+
                     #region Right
                     Inds = new int[30];
                     Verts = new VertexPositionColorTexture[8];
@@ -290,7 +290,7 @@ namespace MultiSaver
 
                     Y = Cells[x, y].BottomWall ? 110 : -100;
 
-                    Temp = new BoundingBox(new Vector3(x * 110, Y -110, y * 110 + 105), new Vector3(x * 110 + 110, Y, y * 110 + 110));
+                    Temp = new BoundingBox(new Vector3(x * 110, Y - 110, y * 110 + 105), new Vector3(x * 110 + 110, Y, y * 110 + 110));
 
                     GenerateBoxVertices(Temp, Inds, Verts, new Vector2(0, .5f), i);
 
@@ -476,7 +476,7 @@ namespace MultiSaver
                 }
 
                 //Top
-                if (Temp.Location.Y -1 >= 0
+                if (Temp.Location.Y - 1 >= 0
                     && !Cells[(int)Temp.Location.X, (int)Temp.Location.Y - 1].BottomWall
                     && !Cells[(int)Temp.Location.X, (int)Temp.Location.Y - 1].VisitedBy(ID))
                 {
@@ -505,12 +505,12 @@ namespace MultiSaver
 
                 if (!Neighbors)
                 {
-                    
+
                     //Adds fake steps in so that the AI will animate the retracing of its steps
                     List<Cell> Fakes = GetPathDFS(Temp, PathStack.Peek());
                     Fakes.RemoveAt(0);
                     Fakes.RemoveAt(Fakes.Count - 1);
-                    
+
                     foreach (Cell C in Fakes)
                     {
 
@@ -567,7 +567,7 @@ namespace MultiSaver
             this.Width = Width;
 
             Maze = GenericCopier<Cell[,]>.DeepCopy(MazeData);
-            
+
             foreach (Cell C in Maze)
             {
 
@@ -682,5 +682,4 @@ namespace MultiSaver
             }
         }
     }
-
 }
