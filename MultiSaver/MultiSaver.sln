@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiSaver", "MultiSaver\MultiSaver\MultiSaver.csproj", "{9E9CC433-9E39-4D00-A5B0-B3A4AFB4323B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiSaverContent", "MultiSaver\MultiSaverContent\MultiSaverContent.contentproj", "{1FC61D1D-32B1-4254-A89F-0288D0EA24AE}"
