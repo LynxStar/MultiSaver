@@ -62,14 +62,14 @@
     <Compile Include="FadeIn.fx">
       <Name>FadeIn</Name>
       <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
+      <Processor>MGEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FadeOut.fx">
       <Name>FadeOut</Name>
       <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
+      <Processor>MGEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -97,35 +97,35 @@
     <Compile Include="MazeEffect.fx">
       <Name>MazeEffect</Name>
       <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
+      <Processor>MGEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PanIn.fx">
       <Name>PanIn</Name>
       <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
+      <Processor>MGEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PanOut.fx">
       <Name>PanOut</Name>
       <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
+      <Processor>MGEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SpiralIn.fx">
       <Name>SpiralIn</Name>
       <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
+      <Processor>MGEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SpiralOut.fx">
       <Name>SpiralOut</Name>
       <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
+      <Processor>MGEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>

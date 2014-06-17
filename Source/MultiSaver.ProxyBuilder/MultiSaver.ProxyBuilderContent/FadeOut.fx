@@ -3,11 +3,10 @@ float4x4 Projection;
 
 int Time;
 
-texture PhotoTexture;
+Texture2D PhotoTexture;
 sampler PhotoSampler = sampler_state 
 {
 
-	texture = <PhotoTexture>;
 	AddressU = Wrap;
 	AddressV = Wrap;
 	MinFilter = Anisotropic;
@@ -18,7 +17,7 @@ sampler PhotoSampler = sampler_state
 
 struct VertexShaderInput
 {
-    float4 Position : POSITION0;
+	float4 Position : SV_POSITION;
 	float3 Normal   : NORMAL0;
 	float2 UV : TEXCOORD0;
 
@@ -26,7 +25,7 @@ struct VertexShaderInput
 
 struct VertexShaderOutput
 {
-    float4 Position : POSITION0;	
+	float4 Position : SV_POSITION;
 	float3 Normal   : NORMAL0;
 	float2 UV : TEXCOORD0;
 
@@ -45,10 +44,10 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput Input)
 
 }
 
-float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
+float4 PixelShaderFunction(VertexShaderOutput input) : SV_Target
 {
 
-	float4 Color = tex2D(PhotoSampler, input.UV);
+	float4 Color = PhotoTexture.Sample(PhotoSampler, input.UV);
 	
 	float Alpha = clamp((input.Normal.x - Time) * input.Normal.y / 255, 0, 1);
 
@@ -62,10 +61,8 @@ technique Technique1
     pass Pass1
     {
 
-        // TODO: set renderstates here.
-
-        VertexShader = compile vs_3_0 VertexShaderFunction();
-        PixelShader = compile ps_3_0 PixelShaderFunction();
+		VertexShader = compile vs_5_0 VertexShaderFunction();
+		PixelShader = compile ps_5_0 PixelShaderFunction();
 
     }
 

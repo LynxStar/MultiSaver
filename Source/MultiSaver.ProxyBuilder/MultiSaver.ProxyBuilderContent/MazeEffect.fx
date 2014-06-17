@@ -1,11 +1,10 @@
 float4x4 View;
 float4x4 Projection;
 
-texture MazeTexture;
+Texture2D MazeTexture;
 sampler MazeSampler = sampler_state 
 {
 
-	texture = <MazeTexture>;
 	AddressU = Wrap;
 	AddressV = Wrap;
 	MinFilter = Anisotropic;
@@ -16,7 +15,7 @@ sampler MazeSampler = sampler_state
 
 struct VertexShaderInput
 {
-    float4 Position : POSITION0;
+	float4 Position : SV_POSITION;
 	float3 Normal   : NORMAL0;
 	float2 UV : TEXCOORD0;
 
@@ -24,7 +23,7 @@ struct VertexShaderInput
 
 struct VertexShaderOutput
 {
-    float4 Position : POSITION0;	
+	float4 Position : SV_POSITION;
 	float3 Normal   : NORMAL0;
 	float2 UV : TEXCOORD0;
 
@@ -43,10 +42,10 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput Input)
 
 }
 
-float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
+float4 PixelShaderFunction(VertexShaderOutput input) : SV_Target
 {
 
-    return tex2D(MazeSampler, input.UV);
+	return MazeTexture.Sample(MazeSampler, input.UV);
 
 }
 
@@ -56,10 +55,8 @@ technique Technique1
     pass Pass1
     {
 
-        // TODO: set renderstates here.
-
-        VertexShader = compile vs_3_0 VertexShaderFunction();
-        PixelShader = compile ps_3_0 PixelShaderFunction();
+		VertexShader = compile vs_5_0 VertexShaderFunction();
+		PixelShader = compile ps_5_0 PixelShaderFunction();
 
     }
 

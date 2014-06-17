@@ -115,13 +115,10 @@ namespace MultiSaver
                 else
                 {
 
-                    foreach (Screen S in System.Windows.Forms.Screen.AllScreens)
-                    {
+                    Screen S = System.Windows.Forms.Screen.AllScreens[0];
 
-                        Thread MonitorThread = new Thread(RunAlbum);
-                        MonitorThread.Start(new ConfigData.Monitor { Bounds = new System.Drawing.Rectangle(S.Bounds.X, S.Bounds.Y, S.Bounds.Width, S.Bounds.Height) });
-
-                    }
+                    Thread MonitorThread = new Thread(RunAlbum);
+                    MonitorThread.Start(new ConfigData.Monitor { Bounds = new System.Drawing.Rectangle(S.Bounds.X, S.Bounds.Y, S.Bounds.Width, S.Bounds.Height) });
 
                 }
 
@@ -172,10 +169,12 @@ namespace MultiSaver
 
                 ConfigData.Monitor Mon = (ConfigData.Monitor)Args;
 
-                Control C = Form.FromHandle(game.Window.Handle);
-                Form F = C.FindForm();
+                //Control C = Form.FromHandle(game.Window.Handle);
+                //Form F = C.FindForm();
+                //F.FormBorderStyle = FormBorderStyle.None;
 
-                F.FormBorderStyle = FormBorderStyle.None;
+                game.Window.IsBorderless = true;
+
                 game.Bounds = new Rectangle(Mon.Bounds.X, Mon.Bounds.Y, Mon.Bounds.Width, Mon.Bounds.Height);
 
                 game.Location = Mon.Source;
