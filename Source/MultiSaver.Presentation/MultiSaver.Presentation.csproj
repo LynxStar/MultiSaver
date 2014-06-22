@@ -51,9 +51,6 @@
     <Compile Include="User32.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MonoGameContentProcessors">
-      <HintPath>..\packages\MonoGame.ContentProcessors.3.2.1\lib\MonoGameContentProcessors.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -68,7 +65,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="Icon.ico" />
-    <Content Include="SDL.dll" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
@@ -90,9 +86,12 @@
       <Project>{d877891a-a706-4fd5-ab1f-242e7cd2fb4c}</Project>
       <Name>MultiSaver.ProxyBuilder</Name>
     </ProjectReference>
+    <ProjectReference Include="C:\Users\LynxStar\Documents\GitHub\MonoGame\MonoGame.Framework\MonoGame.Framework.Windows.csproj">
+      <Project>{7de47032-a904-4c29-bd22-2d235e8d91ba}</Project>
+      <Name>MonoGame.Framework.Windows</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\MonoGame.Binaries.3.2.0\build\net40\MonoGame.Binaries.targets" Condition="Exists('..\packages\MonoGame.Binaries.3.2.0\build\net40\MonoGame.Binaries.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
